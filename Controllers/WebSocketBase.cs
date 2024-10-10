@@ -26,9 +26,10 @@ public class WebSocketBase
     public async Task Echo()
     {
         var buffer = new byte[1024 * 256];
-        bool isFirstChunk = true;
-        string currentFileName = null;
+        bool isNameChunk = false;
+        string currentFileName = "";
         FileStream currentFileStream = null;
+        
 
         do
         {
@@ -41,14 +42,13 @@ public class WebSocketBase
                 if (message.Contains("endFileStream"))
                 {
                     // Close current file stream once the end of the file is reached
-                    if (currentFileStream != null)
+                    if (_fileStreams.ContainsKey(currentFileName))
                     {
+                        currentFileStream = _fileStreams[currentFileName];
                         await currentFileStream.FlushAsync();
-                        // currentFileStream.Flush();
                         currentFileStream.Close();
                         currentFileStream.Dispose();
-                        currentFileStream = null;
-                        isFirstChunk = true;
+                        _fileStreams.Remove(currentFileName);
                         Console.WriteLine("File received: " + currentFileName);
                     }
                 }
@@ -60,36 +60,56 @@ public class WebSocketBase
             else if (receiveResult.MessageType == WebSocketMessageType.Binary)
             {
                 Console.WriteLine(receiveResult.Count);
-                if (isFirstChunk)
+                
+                if (receiveResult.Count > 100 )
                 {
-                    // Extract file name from the first 100 bytes of the first chunk
                     byte[] nameBuffer = new byte[100];
+                    byte[] dataBuffer = new byte[receiveResult.Count - 100];
                     Array.Copy(buffer, 0, nameBuffer, 0, 100);
+                    Array.Copy(buffer, 100, dataBuffer, 0, receiveResult.Count - 100);
                     currentFileName = Encoding.UTF8.GetString(nameBuffer).TrimEnd('\0'); // Trim null bytes
-
-                    // Initialize file stream to save the file
-                    currentFileStream =
-                        new FileStream(Path.Combine(_filesPath + "/" + _targetUser + "/", currentFileName),
-                            FileMode.Create, FileAccess.Write);
-
-                    // Write the remaining data from the first chunk (after the file name)
-                    int remainingDataSize = receiveResult.Count - 100;
-                    if (remainingDataSize > 0)
+                    if (_fileStreams.ContainsKey(currentFileName))
                     {
-                        await currentFileStream.WriteAsync(buffer, 100, remainingDataSize);
+                        currentFileStream = _fileStreams[currentFileName];
                     }
-
-                    isFirstChunk = false;
+                    else
+                    {
+                        _fileStreams[currentFileName] =
+                            new FileStream(Path.Combine(_filesPath + "/" + _targetUser + "/", currentFileName),
+                                FileMode.Create, FileAccess.Write);
+                        currentFileStream = _fileStreams[currentFileName];
+                    }
+                    await currentFileStream.WriteAsync(dataBuffer, 0, receiveResult.Count - 100);
                 }
                 else
                 {
-                    // For subsequent chunks, write the binary data to the file
-                    if (currentFileStream != null)
-                    {
-                        // Console.WriteLine(receiveResult.Count);
-                        await currentFileStream.WriteAsync(buffer, 0, receiveResult.Count);
-                    }
+                    await currentFileStream.WriteAsync(buffer, 0, receiveResult.Count);
                 }
+                //
+                // if (_fileStreams.ContainsKey(currentFileName) && !isNameChunk)
+                // {
+                //     currentFileStream = _fileStreams[currentFileName];
+                //     
+                // }
+                // else if (isNameChunk && !_fileStreams.ContainsKey(currentFileName))
+                // {
+                //     _fileStreams[currentFileName] =
+                //         new FileStream(Path.Combine(_filesPath + "/" + _targetUser + "/", currentFileName),
+                //             FileMode.Create, FileAccess.Write);
+                // }
+                //
+                // Write the remaining data from the first chunk (after the file name)
+                // int remainingDataSize = receiveResult.Count - 100;
+                // if (remainingDataSize > 0)
+                // {
+                //     await currentFileStream.WriteAsync(buffer, 100, remainingDataSize);
+                // }
+                
+                // For subsequent chunks, write the binary data to the file
+                // if (currentFileStream != null && !isNameChunk)
+                // {
+                //     await currentFileStream.WriteAsync(buffer, 0, receiveResult.Count);
+                // }
             }
         } while (!receiveResult.CloseStatus.HasValue);
 
