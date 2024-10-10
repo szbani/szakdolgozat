@@ -23,3 +23,4 @@ C:\Users\szabo\RiderProjects\szakdolgozat\szakdolgozat\obj\Debug\net8.0\refint\s
 C:\Users\szabo\RiderProjects\szakdolgozat\szakdolgozat\obj\Debug\net8.0\szakdolgozat.pdb
 C:\Users\szabo\RiderProjects\szakdolgozat\szakdolgozat\obj\Debug\net8.0\szakdolgozat.genruntimeconfig.cache
 C:\Users\szabo\RiderProjects\szakdolgozat\szakdolgozat\obj\Debug\net8.0\ref\szakdolgozat.dll
+C:\Users\szabo\RiderProjects\szakdolgozat\szakdolgozat\obj\Debug\net8.0\szakdolgozat.sourcelink.json

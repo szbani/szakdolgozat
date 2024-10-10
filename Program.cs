@@ -3,14 +3,23 @@ using System.Net.WebSockets;
 using szakdolgozat.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
-// builder.Services.AddControllers();
-// builder.Services.AddEndpointsApiExplorer();
+
+var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+int port = config.GetValue<int>("HttpsPort");
+
+builder.WebHost.UseUrls($"https://localhost:{port}");
 
 
 var app = builder.Build();
-app.UseWebSockets();
 
-var connectedUsers = new ConcurrentDictionary<string,WebSocket>();
+var webSocketOptions = new WebSocketOptions()
+{
+    KeepAliveInterval = TimeSpan.FromSeconds(120),
+};
+app.UseWebSockets(webSocketOptions);
+
+
+
 var userCount = 0;
 
 app.Use(async (context, next) =>
@@ -26,25 +35,33 @@ app.Use(async (context, next) =>
                 if (!string.IsNullOrEmpty(user))
                 {
                     userId = user;
+                    ConnectedUsers.clients.TryAdd(userId, webSocket);
                 }
                 else
                 {
+                    // connectedClients.TryAdd(userId, webSocket);
                     userId =  "User-" + userCount++;
+                    ConnectedUsers.admins.TryAdd(userId, webSocket);
                 }
-                connectedUsers.TryAdd(userId, webSocket);
+                var socket = new WebSocketBase(webSocket, userId, config.GetValue<string>("FilesPath"));
+
+                
+                Console.WriteLine("Connected: " + userId);
+                socket.BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
                 
                 try
                 {
-                    await WebSocketBase.Echo(webSocket,connectedUsers, userId);
+                    await socket.Echo();
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"Error: {e.Message}");
-                    var users = string.Join(", ", connectedUsers.Keys);
-                    Console.WriteLine(users);
-                    connectedUsers.TryRemove(userId, out _);
-                    users = string.Join(", ", connectedUsers.Keys);
-                    Console.WriteLine(users);
+                    socket.CleanupResources();
+                    
+                    ConnectedUsers.clients.TryRemove(userId, out _);
+                    ConnectedUsers.admins.TryRemove(userId, out _);
+                    
+                    socket.BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
                 }
                 finally
                 {
@@ -71,7 +88,6 @@ app.Use(async (context, next) =>
 
 app.UseRouting();
 app.UseHttpsRedirection();
-// app.MapControllers();
 
 
 app.Run();
