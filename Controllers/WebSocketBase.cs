@@ -9,11 +9,12 @@ public class WebSocketBase
 {
     private readonly WebSocket _webSocket;
     private readonly string _userId;
-    private WebSocketReceiveResult receiveResult;
+    private WebSocketReceiveResult _receiveResult;
     private readonly string _filesPath;
     private string _targetUser;
+    private FileStream _currentFileStream;
+    private PowerShellScripts _psScripts;
 
-    private Dictionary<string, FileStream> _fileStreams = new Dictionary<string, FileStream>();
 
 
     public WebSocketBase(WebSocket webSocket, string userId, string filesPath)
@@ -21,100 +22,57 @@ public class WebSocketBase
         _webSocket = webSocket;
         _userId = userId;
         _filesPath = filesPath;
+        _psScripts = new PowerShellScripts();
     }
 
     public async Task Echo()
     {
         var buffer = new byte[1024 * 256];
-        bool isNameChunk = false;
-        string currentFileName = "";
-        FileStream currentFileStream = null;
         
-
         do
         {
             // Receive data (both text and binary messages)
-            receiveResult = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            if (receiveResult.MessageType == WebSocketMessageType.Text)
+            _receiveResult = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+            if (_receiveResult.MessageType == WebSocketMessageType.Text)
             {
-                var message = Encoding.UTF8.GetString(buffer, 0, receiveResult.Count);
+                var message = Encoding.UTF8.GetString(buffer, 0, _receiveResult.Count);
+                Console.WriteLine(message);
                 var response = await ProcessMessage(message);
                 if (message.Contains("endFileStream"))
                 {
                     // Close current file stream once the end of the file is reached
-                    if (_fileStreams.ContainsKey(currentFileName))
-                    {
-                        currentFileStream = _fileStreams[currentFileName];
-                        await currentFileStream.FlushAsync();
-                        currentFileStream.Close();
-                        currentFileStream.Dispose();
-                        _fileStreams.Remove(currentFileName);
-                        Console.WriteLine("File received: " + currentFileName);
-                    }
+                    // if (_fileStreams.ContainsKey(currentFileName))
+                    // {
+                    //     currentFileStream = _fileStreams[currentFileName];
+                    //     await currentFileStream.FlushAsync();
+                    //     currentFileStream.Close();
+                    //     currentFileStream.Dispose();
+                    //     _fileStreams.Remove(currentFileName);
+                    // }
                 }
 
                 var serverReply = Encoding.UTF8.GetBytes(response);
                 await _webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text, true,
                     CancellationToken.None);
             }
-            else if (receiveResult.MessageType == WebSocketMessageType.Binary)
+            else if (_receiveResult.MessageType == WebSocketMessageType.Binary)
             {
-                Console.WriteLine(receiveResult.Count);
-                
-                if (receiveResult.Count > 100 )
+                Console.WriteLine(_receiveResult.Count);
+
+                if (_currentFileStream != null)
                 {
-                    byte[] nameBuffer = new byte[100];
-                    byte[] dataBuffer = new byte[receiveResult.Count - 100];
-                    Array.Copy(buffer, 0, nameBuffer, 0, 100);
-                    Array.Copy(buffer, 100, dataBuffer, 0, receiveResult.Count - 100);
-                    currentFileName = Encoding.UTF8.GetString(nameBuffer).TrimEnd('\0'); // Trim null bytes
-                    if (_fileStreams.ContainsKey(currentFileName))
-                    {
-                        currentFileStream = _fileStreams[currentFileName];
-                    }
-                    else
-                    {
-                        _fileStreams[currentFileName] =
-                            new FileStream(Path.Combine(_filesPath + "/" + _targetUser + "/", currentFileName),
-                                FileMode.Create, FileAccess.Write);
-                        currentFileStream = _fileStreams[currentFileName];
-                    }
-                    await currentFileStream.WriteAsync(dataBuffer, 0, receiveResult.Count - 100);
+                    byte[] dataBuffer = new byte[_receiveResult.Count];
+                    Array.Copy(buffer, 0, dataBuffer, 0, _receiveResult.Count);
+                    await _currentFileStream.WriteAsync(dataBuffer, 0, _receiveResult.Count);
                 }
-                else
-                {
-                    await currentFileStream.WriteAsync(buffer, 0, receiveResult.Count);
-                }
-                //
-                // if (_fileStreams.ContainsKey(currentFileName) && !isNameChunk)
-                // {
-                //     currentFileStream = _fileStreams[currentFileName];
-                //     
-                // }
-                // else if (isNameChunk && !_fileStreams.ContainsKey(currentFileName))
-                // {
-                //     _fileStreams[currentFileName] =
-                //         new FileStream(Path.Combine(_filesPath + "/" + _targetUser + "/", currentFileName),
-                //             FileMode.Create, FileAccess.Write);
-                // }
-                //
-                // Write the remaining data from the first chunk (after the file name)
-                // int remainingDataSize = receiveResult.Count - 100;
-                // if (remainingDataSize > 0)
-                // {
-                //     await currentFileStream.WriteAsync(buffer, 100, remainingDataSize);
-                // }
                 
-                // For subsequent chunks, write the binary data to the file
-                // if (currentFileStream != null && !isNameChunk)
-                // {
-                //     await currentFileStream.WriteAsync(buffer, 0, receiveResult.Count);
-                // }
             }
-        } while (!receiveResult.CloseStatus.HasValue);
+        } while (!_receiveResult.CloseStatus.HasValue);
 
         Console.WriteLine("Closing connection");
-        CleanupResources();
+        ConnectedUsers.clients.TryRemove(_userId, out _);
+        ConnectedUsers.admins.TryRemove(_userId, out _);
+        BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
     }
 
     private async Task<string> ProcessMessage(string message)
@@ -123,22 +81,35 @@ public class WebSocketBase
         {
             var json = JsonDocument.Parse(message);
             var messageType = json.RootElement.GetProperty("type").GetString();
-            // var content = json.RootElement.GetProperty("content").GetString();
-            string targetUser;
             string content;
             WebSocket targetSocket;
 
             switch (messageType)
             {
+                case "getFilesForUser":
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    Console.WriteLine(_targetUser);
+                    var files = Directory.GetFiles(_filesPath + _targetUser + "/");
+                    // Console.WriteLine(_filesPath + _targetUser + "/");
+                    var fileList = new List<string>();
+                    foreach (var file in files)
+                    {
+                        Console.WriteLine(Path.GetFileName(file));
+                        if (file.Contains("config.json"))
+                        {
+                            continue;
+                        }
+                        fileList.Add(Path.GetFileName(file));
+                    }
+                    return JsonSerializer.Serialize(new {type = "filesForUser", content = fileList});
                 case "getConnectedUsers":
                     Console.WriteLine("getConnectedUsers");
-                    // return "{\"type\": \"connectedUsers\", \"content\": \"" + users + "\"}";
                     return ConnectedUsers.sendConnectedUsers();
                 case "sendToUser":
-                    targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     content = json.RootElement.GetProperty("content").GetString();
 
-                    if (ConnectedUsers.clients.TryGetValue(targetUser, out targetSocket))
+                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
                         var reply = "{\"type\": \"messageFromUser\", \"content\": \"" + content + "\"}";
                         var serverReply = Encoding.UTF8.GetBytes(reply);
@@ -153,40 +124,66 @@ public class WebSocketBase
                         return createJsonContent("error", "User not found");
                     }
                 case "sendUpdateRequestToUser":
-                    targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    content = json.RootElement.GetProperty("content").GetString();
-
-                    if (ConnectedUsers.clients.TryGetValue(targetUser, out targetSocket))
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
-                        var reply = "{\"type\": \"updateRequestFromUser\", \"content\": \"" + content + "\"}";
+                        var reply = "{\"type\": \"updateRequest\"}";
                         var serverReply = Encoding.UTF8.GetBytes(reply);
                         await targetSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text,
                             true, CancellationToken.None);
-                        // return "{\"type\": \"updateRequestFromUser\", \"content\": \" messageSent\"}";
-                        return createJsonContent("updateRequestFromUser", "messageSent");
+                        return createJsonContent("updateRequest", "messageSent");
                     }
                     else
                     {
                         return createJsonContent("error", "User not found");
                     }
-                case "startFileStream":
+                case "startingFileStream":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    bool deleteFiles = json.RootElement.GetProperty("deleteFiles").GetBoolean() || false;
+                    string mediaType = json.RootElement.GetProperty("mediaType").GetString();
+                    if (deleteFiles)
+                    {
+                        DeleteFiles(_filesPath + "/" + _targetUser + "/");
+                    }
+                    CreateDirectory(_filesPath + "/" + _targetUser + "/");
 
-                    // if (!_fileStreams.ContainsKey(_fileName))
-                    // {
-                    //     CreateDirectory(_filesPath);
-                    //     CreateDirectory(_filesPath + "/" + targetUser);
-                    //     var fs = new FileStream(_filesPath + "/" + targetUser + "/" + _fileName, FileMode.Create,FileAccess.ReadWrite);
-                    //     _fileStreams[_fileName] = fs;
-                    // }
-                    return createJsonContent("fileReceived", "Start receiving files");
+                    string config =JsonSerializer.Serialize(new {mediaType = mediaType});
+                    
+                    FileStream fileStream = new FileStream(_filesPath + "/" + _targetUser + "/config.json",
+                        FileMode.Create, FileAccess.Write);
+                    await fileStream.WriteAsync(Encoding.UTF8.GetBytes(config));
+                    
+                    // fileStream.FlushAsync();
+                    fileStream.Close();
+                    fileStream.Dispose();
+                    
+                    return createJsonContent("fileStreamStarted", "Start receiving files");
+                case "startFileStream":
+                    string fileName = json.RootElement.GetProperty("fileName").GetString();
+                    
+                    _currentFileStream = new FileStream(_filesPath + "/" + _targetUser + "/" + fileName,
+                        FileMode.Create, FileAccess.Write);
+
+                    return createJsonContent("fileStreamStarted", "Start receiving files");
+                case "endFileStream":
+                    _currentFileStream.FlushAsync();
+                    _currentFileStream.Close();
+                    _currentFileStream.Dispose();
+                    return createJsonContent("fileArrived", "File arrived");
                 case "ping":
                     return createJsonContent("pong");
                 // return "{\"type\": \"pong\", \"content\": \"\"}";
                 case "disconnect":
-                    CleanupResources();
                     return createJsonContent("disconnected");
                 // return "{\"type\": \"disconnected\", \"content\": \"\"}";
+                case "OpenEdge":
+                    _psScripts.OpenEdge(json.RootElement.GetProperty("address").GetString(),
+                        json.RootElement.GetProperty("url").GetString());
+                    return createJsonContent("OpenEdge");
+                case "StartDisplay":
+                    _psScripts.WakeOnLan(json.RootElement.GetProperty("macAddress").GetString(),
+                        json.RootElement.GetProperty("address").GetString());
+                    return createJsonContent("StartDisplay");
                 default:
                     Console.WriteLine($"Unknown message type: {messageType}");
                     return createJsonContent("error", "Unknown message type");
@@ -223,38 +220,19 @@ public class WebSocketBase
         return message;
     }
 
-    public void CleanupResources()
-    {
-        if (_fileStreams.Count > 0)
-        {
-            foreach (var fs in _fileStreams)
-            {
-                fs.Value.Close();
-                fs.Value.Dispose();
-            }
-        }
-
-        receiveResult = null;
-
-        ConnectedUsers.clients.TryRemove(_userId, out _);
-        ConnectedUsers.admins.TryRemove(_userId, out _);
-
-        BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-
-        if (_webSocket.State == WebSocketState.Open)
-        {
-            _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Connection closed", CancellationToken.None)
-                .Wait();
-        }
-
-        _webSocket.Dispose();
-    }
-
     private static void CreateDirectory(string path)
     {
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
+        }
+    }
+    
+    private static void DeleteFiles(string path)
+    {
+        if (Directory.Exists(path))
+        {
+            Directory.Delete(path, true);
         }
     }
 
@@ -266,6 +244,6 @@ public class WebSocketBase
 
     ~WebSocketBase()
     {
-        CleanupResources();
+        Console.WriteLine("Destructor called");
     }
 }

@@ -5,9 +5,9 @@ using szakdolgozat.Controllers;
 var builder = WebApplication.CreateBuilder(args);
 
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-int port = config.GetValue<int>("HttpsPort");
+string ip = config.GetValue<string>("HttpsPort");
 
-builder.WebHost.UseUrls($"https://localhost:{port}");
+builder.WebHost.UseUrls(ip);
 
 
 var app = builder.Build();
@@ -15,6 +15,7 @@ var app = builder.Build();
 var webSocketOptions = new WebSocketOptions()
 {
     KeepAliveInterval = TimeSpan.FromSeconds(120),
+    ReceiveBufferSize = 256 * 1024,
 };
 app.UseWebSockets(webSocketOptions);
 
@@ -56,12 +57,12 @@ app.Use(async (context, next) =>
                 catch (Exception e)
                 {
                     Console.WriteLine($"Error: {e.Message}");
-                    socket.CleanupResources();
                     
                     ConnectedUsers.clients.TryRemove(userId, out _);
                     ConnectedUsers.admins.TryRemove(userId, out _);
                     
                     socket.BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+                    socket = null;
                 }
                 finally
                 {
