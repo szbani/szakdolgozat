@@ -1,12 +1,18 @@
 ﻿using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 using System.Net;
 using System.Net.Sockets;
+using System.Security;
 using System.Text.RegularExpressions;
 
 namespace szakdolgozat.Controllers;
 
 public class PowerShellScripts
 {
+    private string username = "KioskAdmin";
+    private string password = "k105k5Tr0ngpA55w0rd";
+    private string command;
+
     public void WakeOnLan(string macAddress, string address)
     {
         try
@@ -46,24 +52,110 @@ public class PowerShellScripts
         }
     }
 
-    public void OpenEdge(string address, string url)
+    public void Disconnect(string address)
     {
-        string command =
-            $"Invoke-Command -ComputerName {address} -Credential $cred -ScriptBlock {{ Start-Process 'msedge.exe' '{url}' }}";
+        command = $"Stop-Computer -ComputerName {address} -Force";
 
-        using (PowerShell ps = PowerShell.Create())
+        WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
+
+        using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
         {
-            Console.WriteLine($"$cred = New-Object System.Management.Automation.PSCredential ('Szbani', (ConvertTo-SecureString 'M5x1k1nG' -AsPlainText -Force)); {command}");
-            ps.AddScript($"$cred = New-Object System.Management.Automation.PSCredential ('Szbani', (ConvertTo-SecureString 'M5x1k1nG' -AsPlainText -Force)); {command}");            
-            try
+            runspace.Open();
+            using (PowerShell ps = PowerShell.Create())
             {
-                ps.Invoke();
-                Console.WriteLine("Edge opened successfully.");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error opening Edge: {e.Message}");
+                try
+                {
+                    ps.Runspace = runspace;
+                    ps.AddScript(command);
+                    ps.Invoke();
+                    Console.WriteLine("Computer disconnected successfully.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error disconnecting computer: {e.Message}");
+                }
             }
         }
+    }
+
+    public void Reboot(string address)
+    {
+        command = $"Restart-Computer -ComputerName {address} -Force";
+        WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
+
+        using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
+        {
+            runspace.Open();
+            using (PowerShell ps = PowerShell.Create())
+            {
+                try
+                {
+                    ps.Runspace = runspace;
+                    ps.AddScript(command);
+                    ps.Invoke();
+                    Console.WriteLine("Computer rebooted successfully.");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error rebooting computer: {e.Message}");
+                }
+            }
+        }
+    }
+
+    public string GetMacAddress(string address)
+    {
+        command = $"Get-WmiObject Win32_NetworkAdapterConfiguration -ComputerName {address} |" +
+                  $" Where-Object -FilterScript {{$_.IPEnabled -eq \"true\" -and $_.IPAddress -contains '{address}' }} |" +
+                  $" Select-Object -ExpandProperty MacAddress";
+
+        WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
+
+        using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
+        {
+            runspace.Open();
+            using (PowerShell ps = PowerShell.Create())
+            {
+                try
+                {
+                    ps.Runspace = runspace;
+                    ps.AddScript(command);
+                    var macAddress = ps.Invoke();
+                    if (macAddress.Count == 0)
+                    {
+                        Console.WriteLine("No MAC address found.");
+                        return null;
+                    }
+                    else
+                    {
+                        return macAddress[0].ToString();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error getting MAC address: {e.Message}");
+                    return null;
+                }
+            }
+        }
+    }
+
+    public SecureString ToSecureString(string password)
+    {
+        SecureString securePassword = new SecureString();
+        foreach (char c in password)
+        {
+            securePassword.AppendChar(c);
+        }
+
+        return securePassword;
+    }
+
+    public WSManConnectionInfo GetConnectionInfo(string address)
+    {
+        return new WSManConnectionInfo(
+            new Uri($"http://{address}:5985/wsman"),
+            "http://schemas.microsoft.com/powershell/Microsoft.PowerShell",
+            new PSCredential(username, ToSecureString(password)));
     }
 }

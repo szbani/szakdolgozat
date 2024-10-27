@@ -13,9 +13,9 @@
     <SourceRoot Include="C:\Users\szabo\.nuget\packages\" />
   </ItemGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.CSharp.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.CSharp.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.CSharp.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.CSharp.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -24,9 +24,9 @@
       <Private>True</Private>
       <Link>ref\Microsoft.CSharp.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.VisualBasic.Core.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.VisualBasic.Core.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.VisualBasic.Core.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.VisualBasic.Core.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -35,9 +35,9 @@
       <Private>True</Private>
       <Link>ref\Microsoft.VisualBasic.Core.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.VisualBasic.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.VisualBasic.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.VisualBasic.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.VisualBasic.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -46,9 +46,9 @@
       <Private>True</Private>
       <Link>ref\Microsoft.VisualBasic.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.Win32.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.Win32.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.Win32.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.Win32.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -57,9 +57,9 @@
       <Private>True</Private>
       <Link>ref\Microsoft.Win32.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.Win32.Registry.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\Microsoft.Win32.Registry.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.Win32.Registry.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\Microsoft.Win32.Registry.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -68,9 +68,9 @@
       <Private>True</Private>
       <Link>ref\Microsoft.Win32.Registry.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.AppContext.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.AppContext.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.AppContext.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.AppContext.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -79,9 +79,9 @@
       <Private>True</Private>
       <Link>ref\System.AppContext.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Buffers.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Buffers.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Buffers.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Buffers.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -90,9 +90,9 @@
       <Private>True</Private>
       <Link>ref\System.Buffers.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.Concurrent.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.Concurrent.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.Concurrent.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.Concurrent.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -101,9 +101,9 @@
       <Private>True</Private>
       <Link>ref\System.Collections.Concurrent.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.Immutable.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.Immutable.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.Immutable.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.Immutable.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -112,9 +112,9 @@
       <Private>True</Private>
       <Link>ref\System.Collections.Immutable.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.NonGeneric.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.NonGeneric.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.NonGeneric.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.NonGeneric.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -123,9 +123,9 @@
       <Private>True</Private>
       <Link>ref\System.Collections.NonGeneric.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.Specialized.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.Specialized.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.Specialized.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.Specialized.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -134,9 +134,9 @@
       <Private>True</Private>
       <Link>ref\System.Collections.Specialized.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Collections.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Collections.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -145,9 +145,9 @@
       <Private>True</Private>
       <Link>ref\System.Collections.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.Annotations.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.Annotations.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.Annotations.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.Annotations.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -156,9 +156,9 @@
       <Private>True</Private>
       <Link>ref\System.ComponentModel.Annotations.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.DataAnnotations.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.DataAnnotations.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.DataAnnotations.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.DataAnnotations.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -167,9 +167,9 @@
       <Private>True</Private>
       <Link>ref\System.ComponentModel.DataAnnotations.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.EventBasedAsync.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.EventBasedAsync.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.EventBasedAsync.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.EventBasedAsync.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -178,9 +178,9 @@
       <Private>True</Private>
       <Link>ref\System.ComponentModel.EventBasedAsync.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -189,9 +189,9 @@
       <Private>True</Private>
       <Link>ref\System.ComponentModel.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.TypeConverter.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.TypeConverter.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.TypeConverter.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.TypeConverter.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -200,9 +200,9 @@
       <Private>True</Private>
       <Link>ref\System.ComponentModel.TypeConverter.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ComponentModel.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ComponentModel.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -211,9 +211,9 @@
       <Private>True</Private>
       <Link>ref\System.ComponentModel.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Configuration.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Configuration.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Configuration.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Configuration.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -222,9 +222,9 @@
       <Private>True</Private>
       <Link>ref\System.Configuration.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Console.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Console.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Console.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Console.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -233,9 +233,9 @@
       <Private>True</Private>
       <Link>ref\System.Console.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Core.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Core.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Core.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Core.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -244,9 +244,9 @@
       <Private>True</Private>
       <Link>ref\System.Core.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Data.Common.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Data.Common.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Data.Common.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Data.Common.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -255,9 +255,9 @@
       <Private>True</Private>
       <Link>ref\System.Data.Common.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Data.DataSetExtensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Data.DataSetExtensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Data.DataSetExtensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Data.DataSetExtensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -266,9 +266,9 @@
       <Private>True</Private>
       <Link>ref\System.Data.DataSetExtensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Data.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Data.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Data.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Data.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -277,9 +277,9 @@
       <Private>True</Private>
       <Link>ref\System.Data.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Contracts.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Contracts.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Contracts.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Contracts.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -288,9 +288,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.Contracts.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Debug.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Debug.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Debug.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Debug.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -299,9 +299,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.Debug.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.DiagnosticSource.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.DiagnosticSource.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.DiagnosticSource.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.DiagnosticSource.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -310,9 +310,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.DiagnosticSource.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.FileVersionInfo.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.FileVersionInfo.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.FileVersionInfo.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.FileVersionInfo.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -321,9 +321,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.FileVersionInfo.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Process.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Process.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Process.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Process.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -332,9 +332,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.Process.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.StackTrace.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.StackTrace.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.StackTrace.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.StackTrace.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -343,9 +343,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.StackTrace.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.TextWriterTraceListener.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.TextWriterTraceListener.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.TextWriterTraceListener.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.TextWriterTraceListener.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -354,9 +354,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.TextWriterTraceListener.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Tools.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Tools.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Tools.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Tools.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -365,9 +365,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.Tools.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.TraceSource.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.TraceSource.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.TraceSource.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.TraceSource.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -376,9 +376,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.TraceSource.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Tracing.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Diagnostics.Tracing.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Tracing.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Diagnostics.Tracing.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -387,9 +387,9 @@
       <Private>True</Private>
       <Link>ref\System.Diagnostics.Tracing.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Drawing.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Drawing.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Drawing.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Drawing.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -398,9 +398,9 @@
       <Private>True</Private>
       <Link>ref\System.Drawing.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Drawing.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Drawing.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Drawing.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Drawing.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -409,9 +409,9 @@
       <Private>True</Private>
       <Link>ref\System.Drawing.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Dynamic.Runtime.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Dynamic.Runtime.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Dynamic.Runtime.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Dynamic.Runtime.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -420,9 +420,9 @@
       <Private>True</Private>
       <Link>ref\System.Dynamic.Runtime.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Formats.Asn1.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Formats.Asn1.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Formats.Asn1.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Formats.Asn1.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -431,9 +431,9 @@
       <Private>True</Private>
       <Link>ref\System.Formats.Asn1.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Formats.Tar.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Formats.Tar.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Formats.Tar.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Formats.Tar.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -442,9 +442,9 @@
       <Private>True</Private>
       <Link>ref\System.Formats.Tar.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Globalization.Calendars.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Globalization.Calendars.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Globalization.Calendars.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Globalization.Calendars.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -453,9 +453,9 @@
       <Private>True</Private>
       <Link>ref\System.Globalization.Calendars.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Globalization.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Globalization.Extensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Globalization.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Globalization.Extensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -464,9 +464,9 @@
       <Private>True</Private>
       <Link>ref\System.Globalization.Extensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Globalization.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Globalization.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Globalization.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Globalization.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -475,9 +475,9 @@
       <Private>True</Private>
       <Link>ref\System.Globalization.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.Brotli.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.Brotli.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.Brotli.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.Brotli.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -486,9 +486,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.Compression.Brotli.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.FileSystem.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.FileSystem.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.FileSystem.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.FileSystem.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -497,9 +497,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.Compression.FileSystem.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.ZipFile.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.ZipFile.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.ZipFile.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.ZipFile.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -508,9 +508,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.Compression.ZipFile.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Compression.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Compression.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -519,9 +519,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.Compression.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.AccessControl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.AccessControl.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.AccessControl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.AccessControl.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -530,9 +530,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.FileSystem.AccessControl.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.DriveInfo.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.DriveInfo.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.DriveInfo.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.DriveInfo.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -541,9 +541,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.FileSystem.DriveInfo.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -552,9 +552,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.FileSystem.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.Watcher.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.Watcher.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.Watcher.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.Watcher.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -563,9 +563,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.FileSystem.Watcher.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.FileSystem.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.FileSystem.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -574,9 +574,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.FileSystem.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.IsolatedStorage.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.IsolatedStorage.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.IsolatedStorage.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.IsolatedStorage.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -585,9 +585,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.IsolatedStorage.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.MemoryMappedFiles.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.MemoryMappedFiles.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.MemoryMappedFiles.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.MemoryMappedFiles.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -596,9 +596,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.MemoryMappedFiles.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Pipes.AccessControl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Pipes.AccessControl.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Pipes.AccessControl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Pipes.AccessControl.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -607,9 +607,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.Pipes.AccessControl.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Pipes.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.Pipes.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Pipes.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.Pipes.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -618,9 +618,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.Pipes.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.UnmanagedMemoryStream.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.UnmanagedMemoryStream.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.UnmanagedMemoryStream.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.UnmanagedMemoryStream.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -629,9 +629,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.UnmanagedMemoryStream.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.IO.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.IO.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -640,9 +640,9 @@
       <Private>True</Private>
       <Link>ref\System.IO.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.Expressions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.Expressions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.Expressions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.Expressions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -651,9 +651,9 @@
       <Private>True</Private>
       <Link>ref\System.Linq.Expressions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.Parallel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.Parallel.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.Parallel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.Parallel.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -662,9 +662,9 @@
       <Private>True</Private>
       <Link>ref\System.Linq.Parallel.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.Queryable.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.Queryable.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.Queryable.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.Queryable.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -673,9 +673,9 @@
       <Private>True</Private>
       <Link>ref\System.Linq.Queryable.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Linq.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Linq.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -684,9 +684,9 @@
       <Private>True</Private>
       <Link>ref\System.Linq.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Memory.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Memory.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Memory.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Memory.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -695,9 +695,9 @@
       <Private>True</Private>
       <Link>ref\System.Memory.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Http.Json.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Http.Json.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Http.Json.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Http.Json.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -706,9 +706,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Http.Json.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Http.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Http.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Http.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Http.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -717,9 +717,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Http.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.HttpListener.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.HttpListener.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.HttpListener.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.HttpListener.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -728,9 +728,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.HttpListener.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Mail.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Mail.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Mail.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Mail.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -739,9 +739,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Mail.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.NameResolution.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.NameResolution.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.NameResolution.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.NameResolution.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -750,9 +750,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.NameResolution.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.NetworkInformation.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.NetworkInformation.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.NetworkInformation.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.NetworkInformation.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -761,9 +761,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.NetworkInformation.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Ping.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Ping.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Ping.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Ping.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -772,9 +772,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Ping.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -783,9 +783,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Quic.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Quic.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Quic.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Quic.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -794,9 +794,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Quic.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Requests.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Requests.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Requests.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Requests.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -805,9 +805,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Requests.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Security.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Security.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Security.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Security.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -816,9 +816,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Security.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.ServicePoint.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.ServicePoint.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.ServicePoint.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.ServicePoint.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -827,9 +827,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.ServicePoint.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Sockets.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.Sockets.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Sockets.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.Sockets.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -838,9 +838,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.Sockets.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebClient.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebClient.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebClient.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebClient.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -849,9 +849,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.WebClient.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebHeaderCollection.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebHeaderCollection.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebHeaderCollection.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebHeaderCollection.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -860,9 +860,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.WebHeaderCollection.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebProxy.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebProxy.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebProxy.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebProxy.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -871,9 +871,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.WebProxy.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebSockets.Client.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebSockets.Client.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebSockets.Client.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebSockets.Client.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -882,9 +882,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.WebSockets.Client.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebSockets.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.WebSockets.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebSockets.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.WebSockets.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -893,9 +893,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.WebSockets.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Net.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Net.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -904,9 +904,9 @@
       <Private>True</Private>
       <Link>ref\System.Net.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Numerics.Vectors.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Numerics.Vectors.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Numerics.Vectors.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Numerics.Vectors.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -915,9 +915,9 @@
       <Private>True</Private>
       <Link>ref\System.Numerics.Vectors.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Numerics.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Numerics.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Numerics.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Numerics.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -926,9 +926,9 @@
       <Private>True</Private>
       <Link>ref\System.Numerics.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ObjectModel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ObjectModel.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ObjectModel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ObjectModel.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -937,9 +937,9 @@
       <Private>True</Private>
       <Link>ref\System.ObjectModel.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.DispatchProxy.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.DispatchProxy.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.DispatchProxy.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.DispatchProxy.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -948,9 +948,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.DispatchProxy.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Emit.ILGeneration.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Emit.ILGeneration.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Emit.ILGeneration.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Emit.ILGeneration.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -959,9 +959,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.Emit.ILGeneration.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Emit.Lightweight.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Emit.Lightweight.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Emit.Lightweight.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Emit.Lightweight.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -970,9 +970,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.Emit.Lightweight.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Emit.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Emit.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Emit.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Emit.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -981,9 +981,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.Emit.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Extensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Extensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -992,9 +992,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.Extensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Metadata.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Metadata.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Metadata.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Metadata.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1003,9 +1003,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.Metadata.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1014,9 +1014,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.TypeExtensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.TypeExtensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.TypeExtensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.TypeExtensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1025,9 +1025,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.TypeExtensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Reflection.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Reflection.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1036,9 +1036,9 @@
       <Private>True</Private>
       <Link>ref\System.Reflection.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Resources.Reader.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Resources.Reader.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Resources.Reader.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Resources.Reader.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1047,9 +1047,9 @@
       <Private>True</Private>
       <Link>ref\System.Resources.Reader.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Resources.ResourceManager.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Resources.ResourceManager.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Resources.ResourceManager.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Resources.ResourceManager.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1058,9 +1058,9 @@
       <Private>True</Private>
       <Link>ref\System.Resources.ResourceManager.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Resources.Writer.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Resources.Writer.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Resources.Writer.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Resources.Writer.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1069,9 +1069,9 @@
       <Private>True</Private>
       <Link>ref\System.Resources.Writer.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.CompilerServices.Unsafe.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.CompilerServices.Unsafe.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.CompilerServices.Unsafe.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.CompilerServices.Unsafe.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1080,9 +1080,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.CompilerServices.Unsafe.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.CompilerServices.VisualC.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.CompilerServices.VisualC.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.CompilerServices.VisualC.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.CompilerServices.VisualC.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1091,9 +1091,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.CompilerServices.VisualC.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Extensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Extensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1102,9 +1102,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Extensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Handles.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Handles.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Handles.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Handles.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1113,9 +1113,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Handles.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.InteropServices.JavaScript.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.InteropServices.JavaScript.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.InteropServices.JavaScript.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.InteropServices.JavaScript.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1124,9 +1124,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.InteropServices.JavaScript.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.InteropServices.RuntimeInformation.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.InteropServices.RuntimeInformation.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.InteropServices.RuntimeInformation.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.InteropServices.RuntimeInformation.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1135,9 +1135,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.InteropServices.RuntimeInformation.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.InteropServices.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.InteropServices.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.InteropServices.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.InteropServices.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1146,9 +1146,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.InteropServices.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Intrinsics.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Intrinsics.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Intrinsics.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Intrinsics.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1157,9 +1157,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Intrinsics.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Loader.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Loader.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Loader.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Loader.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1168,9 +1168,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Loader.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Numerics.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Numerics.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Numerics.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Numerics.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1179,9 +1179,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Numerics.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Formatters.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Formatters.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Formatters.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Formatters.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1190,9 +1190,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Serialization.Formatters.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Json.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Json.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Json.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Json.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1201,9 +1201,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Serialization.Json.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1212,9 +1212,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Serialization.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Xml.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.Xml.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Xml.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.Xml.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1223,9 +1223,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Serialization.Xml.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.Serialization.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.Serialization.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1234,9 +1234,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.Serialization.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Runtime.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Runtime.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1245,9 +1245,9 @@
       <Private>True</Private>
       <Link>ref\System.Runtime.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.AccessControl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.AccessControl.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.AccessControl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.AccessControl.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1256,9 +1256,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.AccessControl.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Claims.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Claims.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Claims.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Claims.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1267,9 +1267,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Claims.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Algorithms.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Algorithms.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Algorithms.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Algorithms.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1278,9 +1278,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.Algorithms.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Cng.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Cng.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Cng.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Cng.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1289,9 +1289,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.Cng.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Csp.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Csp.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Csp.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Csp.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1300,9 +1300,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.Csp.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Encoding.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Encoding.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Encoding.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Encoding.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1311,9 +1311,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.Encoding.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.OpenSsl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.OpenSsl.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.OpenSsl.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.OpenSsl.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1322,9 +1322,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.OpenSsl.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.Primitives.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Primitives.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.Primitives.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1333,9 +1333,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.Primitives.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.X509Certificates.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.X509Certificates.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.X509Certificates.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.X509Certificates.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1344,9 +1344,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.X509Certificates.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Cryptography.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Cryptography.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1355,9 +1355,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Cryptography.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Principal.Windows.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Principal.Windows.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Principal.Windows.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Principal.Windows.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1366,9 +1366,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Principal.Windows.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Principal.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.Principal.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Principal.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.Principal.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1377,9 +1377,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.Principal.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.SecureString.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.SecureString.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.SecureString.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.SecureString.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1388,9 +1388,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.SecureString.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Security.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Security.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1399,9 +1399,9 @@
       <Private>True</Private>
       <Link>ref\System.Security.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ServiceModel.Web.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ServiceModel.Web.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ServiceModel.Web.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ServiceModel.Web.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1410,9 +1410,9 @@
       <Private>True</Private>
       <Link>ref\System.ServiceModel.Web.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ServiceProcess.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ServiceProcess.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ServiceProcess.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ServiceProcess.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1421,9 +1421,9 @@
       <Private>True</Private>
       <Link>ref\System.ServiceProcess.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encoding.CodePages.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encoding.CodePages.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encoding.CodePages.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encoding.CodePages.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1432,9 +1432,9 @@
       <Private>True</Private>
       <Link>ref\System.Text.Encoding.CodePages.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encoding.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encoding.Extensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encoding.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encoding.Extensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1443,9 +1443,9 @@
       <Private>True</Private>
       <Link>ref\System.Text.Encoding.Extensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encoding.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encoding.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encoding.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encoding.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1454,9 +1454,9 @@
       <Private>True</Private>
       <Link>ref\System.Text.Encoding.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encodings.Web.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Encodings.Web.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encodings.Web.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Encodings.Web.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1465,9 +1465,9 @@
       <Private>True</Private>
       <Link>ref\System.Text.Encodings.Web.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Json.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.Json.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Json.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.Json.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1476,9 +1476,9 @@
       <Private>True</Private>
       <Link>ref\System.Text.Json.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.RegularExpressions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Text.RegularExpressions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.RegularExpressions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Text.RegularExpressions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1487,9 +1487,9 @@
       <Private>True</Private>
       <Link>ref\System.Text.RegularExpressions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Channels.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Channels.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Channels.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Channels.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1498,9 +1498,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Channels.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Overlapped.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Overlapped.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Overlapped.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Overlapped.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1509,9 +1509,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Overlapped.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.Dataflow.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.Dataflow.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.Dataflow.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.Dataflow.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1520,9 +1520,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Tasks.Dataflow.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.Extensions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.Extensions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.Extensions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1531,9 +1531,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Tasks.Extensions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.Parallel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.Parallel.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.Parallel.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.Parallel.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1542,9 +1542,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Tasks.Parallel.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Tasks.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Tasks.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1553,9 +1553,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Tasks.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Thread.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Thread.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Thread.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Thread.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1564,9 +1564,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Thread.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.ThreadPool.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.ThreadPool.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.ThreadPool.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.ThreadPool.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1575,9 +1575,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.ThreadPool.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Timer.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.Timer.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Timer.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.Timer.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1586,9 +1586,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.Timer.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Threading.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Threading.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1597,9 +1597,9 @@
       <Private>True</Private>
       <Link>ref\System.Threading.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Transactions.Local.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Transactions.Local.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Transactions.Local.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Transactions.Local.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1608,9 +1608,9 @@
       <Private>True</Private>
       <Link>ref\System.Transactions.Local.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Transactions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Transactions.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Transactions.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Transactions.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1619,9 +1619,9 @@
       <Private>True</Private>
       <Link>ref\System.Transactions.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ValueTuple.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.ValueTuple.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ValueTuple.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.ValueTuple.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1630,9 +1630,9 @@
       <Private>True</Private>
       <Link>ref\System.ValueTuple.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Web.HttpUtility.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Web.HttpUtility.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Web.HttpUtility.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Web.HttpUtility.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1641,9 +1641,9 @@
       <Private>True</Private>
       <Link>ref\System.Web.HttpUtility.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Web.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Web.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Web.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Web.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1652,9 +1652,9 @@
       <Private>True</Private>
       <Link>ref\System.Web.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Windows.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Windows.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Windows.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Windows.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1663,9 +1663,9 @@
       <Private>True</Private>
       <Link>ref\System.Windows.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.Linq.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.Linq.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.Linq.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.Linq.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1674,9 +1674,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.Linq.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.ReaderWriter.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.ReaderWriter.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.ReaderWriter.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.ReaderWriter.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1685,9 +1685,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.ReaderWriter.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.Serialization.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.Serialization.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.Serialization.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.Serialization.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1696,9 +1696,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.Serialization.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XDocument.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XDocument.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XDocument.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XDocument.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1707,9 +1707,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.XDocument.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XPath.XDocument.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XPath.XDocument.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XPath.XDocument.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XPath.XDocument.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1718,9 +1718,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.XPath.XDocument.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XPath.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XPath.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XPath.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XPath.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1729,9 +1729,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.XPath.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XmlDocument.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XmlDocument.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XmlDocument.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XmlDocument.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1740,9 +1740,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.XmlDocument.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XmlSerializer.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.XmlSerializer.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XmlSerializer.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.XmlSerializer.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1751,9 +1751,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.XmlSerializer.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.Xml.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.Xml.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1762,9 +1762,9 @@
       <Private>True</Private>
       <Link>ref\System.Xml.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\System.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\System.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1773,9 +1773,9 @@
       <Private>True</Private>
       <Link>ref\System.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\WindowsBase.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\WindowsBase.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\WindowsBase.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\WindowsBase.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1784,9 +1784,9 @@
       <Private>True</Private>
       <Link>ref\WindowsBase.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\mscorlib.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\mscorlib.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\mscorlib.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\mscorlib.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1795,9 +1795,9 @@
       <Private>True</Private>
       <Link>ref\mscorlib.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\netstandard.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\ref\netstandard.dll')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\netstandard.dll" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\ref\netstandard.dll')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1806,9 +1806,9 @@
       <Private>True</Private>
       <Link>ref\netstandard.dll</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1817,9 +1817,9 @@
       <Private>True</Private>
       <Link>runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1828,9 +1828,9 @@
       <Private>True</Private>
       <Link>runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1839,9 +1839,9 @@
       <Private>True</Private>
       <Link>runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1850,9 +1850,9 @@
       <Private>True</Private>
       <Link>runtimes\unix\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\CimCmdlets\CimCmdlets.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\CimCmdlets\CimCmdlets.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\CimCmdlets\CimCmdlets.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\CimCmdlets\CimCmdlets.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1861,9 +1861,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\CimCmdlets\CimCmdlets.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Diagnostics.format.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Diagnostics.format.ps1xml')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Diagnostics.format.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Diagnostics.format.ps1xml')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1872,9 +1872,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Diagnostics.format.ps1xml</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Event.format.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Event.format.ps1xml')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Event.format.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Event.format.ps1xml')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1883,9 +1883,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Event.format.ps1xml</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\GetEvent.types.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\GetEvent.types.ps1xml')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\GetEvent.types.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\GetEvent.types.ps1xml')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1894,9 +1894,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\GetEvent.types.ps1xml</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Microsoft.PowerShell.Diagnostics.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Microsoft.PowerShell.Diagnostics.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Microsoft.PowerShell.Diagnostics.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Microsoft.PowerShell.Diagnostics.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1905,9 +1905,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Diagnostics\Microsoft.PowerShell.Diagnostics.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1916,9 +1916,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Host\Microsoft.PowerShell.Host.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1927,9 +1927,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Management\Microsoft.PowerShell.Management.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1938,9 +1938,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Security.types.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Security.types.ps1xml')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Security.types.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Security.types.ps1xml')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1949,9 +1949,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Security\Security.types.ps1xml</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1960,9 +1960,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.PowerShell.Utility\Microsoft.PowerShell.Utility.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\Microsoft.WSMan.Management.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\Microsoft.WSMan.Management.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\Microsoft.WSMan.Management.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\Microsoft.WSMan.Management.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1971,9 +1971,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\Microsoft.WSMan.Management.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\WSMan.format.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\WSMan.format.ps1xml')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\WSMan.format.ps1xml" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\WSMan.format.ps1xml')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1982,9 +1982,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\Microsoft.WSMan.Management\WSMan.format.ps1xml</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psd1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psd1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psd1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1993,9 +1993,9 @@
       <Private>True</Private>
       <Link>runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psd1</Link>
     </None>
-    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psm1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.5\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psm1')">
+    <None Include="$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psm1" Condition="Exists('$(NuGetPackageRoot)microsoft.powershell.sdk\7.4.6\contentFiles\any\any\runtimes\win\lib\net8.0\Modules\PSDiagnostics\PSDiagnostics.psm1')">
       <NuGetPackageId>Microsoft.PowerShell.SDK</NuGetPackageId>
-      <NuGetPackageVersion>7.4.5</NuGetPackageVersion>
+      <NuGetPackageVersion>7.4.6</NuGetPackageVersion>
       <NuGetItemType>None</NuGetItemType>
       <Pack>false</Pack>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2007,8 +2007,12 @@
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\3.3.4\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.10\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\8.0.10\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design\8.0.10\build\net8.0\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design\8.0.10\build\net8.0\Microsoft.EntityFrameworkCore.Design.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\8.0.10\build\Microsoft.AspNetCore.Identity.UI.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.identity.ui\8.0.10\build\Microsoft.AspNetCore.Identity.UI.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\szabo\.nuget\packages\microsoft.codeanalysis.analyzers\3.3.4</PkgMicrosoft_CodeAnalysis_Analyzers>
+    <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\szabo\.nuget\packages\microsoft.entityframeworkcore.tools\8.0.10</PkgMicrosoft_EntityFrameworkCore_Tools>
   </PropertyGroup>
 </Project>

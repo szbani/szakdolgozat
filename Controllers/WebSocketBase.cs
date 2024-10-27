@@ -38,18 +38,7 @@ public class WebSocketBase
                 var message = Encoding.UTF8.GetString(buffer, 0, _receiveResult.Count);
                 Console.WriteLine(message);
                 var response = await ProcessMessage(message);
-                if (message.Contains("endFileStream"))
-                {
-                    // Close current file stream once the end of the file is reached
-                    // if (_fileStreams.ContainsKey(currentFileName))
-                    // {
-                    //     currentFileStream = _fileStreams[currentFileName];
-                    //     await currentFileStream.FlushAsync();
-                    //     currentFileStream.Close();
-                    //     currentFileStream.Dispose();
-                    //     _fileStreams.Remove(currentFileName);
-                    // }
-                }
+                
 
                 var serverReply = Encoding.UTF8.GetBytes(response);
                 await _webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text, true,
@@ -82,7 +71,7 @@ public class WebSocketBase
             var json = JsonDocument.Parse(message);
             var messageType = json.RootElement.GetProperty("type").GetString();
             string content;
-            WebSocket targetSocket;
+            SocketConnection targetSocket;
 
             switch (messageType)
             {
@@ -113,10 +102,10 @@ public class WebSocketBase
                     {
                         var reply = "{\"type\": \"messageFromUser\", \"content\": \"" + content + "\"}";
                         var serverReply = Encoding.UTF8.GetBytes(reply);
-                        await targetSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text,
+                        await targetSocket.webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text,
                             true, CancellationToken.None);
                         // return "{\"type\": \"messageFromUser\", \"content\": \" messageSent\"}";
-                        return createJsonContent("messageFromUser", "messageSent");
+                        return createJsonContent("Success", "messageSent");
                     }
                     else
                     {
@@ -129,9 +118,9 @@ public class WebSocketBase
                     {
                         var reply = "{\"type\": \"updateRequest\"}";
                         var serverReply = Encoding.UTF8.GetBytes(reply);
-                        await targetSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text,
+                        await targetSocket.webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text,
                             true, CancellationToken.None);
-                        return createJsonContent("updateRequest", "messageSent");
+                        return createJsonContent("Success", "messageSent");
                     }
                     else
                     {
@@ -173,13 +162,33 @@ public class WebSocketBase
                 case "ping":
                     return createJsonContent("pong");
                 // return "{\"type\": \"pong\", \"content\": \"\"}";
-                case "disconnect":
-                    return createJsonContent("disconnected");
-                // return "{\"type\": \"disconnected\", \"content\": \"\"}";
-                case "OpenEdge":
-                    _psScripts.OpenEdge(json.RootElement.GetProperty("address").GetString(),
-                        json.RootElement.GetProperty("url").GetString());
-                    return createJsonContent("OpenEdge");
+                case "Disconnect":
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    {
+                        //todo disconnect
+                        _psScripts.Disconnect("192.168.56.51");
+                    }
+                    return createJsonContent("Success","disconnected");
+                case "Restart":
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    {
+                        //todo restart
+                        _psScripts.Reboot(targetSocket.ipAddress);
+                    }
+                    return createJsonContent("Success","restarted");
+                case "AddDisplayToNetwork":
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    {
+                        Console.WriteLine(targetSocket.ipAddress);
+                        Console.WriteLine(_psScripts.GetMacAddress("192.168.56.51"));
+                        return createJsonContent("Success", "messageSent");
+                    }else
+                    {
+                        return createJsonContent("error", "User not found");
+                    }
                 case "StartDisplay":
                     _psScripts.WakeOnLan(json.RootElement.GetProperty("macAddress").GetString(),
                         json.RootElement.GetProperty("address").GetString());
@@ -203,7 +212,7 @@ public class WebSocketBase
         var serverReply = Encoding.UTF8.GetBytes(message);
         foreach (var admin in ConnectedUsers.admins)
         {
-            admin.Value.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text, true,
+            admin.Value.webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text, true,
                 CancellationToken.None);
         }
     }
