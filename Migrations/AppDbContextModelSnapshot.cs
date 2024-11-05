@@ -229,12 +229,9 @@ namespace szakdolgozat.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ipAddress")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("macAddress")
                         .IsRequired()
+                        .HasMaxLength(17)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

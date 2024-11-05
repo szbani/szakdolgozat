@@ -6,7 +6,4 @@ public class IDisplay
     string DisplayName { get; set; }
     string DisplayDescription { get; set; }
     string macAddress { get; set; }
-    string ipAddress { get; set; }
-    
-    
 }

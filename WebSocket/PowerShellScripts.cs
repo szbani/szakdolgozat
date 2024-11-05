@@ -13,10 +13,16 @@ public class PowerShellScripts
     private string password = "k105k5Tr0ngpA55w0rd";
     private string command;
 
-    public void WakeOnLan(string macAddress, string address)
+    public void WakeOnLan(string macAddress)
     {
         try
         {
+            if (macAddress == "00:00:00:00:00:00")
+            {
+                Console.WriteLine("Cannot wake up localhost.");
+                return;
+            }
+
             if (!Regex.IsMatch(macAddress, "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"))
             {
                 throw new ArgumentException("Invalid MAC address format.");
@@ -42,7 +48,7 @@ public class PowerShellScripts
 
             using (UdpClient client = new UdpClient())
             {
-                client.Connect(IPAddress.Parse(address), 9);
+                client.Connect(IPAddress.Broadcast, 9);
                 client.Send(magicPacket, magicPacket.Length);
             }
         }
@@ -54,6 +60,12 @@ public class PowerShellScripts
 
     public void Disconnect(string address)
     {
+        if (address == "127.0.0.1" || address == "::1")
+        {
+            Console.WriteLine("Cannot disconnect localhost.");
+            return;
+        }
+
         command = $"Stop-Computer -ComputerName {address} -Force";
 
         WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
@@ -80,6 +92,12 @@ public class PowerShellScripts
 
     public void Reboot(string address)
     {
+        if (address == "127.0.0.1" || address == "::1")
+        {
+            Console.WriteLine("Cannot reboot localhost.");
+            return;
+        }
+
         command = $"Restart-Computer -ComputerName {address} -Force";
         WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
 
@@ -105,22 +123,30 @@ public class PowerShellScripts
 
     public string GetMacAddress(string address)
     {
-        command = $"Get-WmiObject Win32_NetworkAdapterConfiguration -ComputerName {address} |" +
-                  $" Where-Object -FilterScript {{$_.IPEnabled -eq \"true\" -and $_.IPAddress -contains '{address}' }} |" +
-                  $" Select-Object -ExpandProperty MacAddress";
+        if (address == "127.0.0.1" || address == "::1")
+        {
+            return "00:00:00:00:00:00";
+        }
+
+        string command = $"Get-WmiObject Win32_NetworkAdapterConfiguration -ComputerName {address} |" +
+                         $" Where-Object -FilterScript {{$_.IPEnabled -eq \"true\" -and $_.IPAddress -contains '{address}' }} |" +
+                         $" Select-Object -ExpandProperty MacAddress";
 
         WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
 
-        using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
+        try
         {
-            runspace.Open();
-            using (PowerShell ps = PowerShell.Create())
+            using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
             {
-                try
+                runspace.Open();
+
+                using (PowerShell ps = PowerShell.Create())
                 {
                     ps.Runspace = runspace;
                     ps.AddScript(command);
+
                     var macAddress = ps.Invoke();
+
                     if (macAddress.Count == 0)
                     {
                         Console.WriteLine("No MAC address found.");
@@ -131,12 +157,13 @@ public class PowerShellScripts
                         return macAddress[0].ToString();
                     }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error getting MAC address: {e.Message}");
-                    return null;
-                }
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error getting MAC address: {e.Message}");
+            // You can return a specific value or continue with a fallback
+            return null; // Or any default fallback value
         }
     }
 

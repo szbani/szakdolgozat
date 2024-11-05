@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Smyux85jp+Tp4ulqHdiSLHrhNppNtrTXe1N9LJ/k5gF6LKv8lCXZUU/xbDERoTczElVWnRal1mRYz0eQTpG5rA==",
+  "dgSpecHash": "l1vamJluWZwMybwzPMf04dpvCJUl4vk9MGxP3K8aqdaZv5bb6o8fRB8WYMEL1eKyWjb38dGw3Z1WFCykgcFyLw==",
   "success": true,
   "projectFilePath": "C:\\Users\\szabo\\RiderProjects\\szakdolgozat\\szakdolgozat\\szakdolgozat.csproj",
   "expectedPackageFiles": [
@@ -27,6 +27,7 @@
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.aspnetcore.identity\\2.2.0\\microsoft.aspnetcore.identity.2.2.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\8.0.10\\microsoft.aspnetcore.identity.entityframeworkcore.8.0.10.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\8.0.10\\microsoft.aspnetcore.identity.ui.8.0.10.nupkg.sha512",
+    "C:\\Users\\szabo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.10\\microsoft.aspnetcore.openapi.8.0.10.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\8.0.0\\microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.4\\microsoft.codeanalysis.analyzers.3.3.4.nupkg.sha512",
@@ -65,6 +66,7 @@
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.management.infrastructure.runtime.unix\\3.0.0\\microsoft.management.infrastructure.runtime.unix.3.0.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.management.infrastructure.runtime.win\\3.0.0\\microsoft.management.infrastructure.runtime.win.3.0.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
+    "C:\\Users\\szabo\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.powershell.commands.diagnostics\\7.4.6\\microsoft.powershell.commands.diagnostics.7.4.6.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.powershell.commands.management\\7.4.6\\microsoft.powershell.commands.management.7.4.6.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.powershell.commands.utility\\7.4.6\\microsoft.powershell.commands.utility.7.4.6.nupkg.sha512",

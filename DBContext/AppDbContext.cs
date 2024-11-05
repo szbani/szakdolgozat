@@ -24,8 +24,7 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
             b.ToTable("Displays");
             b.Property(e => e.DisplayName).HasMaxLength(256);
             b.Property(e => e.DisplayDescription).HasMaxLength(256);
-            b.Property(e => e.macAddress).IsRequired();
-            b.Property(e => e.ipAddress).IsRequired();
+            b.Property(e => e.macAddress).IsRequired().HasMaxLength(17);
         });
     }
 }
