@@ -239,8 +239,12 @@ public class WebSocketBase
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
-                        _psScripts.Disconnect(targetSocket.ipAddress);
-                        return createJsonContent("Success", "Shutdown request sent.");
+                        PsResult psResult = _psScripts.Disconnect(targetSocket.ipAddress);
+                        if (psResult.Success())
+                        {
+                            ConnectedUsers.clients.TryRemove(_targetUser, out _);
+                        }
+                        return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                     }
 
                     return createJsonContent("Error", "User not found");
@@ -248,8 +252,12 @@ public class WebSocketBase
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
-                        _psScripts.Reboot(targetSocket.ipAddress);
-                        return createJsonContent("Success", "Restart request sent.");
+                        PsResult psResult =_psScripts.Reboot(targetSocket.ipAddress);
+                        if (psResult.Success())
+                        {
+                            ConnectedUsers.clients.TryRemove(_targetUser, out _);
+                        }
+                        return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                     }
 
                     return createJsonContent("Error", "User not found");
@@ -259,10 +267,9 @@ public class WebSocketBase
                     var result = ConnectedUsers.RegisteredDisplays.FirstOrDefault(x => x.DisplayName == _targetUser);
                     if (result != null)
                     {
-                        _psScripts.WakeOnLan(result.macAddress);
-                        return createJsonContent("Success", "Display started");
+                        PsResult psResult = _psScripts.WakeOnLan(result.macAddress);
+                        return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                     }
-
                     return createJsonContent("Error", "Display not registered");
                 }
                 case "RegisterDisplay":
@@ -275,6 +282,10 @@ public class WebSocketBase
                             DisplayDescription = json.RootElement.GetProperty("displayDescription").GetString(),
                             macAddress = _psScripts.GetMacAddress(targetSocket.ipAddress),
                         };
+                        if (display.macAddress == null)
+                        {
+                            return createJsonContent("Error", "Cant get mac address");
+                        }
                         using (var scope = _serviceProvider.CreateScope())
                         {
                             var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();

@@ -13,19 +13,20 @@ public class PowerShellScripts
     private string password = "k105k5Tr0ngpA55w0rd";
     private string command;
 
-    public void WakeOnLan(string macAddress)
+    public PsResult WakeOnLan(string macAddress)
     {
         try
         {
             if (macAddress == "00:00:00:00:00:00")
             {
                 Console.WriteLine("Cannot wake up localhost.");
-                return;
+                return new PsResult(false, "Cannot wake up localhost.");
             }
 
             if (!Regex.IsMatch(macAddress, "^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"))
             {
-                throw new ArgumentException("Invalid MAC address format.");
+                // throw new ArgumentException("Invalid MAC address format.");
+                return new PsResult(false, "Invalid MAC address format. Contact the administrator.");
             }
 
             byte[] macBytes = new byte[6];
@@ -50,22 +51,25 @@ public class PowerShellScripts
             {
                 client.Connect(IPAddress.Broadcast, 9);
                 client.Send(magicPacket, magicPacket.Length);
+                // Console.WriteLine("Wake-on-LAN packet sent successfully.");
+                return new PsResult(true, "Wake-on-LAN packet sent successfully.");
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error sending Wake-on-LAN packet: {ex.Message}");
+            return new PsResult(false, "Error sending Wake-on-LAN packet: " + ex.Message);
         }
     }
 
-    public void Disconnect(string address)
+    public PsResult Disconnect(string address)
     {
         if (address == "127.0.0.1" || address == "::1")
         {
             Console.WriteLine("Cannot disconnect localhost.");
-            return;
+            return new PsResult(false,"Cannot disconnect localhost.");
         }
-
+        
         command = $"Stop-Computer -ComputerName {address} -Force";
 
         WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
@@ -81,21 +85,23 @@ public class PowerShellScripts
                     ps.AddScript(command);
                     ps.Invoke();
                     Console.WriteLine("Computer disconnected successfully.");
+                    return new PsResult(true, "Computer disconnected successfully.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"Error disconnecting computer: {e.Message}");
+                    return new PsResult(false, "Error disconnecting computer: " + e.Message);
                 }
             }
         }
     }
 
-    public void Reboot(string address)
+    public PsResult Reboot(string address)
     {
         if (address == "127.0.0.1" || address == "::1")
         {
             Console.WriteLine("Cannot reboot localhost.");
-            return;
+            return new PsResult(false, "Cannot reboot localhost.");
         }
 
         command = $"Restart-Computer -ComputerName {address} -Force";
@@ -112,10 +118,12 @@ public class PowerShellScripts
                     ps.AddScript(command);
                     ps.Invoke();
                     Console.WriteLine("Computer rebooted successfully.");
+                    return new PsResult(true, "Computer rebooted successfully.");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"Error rebooting computer: {e.Message}");
+                    return new PsResult(false, "Error rebooting computer: " + e.Message);
                 }
             }
         }
@@ -131,11 +139,10 @@ public class PowerShellScripts
         string command = $"Get-WmiObject Win32_NetworkAdapterConfiguration -ComputerName {address} |" +
                          $" Where-Object -FilterScript {{$_.IPEnabled -eq \"true\" -and $_.IPAddress -contains '{address}' }} |" +
                          $" Select-Object -ExpandProperty MacAddress";
-
-        WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
-
         try
         {
+            WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
+
             using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
             {
                 runspace.Open();
@@ -181,8 +188,35 @@ public class PowerShellScripts
     public WSManConnectionInfo GetConnectionInfo(string address)
     {
         return new WSManConnectionInfo(
-            new Uri($"http://{address}:5985/wsman"),
-            "http://schemas.microsoft.com/powershell/Microsoft.PowerShell",
+            new Uri($"https://{address}:5986/wsman"),
+            "https://schemas.microsoft.com/powershell/Microsoft.PowerShell",
             new PSCredential(username, ToSecureString(password)));
+    }
+}
+
+public class PsResult
+{
+    private Boolean Result { get; set; }
+    private string Message { get; set; }
+    
+    public PsResult(Boolean result, string message)
+    {
+        Result = result;
+        Message = message;
+    }
+    
+    public Boolean Success()
+    {
+        return Result;
+    }
+    
+    public string SuccessToString()
+    {
+        return Result ? "Success" : "Error";
+    }
+    
+    public string getMessage()
+    {
+        return Message;
     }
 }

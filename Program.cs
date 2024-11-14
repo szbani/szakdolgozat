@@ -9,13 +9,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 WebSocketBase._filesPath = config.GetValue<string>("FilesPath");
-string ip = config.GetValue<string>("ServerUrl");
+int port = config.GetValue<int>("ServerPort");
+var certPath = config.GetValue<string>("Certificate:Path");
+var certPassword = config.GetValue<string>("Certificate:Password");
 
-builder.WebHost.UseUrls(ip);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IRegisteredDisplaysServices, RegisteredDisplaysServices>();
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(port, listenOptions =>
+    // options.ListenLocalhost(port, listenOptions =>
+    {
+        listenOptions.UseHttps(certPath, certPassword);
+    });
+});
 
 builder.Services.AddCors(options =>
 {
@@ -24,7 +34,8 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(config.GetValue<string>("WebUiUrl"))
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials();
+            .AllowCredentials()
+            .SetIsOriginAllowed((host) => true);
     });
 });
 
@@ -53,7 +64,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.LoginPath = "/api/Auth/Login";
 });
@@ -76,5 +87,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseHttpsRedirection();
 
 app.Run();
