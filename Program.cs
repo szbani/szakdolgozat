@@ -8,7 +8,7 @@ using szakdolgozat.Interface;
 var builder = WebApplication.CreateBuilder(args);
 
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-WebSocketBase._filesPath = config.GetValue<string>("FilesPath");
+WebSocketBase._filesPath = config.GetValue<string>("WebServer:FilesPath");
 int port = config.GetValue<int>("ServerPort");
 var certPath = config.GetValue<string>("Certificate:Path");
 var certPassword = config.GetValue<string>("Certificate:Password");
@@ -31,11 +31,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins(config.GetValue<string>("WebUiUrl"))
+        policy.WithOrigins(config.GetValue<string>("WebServer:WebUiUrl"))
             .AllowAnyMethod()
             .AllowAnyHeader()
-            .AllowCredentials()
-            .SetIsOriginAllowed((host) => true);
+            .AllowCredentials();
     });
 });
 
@@ -64,7 +63,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     options.Cookie.SameSite = SameSiteMode.Lax;
     options.LoginPath = "/api/Auth/Login";
 });

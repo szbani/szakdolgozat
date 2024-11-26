@@ -27,8 +27,9 @@ public class WebSocketBase
         using (var scope = _serviceProvider.CreateScope())
         {
             var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
-            ConnectedUsers.RegisteredDisplays = scopedService.GetRegisteredDisplays();
+            ConnectedUsers.RegisteredDisplays =  scopedService.GetRegisteredDisplays();
         }
+
         _next = next;
     }
 
@@ -46,7 +47,7 @@ public class WebSocketBase
                 // Console.WriteLine("tried:2");
                 if (context.WebSockets.IsWebSocketRequest)
                 {
-                    Console.WriteLine("tried:3");
+                    // Console.WriteLine("tried:3");
                     var webSocket = await context.WebSockets.AcceptWebSocketAsync();
                     SocketConnection socket =
                         new SocketConnection(webSocket, context.Connection.RemoteIpAddress.ToString());
@@ -72,14 +73,14 @@ public class WebSocketBase
             if (context.WebSockets.IsWebSocketRequest)
             {
                 var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                Console.WriteLine(context.Connection.RemoteIpAddress.ToString());
+                Console.WriteLine(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
                 SocketConnection socket =
-                    new SocketConnection(webSocket, context.Connection.RemoteIpAddress.ToString(),
-                        _psScripts.GetMacAddress(context.Connection.RemoteIpAddress.ToString()));
+                    new SocketConnection(webSocket, context.Connection.RemoteIpAddress.MapToIPv4().ToString(),
+                        _psScripts.GetMacAddress(context.Connection.RemoteIpAddress.MapToIPv4().ToString()).getMessage());
 
                 var userName = context.Request.Query["user"].ToString();
                 ConnectedUsers.clients.TryAdd(userName, socket);
-                Console.WriteLine("Connected: " + userName);
+                Console.WriteLine("Connected Client: " + userName);
                 BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
 
                 await Echo(webSocket, context, userName);
@@ -149,13 +150,13 @@ public class WebSocketBase
             {
                 case "getFilesForUser":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    Console.WriteLine(_targetUser);
+                    // Console.WriteLine(_targetUser);
                     var files = Directory.GetFiles(_filesPath + _targetUser + "/");
                     // Console.WriteLine(_filesPath + _targetUser + "/");
                     var fileList = new List<string>();
                     foreach (var file in files)
                     {
-                        Console.WriteLine(Path.GetFileName(file));
+                        // Console.WriteLine(Path.GetFileName(file));
                         if (file.Contains("config.json"))
                         {
                             continue;
@@ -166,7 +167,7 @@ public class WebSocketBase
 
                     return JsonSerializer.Serialize(new { type = "filesForUser", content = fileList });
                 case "getConnectedUsers":
-                    Console.WriteLine("getConnectedUsers");
+                    // Console.WriteLine("getConnectedUsers");
                     return ConnectedUsers.sendConnectedUsers();
                 // case "sendToUser":
                 //     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
@@ -195,11 +196,11 @@ public class WebSocketBase
                         await targetSocket.webSocket.SendAsync(new ArraySegment<byte>(serverReply),
                             WebSocketMessageType.Text,
                             true, CancellationToken.None);
-                        return createJsonContent("Success", "messageSent");
+                        return createJsonContent("Success", "Screen update sent.");
                     }
                     else
                     {
-                        return createJsonContent("error", "User not found");
+                        return createJsonContent("Error", "User not found");
                     }
                 case "startingFileStream":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
@@ -244,6 +245,7 @@ public class WebSocketBase
                         {
                             ConnectedUsers.clients.TryRemove(_targetUser, out _);
                         }
+
                         return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                     }
 
@@ -252,11 +254,12 @@ public class WebSocketBase
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
-                        PsResult psResult =_psScripts.Reboot(targetSocket.ipAddress);
+                        PsResult psResult = _psScripts.Reboot(targetSocket.ipAddress);
                         if (psResult.Success())
                         {
                             ConnectedUsers.clients.TryRemove(_targetUser, out _);
                         }
+
                         return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                     }
 
@@ -270,30 +273,36 @@ public class WebSocketBase
                         PsResult psResult = _psScripts.WakeOnLan(result.macAddress);
                         return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                     }
+
                     return createJsonContent("Error", "Display not registered");
                 }
                 case "RegisterDisplay":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
-                        var display = new DisplayModel
+                        var psResult = _psScripts.GetMacAddress(targetSocket.ipAddress);
+                        if (psResult.Success())
                         {
-                            DisplayName = _targetUser,
-                            DisplayDescription = json.RootElement.GetProperty("displayDescription").GetString(),
-                            macAddress = _psScripts.GetMacAddress(targetSocket.ipAddress),
-                        };
-                        if (display.macAddress == null)
-                        {
-                            return createJsonContent("Error", "Cant get mac address");
+                            var display = new DisplayModel
+                            {
+                                DisplayName = _targetUser,
+                                DisplayDescription = json.RootElement.GetProperty("displayDescription").GetString(),
+                                macAddress = psResult.getMessage(),
+                            };
+                            using (var scope = _serviceProvider.CreateScope())
+                            {
+                                var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
+                                scopedService.RegisterDisplay(display);
+                                ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
+                            }
+
+                            BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+                            return createJsonContent("Success", "Display registered");
                         }
-                        using (var scope = _serviceProvider.CreateScope())
+                        else
                         {
-                            var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
-                            scopedService.RegisterDisplay(display);
-                            ConnectedUsers.RegisteredDisplays = scopedService.GetRegisteredDisplays();
+                            return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
                         }
-                        BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-                        return createJsonContent("Success", "Display registered");
                     }
 
                     return createJsonContent("Error", "User not found");
@@ -308,7 +317,7 @@ public class WebSocketBase
                             .FirstOrDefault(x => x.DisplayName == _targetUser).Id);
                         if (result == 1)
                         {
-                            ConnectedUsers.RegisteredDisplays = scopedService.GetRegisteredDisplays();
+                            ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
                             BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
                             return createJsonContent("Success", "Display removed");
                         }
@@ -316,22 +325,69 @@ public class WebSocketBase
 
                     return createJsonContent("Error", "Display not found");
                 case "ModifyRegisteredDisplay":
-                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     using (var scope = _serviceProvider.CreateScope())
                     {
                         var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
-                        var display = new DisplayModel
+                        var macAddress = json.RootElement.GetProperty("macAddress").GetString();
+                        DisplayModel display;
+
+                        display = new DisplayModel
                         {
-                            DisplayName = _targetUser,
-                            DisplayDescription = json.RootElement.GetProperty("displayDescription").GetString(),
-                            macAddress = json.RootElement.GetProperty("macAddress").GetString(),
+                            Id = json.RootElement.GetProperty("id").GetInt32(),
+                            DisplayName = json.RootElement.GetProperty("nickName").GetString(),
+                            DisplayDescription = json.RootElement.GetProperty("description").GetString(),
+                            macAddress = macAddress,
                         };
-                        var result = scopedService.ModifyRegisteredDisplay(display);
-                        if (result == 0)
+
+                        var result = await scopedService.ModifyRegisteredDisplay(display);
+                        Console.WriteLine(result);
+                        if (result == 1)
+                        {
+                            ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
+                            BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
                             return createJsonContent("Success", "Display modified");
+                        }
                     }
 
                     return createJsonContent("Error", "Display not found");
+                case "ModifyShowcaseConfiguration":
+                {
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    // Console.WriteLine(_targetUser);
+                    var result = ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket);
+                    if (result != null)
+                    {
+                        string mediaType2 = json.RootElement.GetProperty("mediaType").GetString();
+                        string transitionStyle = json.RootElement.GetProperty("transitionStyle").GetString();
+                        int transitionDuration = json.RootElement.GetProperty("transitionDuration").GetInt32();
+                        string imageFit = json.RootElement.GetProperty("imageFit").GetString();
+                        int imageInterval = json.RootElement.GetProperty("imageInterval").GetInt32();
+
+                        string config2 = JsonSerializer.Serialize(new
+                        {
+                            mediaType = mediaType2,
+                            transitionStyle = transitionStyle,
+                            transitionDuration = transitionDuration,
+                            imageFit = imageFit,
+                            imageInterval = imageInterval
+                        });
+                        FileStream fileStream2 = new FileStream(_filesPath + "/" + _targetUser + "/config.json",
+                            FileMode.Create, FileAccess.Write);
+                        await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config2));
+
+                        // fileStream.FlushAsync();
+                        fileStream2.Close();
+                        fileStream2.Dispose();
+
+                        targetSocket.webSocket.SendAsync(
+                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
+                            WebSocketMessageType.Text, true, CancellationToken.None);
+
+                        return createJsonContent("ConfigUpdated", "Configuration updated");
+                    }
+
+                    return createJsonContent("Error", "Display not registered");
+                }
                 default:
                     Console.WriteLine($"Unknown message type: {messageType}");
                     return createJsonContent("Error", "Unknown message type");

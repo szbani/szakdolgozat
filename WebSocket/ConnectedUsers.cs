@@ -38,21 +38,30 @@ public class ConnectedUsers
     private static string GetRegisteredDisplayStatuses()
     {
         var onlineDisplays = clients
-            .Where(client => RegisteredDisplays.Any(display => display.macAddress == client.Value.macAddress))
             .Select(client => new
             {
-                ClientName = client.Key,
-                NickName = RegisteredDisplays
-                    .FirstOrDefault(display => display.macAddress == client.Value.macAddress)?.DisplayName,
-                Status = 0 //online
+                Client = client,
+                Display = RegisteredDisplays
+                    .FirstOrDefault(display => display.macAddress == client.Value.macAddress)
+            })
+            .Where(x => x.Display != null)
+            .Select(x => new
+            {
+                Id = x.Display.Id,
+                ClientName = x.Client.Key,
+                NickName = x.Display.DisplayName,
+                Description = x.Display.DisplayDescription,
+                Status = 0 // online
             });
 
         var offlineDisplays = RegisteredDisplays
             .Where(display => !clients.Values.Any(client => client.macAddress == display.macAddress))
             .Select(display => new
             {
+                Id = display.Id,
                 ClientName = (string)null,
                 NickName = display.DisplayName,
+                Description = display.DisplayDescription,
                 Status = 1 //offline
             });
 

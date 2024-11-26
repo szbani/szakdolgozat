@@ -9,9 +9,17 @@ namespace szakdolgozat.Controllers;
 
 public class PowerShellScripts
 {
-    private string username = "KioskAdmin";
-    private string password = "k105k5Tr0ngpA55w0rd";
+    private string username;
+    private string password;
+    // private string username = "KioskAdmin";
+    // private string password = "k105k5Tr0ngpA55w0rd";
     private string command;
+    public PowerShellScripts()
+    {
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        username = config.GetValue<string>("PowerShell:Username");
+        password = config.GetValue<string>("PowerShell:Password");
+    }
 
     public PsResult WakeOnLan(string macAddress)
     {
@@ -74,25 +82,32 @@ public class PowerShellScripts
 
         WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
 
-        using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
+        try
         {
-            runspace.Open();
-            using (PowerShell ps = PowerShell.Create())
+            using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
             {
-                try
+                runspace.Open();
+                using (PowerShell ps = PowerShell.Create())
                 {
-                    ps.Runspace = runspace;
-                    ps.AddScript(command);
-                    ps.Invoke();
-                    Console.WriteLine("Computer disconnected successfully.");
-                    return new PsResult(true, "Computer disconnected successfully.");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error disconnecting computer: {e.Message}");
-                    return new PsResult(false, "Error disconnecting computer: " + e.Message);
+                    try
+                    {
+                        ps.Runspace = runspace;
+                        ps.AddScript(command);
+                        ps.Invoke();
+                        Console.WriteLine("Computer disconnected successfully.");
+                        return new PsResult(true, "Computer disconnected successfully.");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error disconnecting computer: {e.Message}");
+                        return new PsResult(false, "Error disconnecting computer: " + e.Message);
+                    }
                 }
             }
+        }
+        catch (Exception e)
+        {
+            return new PsResult(false, "Error Connecting to computer via powershell: " + e.Message);
         }
     }
 
@@ -107,33 +122,40 @@ public class PowerShellScripts
         command = $"Restart-Computer -ComputerName {address} -Force";
         WSManConnectionInfo connectionInfo = GetConnectionInfo(address);
 
-        using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
+        try
         {
-            runspace.Open();
-            using (PowerShell ps = PowerShell.Create())
+            using (Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo))
             {
-                try
+                runspace.Open();
+                using (PowerShell ps = PowerShell.Create())
                 {
-                    ps.Runspace = runspace;
-                    ps.AddScript(command);
-                    ps.Invoke();
-                    Console.WriteLine("Computer rebooted successfully.");
-                    return new PsResult(true, "Computer rebooted successfully.");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error rebooting computer: {e.Message}");
-                    return new PsResult(false, "Error rebooting computer: " + e.Message);
+                    try
+                    {
+                        ps.Runspace = runspace;
+                        ps.AddScript(command);
+                        ps.Invoke();
+                        Console.WriteLine("Computer rebooted successfully.");
+                        return new PsResult(true, "Computer rebooted successfully.");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error rebooting computer: {e.Message}");
+                        return new PsResult(false, "Error rebooting computer: " + e.Message);
+                    }
                 }
             }
         }
+        catch (Exception e)
+        {
+            return new PsResult(false, "Error Connecting to computer via powershell: " + e.Message);
+        }
     }
 
-    public string GetMacAddress(string address)
+    public PsResult GetMacAddress(string address)
     {
         if (address == "127.0.0.1" || address == "::1")
         {
-            return "00:00:00:00:00:00";
+            return new PsResult(true,"00:00:00:00:00:00");
         }
 
         string command = $"Get-WmiObject Win32_NetworkAdapterConfiguration -ComputerName {address} |" +
@@ -161,16 +183,14 @@ public class PowerShellScripts
                     }
                     else
                     {
-                        return macAddress[0].ToString();
+                        return new PsResult(true, macAddress[0].ToString()) ;
                     }
                 }
             }
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error getting MAC address: {e.Message}");
-            // You can return a specific value or continue with a fallback
-            return null; // Or any default fallback value
+            return new PsResult(false, "Error Connecting to computer via powershell: " + e.Message);
         }
     }
 
@@ -184,12 +204,32 @@ public class PowerShellScripts
 
         return securePassword;
     }
-
+     
+    //if https is needed
+    // private WSManConnectionInfo GetConnectionInfo(string address)
+    // {
+    //     // Specify the URI for the remote connection
+    //     Uri connectionUri = new Uri($"https://{address}:5986/wsman");
+    //
+    //     // Configure WSMan connection info for HTTPS
+    //     WSManConnectionInfo connectionInfo = new WSManConnectionInfo(connectionUri)
+    //     {
+    //         SkipCACheck = true, // Skip certificate authority check (useful for self-signed certs)
+    //         SkipCNCheck = true, // Skip common name (CN) check (useful for mismatched cert names)
+    //         AuthenticationMechanism = AuthenticationMechanism.Default // Or specify another mechanism like Basic or Negotiate
+    //     };
+    //
+    //     // Provide credentials (replace with appropriate logic for your application)
+    //     connectionInfo.Credential = new PSCredential(username, ToSecureString(password));
+    //
+    //     return connectionInfo;
+    // }
+    
     public WSManConnectionInfo GetConnectionInfo(string address)
     {
         return new WSManConnectionInfo(
-            new Uri($"https://{address}:5986/wsman"),
-            "https://schemas.microsoft.com/powershell/Microsoft.PowerShell",
+            new Uri($"http://{address}:5985/wsman"),
+            "http://schemas.microsoft.com/powershell/Microsoft.PowerShell",
             new PSCredential(username, ToSecureString(password)));
     }
 }

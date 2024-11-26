@@ -5,7 +5,8 @@ namespace szakdolgozat.Interface;
 public interface IRegisteredDisplaysServices
 {
     int RegisterDisplay(DisplayModel dto);
+    Task<DisplayModel[]> GetRegisteredDisplaysAsync();
     DisplayModel[] GetRegisteredDisplays();
-    int ModifyRegisteredDisplay(DisplayModel dto);
+    Task<int> ModifyRegisteredDisplay(DisplayModel dto);
     int RemoveRegisteredDisplay(int id);
 }
