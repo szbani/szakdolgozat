@@ -27,7 +27,7 @@ public class ConnectedUsers
             .Where(client => !RegisteredDisplays.Any(display => display.macAddress == client.Value.macAddress))
             .Select(client => new
             {
-                ClientName = client.Key,
+                KioskName = client.Key,
                 MacAddress = client.Value.macAddress,
                 Status = 0 //online
             });
@@ -48,7 +48,7 @@ public class ConnectedUsers
             .Select(x => new
             {
                 Id = x.Display.Id,
-                ClientName = x.Client.Key,
+                KioskName = x.Client.Key,
                 NickName = x.Display.DisplayName,
                 Description = x.Display.DisplayDescription,
                 Status = 0 // online
@@ -59,7 +59,7 @@ public class ConnectedUsers
             .Select(display => new
             {
                 Id = display.Id,
-                ClientName = (string)null,
+                KioskName = display.KioskName,
                 NickName = display.DisplayName,
                 Description = display.DisplayDescription,
                 Status = 1 //offline

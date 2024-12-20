@@ -46,7 +46,6 @@ public class RegisteredDisplaysServices : IRegisteredDisplaysServices
 
         return await _context.SaveChangesAsync();
     }
-
     
     public int RemoveRegisteredDisplay(int id)
     {

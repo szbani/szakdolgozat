@@ -229,6 +229,11 @@ namespace szakdolgozat.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("KioskName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("macAddress")
                         .IsRequired()
                         .HasMaxLength(17)

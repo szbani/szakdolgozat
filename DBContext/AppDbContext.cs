@@ -18,6 +18,10 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        // builder.Entity<IdentityUser>(b =>
+        // {az
+        //     b.HasIndex( e => e.NormalizedUserName).HasDatabaseName("UserNameIndex").IsUnique();
+        // });
         builder.Entity<DisplayModel>(b =>
         {
             b.HasKey(e => e.Id);
@@ -25,6 +29,7 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
             b.Property(e => e.DisplayName).HasMaxLength(256);
             b.Property(e => e.DisplayDescription).HasMaxLength(256);
             b.Property(e => e.macAddress).IsRequired().HasMaxLength(17);
+            b.Property(e => e.KioskName).IsRequired().HasMaxLength(256);
         });
     }
 }

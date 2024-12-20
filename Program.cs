@@ -1,4 +1,3 @@
-using System.Net.WebSockets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using szakdolgozat.Controllers;
@@ -17,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IRegisteredDisplaysServices, RegisteredDisplaysServices>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.WebHost.ConfigureKestrel(options =>
 {

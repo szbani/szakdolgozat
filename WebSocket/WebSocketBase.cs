@@ -15,6 +15,7 @@ public class WebSocketBase
     private FileStream _currentFileStream;
     private PowerShellScripts _psScripts;
     private IServiceProvider _serviceProvider;
+    private string _adminName;
 
     private readonly RequestDelegate _next;
     // private readonly UserManager<IdentityUser> _userManager;
@@ -27,7 +28,7 @@ public class WebSocketBase
         using (var scope = _serviceProvider.CreateScope())
         {
             var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
-            ConnectedUsers.RegisteredDisplays =  scopedService.GetRegisteredDisplays();
+            ConnectedUsers.RegisteredDisplays = scopedService.GetRegisteredDisplays();
         }
 
         _next = next;
@@ -35,25 +36,68 @@ public class WebSocketBase
 
     public async Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path == "/ws")
+        string userName = "";
+        WebSocket webSocket;
+        try
         {
-            // Console.WriteLine("tried:1");
-            var auth = context.RequestServices.GetRequiredService<AuthService>();
-
-            var userName = auth.ValidateCookie(context).Result;
-
-            if (userName != null)
+            if (context.Request.Path == "/ws")
             {
-                // Console.WriteLine("tried:2");
+                // Console.WriteLine("tried:1");
+                var auth = context.RequestServices.GetRequiredService<AuthService>();
+
+                userName = auth.ValidateCookie(context).Result;
+                
+                if (userName != null)
+                {
+                    // Console.WriteLine("tried:2");
+                    if (context.WebSockets.IsWebSocketRequest)
+                    {
+                        // Console.WriteLine("tried:3");
+                        webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                        SocketConnection socket =
+                            new SocketConnection(webSocket, context.Connection.RemoteIpAddress.ToString());
+
+                        ConnectedUsers.admins.TryAdd(userName, socket);
+                        Console.WriteLine("Connected: " + userName);
+                        BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+                        using (var scope = _serviceProvider.CreateScope())
+                        {
+                            var scopedService = scope.ServiceProvider.GetRequiredService<IAccountService>();
+                            var users = await scopedService.GetUsersAsync();
+                            var user = users.FirstOrDefault(x => x.UserName == userName);
+                            _adminName = userName;
+                            // Console.WriteLine(users);
+                            // Console.WriteLine(users.ToString());
+                            BroadcastMessageToAdmin(userName, createJsonContent("ConnectionAccepted", JsonSerializer.Serialize(user)));
+                            BroadcastMessageToAdmin(userName, createJsonContent("AdminList", JsonSerializer.Serialize(users)));
+                        }
+
+                        await Echo(webSocket, context, userName);
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 400;
+                    }
+                }
+                else
+                {
+                    context.Response.StatusCode = 401;
+                }
+            }
+            else if (context.Request.Path == "/showcase")
+            {
                 if (context.WebSockets.IsWebSocketRequest)
                 {
-                    // Console.WriteLine("tried:3");
-                    var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                    webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                    Console.WriteLine(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
                     SocketConnection socket =
-                        new SocketConnection(webSocket, context.Connection.RemoteIpAddress.ToString());
+                        new SocketConnection(webSocket, context.Connection.RemoteIpAddress.MapToIPv4().ToString(),
+                            _psScripts.GetMacAddress(context.Connection.RemoteIpAddress.MapToIPv4().ToString())
+                                .getMessage());
 
-                    ConnectedUsers.admins.TryAdd(userName, socket);
-                    Console.WriteLine("Connected: " + userName);
+                    userName = context.Request.Query["user"].ToString();
+                    ConnectedUsers.clients.TryAdd(userName, socket);
+                    Console.WriteLine("Connected Client: " + userName);
                     BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
 
                     await Echo(webSocket, context, userName);
@@ -65,40 +109,26 @@ public class WebSocketBase
             }
             else
             {
-                context.Response.StatusCode = 401;
+                await _next(context);
             }
         }
-        else if (context.Request.Path == "/showcase")
+        catch (Exception e)
         {
-            if (context.WebSockets.IsWebSocketRequest)
-            {
-                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                Console.WriteLine(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
-                SocketConnection socket =
-                    new SocketConnection(webSocket, context.Connection.RemoteIpAddress.MapToIPv4().ToString(),
-                        _psScripts.GetMacAddress(context.Connection.RemoteIpAddress.MapToIPv4().ToString()).getMessage());
-
-                var userName = context.Request.Query["user"].ToString();
-                ConnectedUsers.clients.TryAdd(userName, socket);
-                Console.WriteLine("Connected Client: " + userName);
-                BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-
-                await Echo(webSocket, context, userName);
-            }
-            else
-            {
-                context.Response.StatusCode = 400;
-            }
-        }
-        else
-        {
-            await _next(context);
+            Console.WriteLine("Closing connection");
+            ConnectedUsers.clients.TryRemove(userName, out _);
+            ConnectedUsers.admins.TryRemove(userName, out _);
+            BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
         }
     }
 
     public async Task Echo(WebSocket webSocket, HttpContext context, string username = "")
     {
         var buffer = new byte[1024 * 256];
+        Console.WriteLine("----------------- Echo ---------------");
+        Console.WriteLine("AdminCount: " + ConnectedUsers.admins.Count);
+        Console.WriteLine("ClientCount: " + ConnectedUsers.clients.Count);
+        Console.WriteLine("Username: " + username);
+        Console.WriteLine("----------------- End ----------------");
 
         do
         {
@@ -109,8 +139,7 @@ public class WebSocketBase
                 var message = Encoding.UTF8.GetString(buffer, 0, _receiveResult.Count);
                 Console.WriteLine(message);
                 var response = await ProcessMessage(message);
-
-
+                
                 var serverReply = Encoding.UTF8.GetBytes(response);
                 await webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text, true,
                     CancellationToken.None);
@@ -149,44 +178,33 @@ public class WebSocketBase
             switch (messageType)
             {
                 case "getFilesForUser":
-                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    // Console.WriteLine(_targetUser);
-                    var files = Directory.GetFiles(_filesPath + _targetUser + "/");
-                    // Console.WriteLine(_filesPath + _targetUser + "/");
-                    var fileList = new List<string>();
-                    foreach (var file in files)
+                    try
                     {
-                        // Console.WriteLine(Path.GetFileName(file));
-                        if (file.Contains("config.json"))
+                        _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                        // Console.WriteLine(_targetUser);
+                        var files = Directory.GetFiles(_filesPath + _targetUser + "/");
+                        // Console.WriteLine(_filesPath + _targetUser + "/");
+                        var fileList = new List<string>();
+                        foreach (var file in files)
                         {
-                            continue;
+                            // Console.WriteLine(Path.GetFileName(file));
+                            if (file.Contains("config.json"))
+                            {
+                                continue;
+                            }
+
+                            fileList.Add(Path.GetFileName(file));
                         }
 
-                        fileList.Add(Path.GetFileName(file));
+                        return JsonSerializer.Serialize(new { type = "filesForUser", content = fileList });
+                    }catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        return createJsonContent("Information", "No media is currently playing");
                     }
-
-                    return JsonSerializer.Serialize(new { type = "filesForUser", content = fileList });
                 case "getConnectedUsers":
                     // Console.WriteLine("getConnectedUsers");
                     return ConnectedUsers.sendConnectedUsers();
-                // case "sendToUser":
-                //     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                //     content = json.RootElement.GetProperty("content").GetString();
-                //
-                //     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
-                //     {
-                //         var reply = "{\"type\": \"messageFromUser\", \"content\": \"" + content + "\"}";
-                //         var serverReply = Encoding.UTF8.GetBytes(reply);
-                //         await targetSocket.webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text,
-                //             true, CancellationToken.None);
-                //         // return "{\"type\": \"messageFromUser\", \"content\": \" messageSent\"}";
-                //         return createJsonContent("Success", "messageSent");
-                //     }
-                //     else
-                //     {
-                //         // return "{\"type\": \"error\", \"content\": \"User not found\"}";
-                //         return createJsonContent("error", "User not found");
-                //     }
                 case "sendUpdateRequestToUser":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
@@ -288,10 +306,12 @@ public class WebSocketBase
                                 DisplayName = _targetUser,
                                 DisplayDescription = json.RootElement.GetProperty("displayDescription").GetString(),
                                 macAddress = psResult.getMessage(),
+                                KioskName = _targetUser
                             };
                             using (var scope = _serviceProvider.CreateScope())
                             {
-                                var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
+                                var scopedService =
+                                    scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
                                 scopedService.RegisterDisplay(display);
                                 ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
                             }
@@ -388,6 +408,74 @@ public class WebSocketBase
 
                     return createJsonContent("Error", "Display not registered");
                 }
+                case "getAdminList":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IAccountService>();
+                        var users = await scopedService.GetUsersAsync();
+                        // Console.WriteLine(users);
+                        // Console.WriteLine(users.ToString());
+
+                        return createJsonContent("AdminList", JsonSerializer.Serialize(users));
+                    }
+                }
+                case "UpdateAdmin":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IAccountService>();
+                        var username = json.RootElement.GetProperty("username").GetString();
+                        var email = json.RootElement.GetProperty("email").GetString();
+                        var password = json.RootElement.GetProperty("password").GetString();
+                        var id = json.RootElement.GetProperty("id").GetString();
+
+                        if (id.Length < 20)
+                        {
+                            id = "";
+                        }
+
+                        var result = scopedService.UpdateUser(id, username, email, password);
+                        if (result == AccountErrors.Success)
+                        {
+                            Console.WriteLine("Admin updated");
+                            BroadcastMessageToAdmins(createJsonContent("AdminList",
+                                JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
+                            return createJsonContent("Success", "Admin created");
+                        }
+
+                        if (AccountErrors.GetErrorMessage(result) != null)
+                        {
+                            Console.WriteLine("Admin not updated");
+                            BroadcastMessageToAdmin(_adminName,createJsonContent("AdminList",
+                                JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
+                            return createJsonContent("Error", AccountErrors.GetErrorMessage(result));
+                        }
+                    }
+
+                    return createJsonContent("Error", "Something went Wrong");
+                }
+                case "DeleteAdmin":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IAccountService>();
+                        var id = json.RootElement.GetProperty("id").GetString();
+                        var result = scopedService.RemoveUser(id);
+                        if (result == 1)
+                        {
+                            return createJsonContent("Success", "Admin removed");
+                        }
+                    }
+
+                    return createJsonContent("Error", "Admin not found");
+                }
+                case "Logout":
+                {
+                    ConnectedUsers.admins.TryRemove(_adminName, out _);
+                    BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+                    return createJsonContent("Logout", "Logged out");
+                }
                 default:
                     Console.WriteLine($"Unknown message type: {messageType}");
                     return createJsonContent("Error", "Unknown message type");
@@ -402,6 +490,13 @@ public class WebSocketBase
         }
     }
 
+    public void BroadcastMessageToAdmin(string adminName, string message)
+    {
+        var serverReply = Encoding.UTF8.GetBytes(message);
+        ConnectedUsers.admins[adminName].webSocket.SendAsync(new ArraySegment<byte>(serverReply),
+            WebSocketMessageType.Text, true, CancellationToken.None);
+    }
+    
     public void BroadcastMessageToAdmins(string message)
     {
         var serverReply = Encoding.UTF8.GetBytes(message);
