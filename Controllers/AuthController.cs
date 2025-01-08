@@ -28,6 +28,7 @@ public class AuthController : ControllerBase
             return BadRequest("Invalid username or password");
         }
         
+        
         var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
         if (result.Succeeded)
         {

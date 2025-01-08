@@ -46,7 +46,7 @@ public class WebSocketBase
                 var auth = context.RequestServices.GetRequiredService<AuthService>();
 
                 userName = auth.ValidateCookie(context).Result;
-                
+
                 if (userName != null)
                 {
                     // Console.WriteLine("tried:2");
@@ -68,8 +68,10 @@ public class WebSocketBase
                             _adminName = userName;
                             // Console.WriteLine(users);
                             // Console.WriteLine(users.ToString());
-                            BroadcastMessageToAdmin(userName, createJsonContent("ConnectionAccepted", JsonSerializer.Serialize(user)));
-                            BroadcastMessageToAdmin(userName, createJsonContent("AdminList", JsonSerializer.Serialize(users)));
+                            BroadcastMessageToAdmin(userName,
+                                createJsonContent("ConnectionAccepted", JsonSerializer.Serialize(user)));
+                            BroadcastMessageToAdmin(userName,
+                                createJsonContent("AdminList", JsonSerializer.Serialize(users)));
                         }
 
                         await Echo(webSocket, context, userName);
@@ -139,7 +141,7 @@ public class WebSocketBase
                 var message = Encoding.UTF8.GetString(buffer, 0, _receiveResult.Count);
                 Console.WriteLine(message);
                 var response = await ProcessMessage(message);
-                
+
                 var serverReply = Encoding.UTF8.GetBytes(response);
                 await webSocket.SendAsync(new ArraySegment<byte>(serverReply), WebSocketMessageType.Text, true,
                     CancellationToken.None);
@@ -197,7 +199,8 @@ public class WebSocketBase
                         }
 
                         return JsonSerializer.Serialize(new { type = "filesForUser", content = fileList });
-                    }catch (Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
                         return createJsonContent("Information", "No media is currently playing");
@@ -231,7 +234,14 @@ public class WebSocketBase
 
                     CreateDirectory(_filesPath + "/" + _targetUser + "/");
 
-                    string config = JsonSerializer.Serialize(new { mediaType = mediaType });
+                    string config = JsonSerializer.Serialize(new
+                    {
+                        mediaType = mediaType,
+                        transitionStyle = "slide",
+                        transitionDuration = 2,
+                        imageFit = "fill",
+                        imageInterval = 5
+                    });
 
                     FileStream fileStream = new FileStream(_filesPath + "/" + _targetUser + "/config.json",
                         FileMode.Create, FileAccess.Write);
@@ -373,6 +383,12 @@ public class WebSocketBase
                 case "ModifyShowcaseConfiguration":
                 {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    if (_targetUser == "")
+                    {
+                        return createJsonContent("Error", "No target user");
+                        break;
+                    }
+
                     // Console.WriteLine(_targetUser);
                     var result = ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket);
                     if (result != null)
@@ -391,6 +407,9 @@ public class WebSocketBase
                             imageFit = imageFit,
                             imageInterval = imageInterval
                         });
+
+                        CreateDirectory(_filesPath + "/" + _targetUser + "/");
+
                         FileStream fileStream2 = new FileStream(_filesPath + "/" + _targetUser + "/config.json",
                             FileMode.Create, FileAccess.Write);
                         await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config2));
@@ -398,10 +417,12 @@ public class WebSocketBase
                         // fileStream.FlushAsync();
                         fileStream2.Close();
                         fileStream2.Dispose();
-
-                        targetSocket.webSocket.SendAsync(
-                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
-                            WebSocketMessageType.Text, true, CancellationToken.None);
+                        if (result)
+                        {
+                            targetSocket.webSocket.SendAsync(
+                                new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
+                                WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
 
                         return createJsonContent("ConfigUpdated", "Configuration updated");
                     }
@@ -447,7 +468,7 @@ public class WebSocketBase
                         if (AccountErrors.GetErrorMessage(result) != null)
                         {
                             Console.WriteLine("Admin not updated");
-                            BroadcastMessageToAdmin(_adminName,createJsonContent("AdminList",
+                            BroadcastMessageToAdmin(_adminName, createJsonContent("AdminList",
                                 JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
                             return createJsonContent("Error", AccountErrors.GetErrorMessage(result));
                         }
@@ -476,6 +497,74 @@ public class WebSocketBase
                     BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
                     return createJsonContent("Logout", "Logged out");
                 }
+                case "getPlaylists":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IPlaylistsService>();
+                        var playlists = scopedService.GetPlaylists();
+                        return createJsonContent("Playlists", JsonSerializer.Serialize(playlists));
+                    }
+                }
+                case "getPlaylist":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IPlaylistsService>();
+                        var id = json.RootElement.GetProperty("id").GetInt32();
+                        var playlist = scopedService.GetPlaylist(id);
+                        return createJsonContent("Playlist", JsonSerializer.Serialize(playlist));
+                    }
+                }
+                case "AddPlaylist":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IPlaylistsService>();
+                        var playlist =
+                            JsonSerializer.Deserialize<PlaylistsModel>(json.RootElement.GetProperty("playlist")
+                                .GetString());
+                        var result = scopedService.AddPlaylist(playlist);
+                        if (result == 1)
+                        {
+                            return createJsonContent("Success", "Playlist added");
+                        }
+                    }
+
+                    return createJsonContent("Error", "Playlist not added");
+                }
+                case "ModifyPlaylist":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IPlaylistsService>();
+                        var playlist =
+                            JsonSerializer.Deserialize<PlaylistsModel>(json.RootElement.GetProperty("playlist")
+                                .GetString());
+                        var result = scopedService.ModifyPlaylist(playlist);
+                        if (result == 1)
+                        {
+                            return createJsonContent("Success", "Playlist modified");
+                        }
+                    }
+
+                    return createJsonContent("Error", "Playlist not modified");
+                }
+                case "RemovePlaylist":
+                {
+                    using (var scope = _serviceProvider.CreateScope())
+                    {
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IPlaylistsService>();
+                        var id = json.RootElement.GetProperty("id").GetInt32();
+                        var result = scopedService.RemovePlaylist(id);
+                        if (result == 1)
+                        {
+                            return createJsonContent("Success", "Playlist removed");
+                        }
+                    }
+
+                    return createJsonContent("Error", "Playlist not removed");
+                }
                 default:
                     Console.WriteLine($"Unknown message type: {messageType}");
                     return createJsonContent("Error", "Unknown message type");
@@ -496,7 +585,7 @@ public class WebSocketBase
         ConnectedUsers.admins[adminName].webSocket.SendAsync(new ArraySegment<byte>(serverReply),
             WebSocketMessageType.Text, true, CancellationToken.None);
     }
-    
+
     public void BroadcastMessageToAdmins(string message)
     {
         var serverReply = Encoding.UTF8.GetBytes(message);

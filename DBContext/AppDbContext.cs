@@ -9,6 +9,7 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
 {
 
     public DbSet<DisplayModel> displays { get; set; }
+    public DbSet<PlaylistsModel> playlists { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
@@ -22,6 +23,14 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
         // {az
         //     b.HasIndex( e => e.NormalizedUserName).HasDatabaseName("UserNameIndex").IsUnique();
         // });
+        builder.Entity<PlaylistsModel>(e =>
+        {
+            e.HasKey(e => e.Id);
+            e.ToTable("Playlists");
+            e.Property(e => e.PlaylistName).HasMaxLength(256).IsRequired();
+            e.Property(e => e.PlaylistDescription).HasMaxLength(256);
+            e.Property(e => e.PlaylistType).HasMaxLength(256).IsRequired();
+        });
         builder.Entity<DisplayModel>(b =>
         {
             b.HasKey(e => e.Id);
