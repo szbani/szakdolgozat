@@ -12,6 +12,7 @@ public class WebSocketBase
     private WebSocketReceiveResult _receiveResult;
     public static string _filesPath;
     private string _targetUser;
+    private bool _isPlaylist = false;
     private FileStream _currentFileStream;
     private PowerShellScripts _psScripts;
     private IServiceProvider _serviceProvider;
@@ -66,12 +67,18 @@ public class WebSocketBase
                             var users = await scopedService.GetUsersAsync();
                             var user = users.FirstOrDefault(x => x.UserName == userName);
                             _adminName = userName;
-                            // Console.WriteLine(users);
-                            // Console.WriteLine(users.ToString());
                             BroadcastMessageToAdmin(userName,
                                 createJsonContent("ConnectionAccepted", JsonSerializer.Serialize(user)));
                             BroadcastMessageToAdmin(userName,
                                 createJsonContent("AdminList", JsonSerializer.Serialize(users)));
+                        }
+
+                        using (var scope = _serviceProvider.CreateScope())
+                        {
+                            var scopedService = scope.ServiceProvider.GetRequiredService<IPlaylistsService>();
+                            BroadcastMessageToAdmin(userName,
+                                createJsonContent("Playlists", JsonSerializer.Serialize(scopedService.GetPlaylists())));
+                            
                         }
 
                         await Echo(webSocket, context, userName);
@@ -184,7 +191,7 @@ public class WebSocketBase
                     {
                         _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                         // Console.WriteLine(_targetUser);
-                        var files = Directory.GetFiles(_filesPath + _targetUser + "/");
+                        var files = Directory.GetFiles(GetDisplaysDierctory(_targetUser));
                         // Console.WriteLine(_filesPath + _targetUser + "/");
                         var fileList = new List<string>();
                         foreach (var file in files)
@@ -224,27 +231,52 @@ public class WebSocketBase
                         return createJsonContent("Error", "User not found");
                     }
                 case "startingFileStream":
+                {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    _isPlaylist = json.RootElement.GetProperty("isPlaylist").GetBoolean() || false;
                     bool deleteFiles = json.RootElement.GetProperty("deleteFiles").GetBoolean() || false;
                     string mediaType = json.RootElement.GetProperty("mediaType").GetString();
-                    if (deleteFiles)
+                    FileStream fileStream;
+
+                    string config;
+                    if (_isPlaylist)
                     {
-                        DeleteFiles(_filesPath + "/" + _targetUser + "/");
+                        config = JsonSerializer.Serialize(new
+                        {
+                            imagePaths = new List<string>(),
+                        });
+                        if (deleteFiles)
+                        {
+                            DeleteFiles(GetPlaylistsDirectory(_targetUser));
+                        }
+
+                        CreateDirectory(GetPlaylistsDirectory(_targetUser));
+
+                        fileStream = new FileStream(GetPlaylistsDirectory(_targetUser) + "/config.json",
+                            FileMode.Create, FileAccess.Write);
+
+                    }
+                    else
+                    {
+                        config = JsonSerializer.Serialize(new
+                        {
+                            mediaType = mediaType,
+                            transitionStyle = "slide",
+                            transitionDuration = 2,
+                            imageFit = "fill",
+                            imageInterval = 5
+                        });
+                        if (deleteFiles)
+                        {
+                            DeleteFiles(GetDisplaysDierctory(_targetUser));
+                        }
+
+                        CreateDirectory(GetDisplaysDierctory(_targetUser));
+
+                        fileStream = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+                            FileMode.Create, FileAccess.Write);
                     }
 
-                    CreateDirectory(_filesPath + "/" + _targetUser + "/");
-
-                    string config = JsonSerializer.Serialize(new
-                    {
-                        mediaType = mediaType,
-                        transitionStyle = "slide",
-                        transitionDuration = 2,
-                        imageFit = "fill",
-                        imageInterval = 5
-                    });
-
-                    FileStream fileStream = new FileStream(_filesPath + "/" + _targetUser + "/config.json",
-                        FileMode.Create, FileAccess.Write);
                     await fileStream.WriteAsync(Encoding.UTF8.GetBytes(config));
 
                     // fileStream.FlushAsync();
@@ -252,14 +284,131 @@ public class WebSocketBase
                     fileStream.Dispose();
 
                     return createJsonContent("fileStreamStarted", "Start receiving files");
+                }
                 case "startFileStream":
                     string fileName = json.RootElement.GetProperty("fileName").GetString();
-
-                    _currentFileStream = new FileStream(_filesPath + "/" + _targetUser + "/" + fileName,
-                        FileMode.Create, FileAccess.Write);
+                    if (_isPlaylist)
+                    {
+                        _currentFileStream = new FileStream(GetPlaylistsDirectory(_targetUser) + fileName,
+                            FileMode.Create, FileAccess.Write);
+                    }
+                    else
+                    {
+                        _currentFileStream = new FileStream(GetDisplaysDierctory(_targetUser) + fileName,
+                            FileMode.Create, FileAccess.Write);
+                    }
 
                     return createJsonContent("fileStreamStarted", "Start receiving files");
+                case "createImagePathConfig":
+                {
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    if (_isPlaylist)
+                    {
+                        var files = Directory.GetFiles(GetPlaylistsDirectory(_targetUser));
+                        
+                        // Console.WriteLine(_filesPath + _targetUser + "/");
+                        var fileList = new List<string>();
+                        foreach (var file in files)
+                        {
+                            // Console.WriteLine(Path.GetFileName(file));
+                            if (file.Contains("config.json"))
+                            {
+                                continue;
+                            }
+
+                            fileList.Add(Path.GetFileName(file));
+                        }
+                        string config = JsonSerializer.Serialize(new
+                        {
+                            imagePaths = fileList,
+                        });
+                        FileStream fileStream2 = new FileStream(GetPlaylistsDirectory(_targetUser) + "/config.json",
+                            FileMode.Create, FileAccess.Write);
+                        await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
+                        
+                        // fileStream.FlushAsync();
+                        fileStream2.Close();
+                        fileStream2.Dispose();
+                        
+                        return createJsonContent("Success", "Image paths added");
+                    }
+                    else
+                    {
+                        var files = Directory.GetFiles(GetDisplaysDierctory(_targetUser));
+                        var readConfig = File.ReadAllText(GetDisplaysDierctory(_targetUser) + "/config.json");
+                        var configJson = JsonDocument.Parse(readConfig);
+                        var fileList = new List<string>();
+                        foreach (var file in files)
+                        {
+                            if (file.Contains("config.json"))
+                            {
+                                continue;
+                            }
+
+                            fileList.Add(Path.GetFileName(file));
+                        }
+                        
+                        string config = JsonSerializer.Serialize(new
+                        {
+                            mediaType = configJson.RootElement.GetProperty("mediaType").GetString(),
+                            transitionStyle = configJson.RootElement.GetProperty("transitionStyle").GetString(),
+                            transitionDuration = configJson.RootElement.GetProperty("transitionDuration").GetInt32(),
+                            imageFit = configJson.RootElement.GetProperty("imageFit").GetString(),
+                            imageInterval = configJson.RootElement.GetProperty("imageInterval").GetInt32(),
+                            imagePaths = fileList,
+                        });
+                        
+                        FileStream fileStream2 = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+                            FileMode.Create, FileAccess.Write);
+                        await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
+                        
+                        // fileStream.FlushAsync();
+                        fileStream2.Close();
+                        fileStream2.Dispose();
+                        
+                        return createJsonContent("Success", "Image paths added");
+                    }
+                }
+                case "modifyImageOrder":
+                {
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    _isPlaylist = json.RootElement.GetProperty("isPlaylist").GetBoolean() || false;
+                    var fileNames = json.RootElement.GetProperty("fileNames");
+                    Console.WriteLine("Modify image order:   " + fileNames);
+                    if(_isPlaylist)
+                    {
+                        //todo
+                    }
+                    else
+                    {
+                        var readConfig = File.ReadAllText(GetDisplaysDierctory(_targetUser) + "/config.json");
+                        var configJson = JsonDocument.Parse(readConfig);
+                        var config = JsonSerializer.Serialize(new
+                        {
+                            mediaType = configJson.RootElement.GetProperty("mediaType").GetString(),
+                            transitionStyle = configJson.RootElement.GetProperty("transitionStyle").GetString(),
+                            transitionDuration = configJson.RootElement.GetProperty("transitionDuration").GetInt32(),
+                            imageFit = configJson.RootElement.GetProperty("imageFit").GetString(),
+                            imageInterval = configJson.RootElement.GetProperty("imageInterval").GetInt32(),
+                            imagePaths = fileNames,
+                        });
+                        FileStream fileStream2 = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+                            FileMode.Create, FileAccess.Write);
+                        await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
+                        fileStream2.Close();
+                        fileStream2.Dispose();
+
+                        if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                        {
+                            targetSocket.webSocket.SendAsync(
+                                new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
+                                WebSocketMessageType.Text, true, CancellationToken.None);
+                        }
+                    }
+                    return createJsonContent("ConfigUpdated", "Image order modified");
+                }
                 case "endFileStream":
+                    _isPlaylist = false;
                     _currentFileStream.FlushAsync();
                     _currentFileStream.Close();
                     _currentFileStream.Dispose();
@@ -398,19 +547,21 @@ public class WebSocketBase
                         int transitionDuration = json.RootElement.GetProperty("transitionDuration").GetInt32();
                         string imageFit = json.RootElement.GetProperty("imageFit").GetString();
                         int imageInterval = json.RootElement.GetProperty("imageInterval").GetInt32();
-
+                        var fileNames = json.RootElement.GetProperty("fileNames");
+                        
                         string config2 = JsonSerializer.Serialize(new
                         {
                             mediaType = mediaType2,
                             transitionStyle = transitionStyle,
                             transitionDuration = transitionDuration,
                             imageFit = imageFit,
-                            imageInterval = imageInterval
+                            imageInterval = imageInterval,
+                            imagePaths = fileNames,
                         });
 
-                        CreateDirectory(_filesPath + "/" + _targetUser + "/");
+                        CreateDirectory(GetDisplaysDierctory(_targetUser));
 
-                        FileStream fileStream2 = new FileStream(_filesPath + "/" + _targetUser + "/config.json",
+                        FileStream fileStream2 = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
                             FileMode.Create, FileAccess.Write);
                         await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config2));
 
@@ -606,6 +757,16 @@ public class WebSocketBase
         }
 
         return message;
+    }
+    
+    private string GetPlaylistsDirectory(string targetPlaylist)
+    {
+        return _filesPath + "/playlists/" + targetPlaylist + "/";
+    }
+    
+    private string GetDisplaysDierctory(string targetUser)
+    {
+        return _filesPath + "/displays/" + targetUser + "/";
     }
 
     private static void CreateDirectory(string path)

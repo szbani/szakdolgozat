@@ -27,9 +27,9 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
         {
             e.HasKey(e => e.Id);
             e.ToTable("Playlists");
+            e.HasIndex(k => k.PlaylistName).IsUnique();
             e.Property(e => e.PlaylistName).HasMaxLength(256).IsRequired();
             e.Property(e => e.PlaylistDescription).HasMaxLength(256);
-            e.Property(e => e.PlaylistType).HasMaxLength(256).IsRequired();
         });
         builder.Entity<DisplayModel>(b =>
         {
