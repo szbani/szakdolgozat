@@ -202,32 +202,35 @@ public class WebSocketBase
                     string mediaType = json.RootElement.GetProperty("mediaType").GetString();
                     FileStream fileStream;
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
+                    string changeTimeString = changeTime;
 
-                    if (changeTime != "default")
+                    if (changeTimeString != "default")
                     {
-                        changeTime = changeTime.Replace(":", "_");
+                        changeTimeString = changeTimeString.Replace(":", "_");
                     }
 
                     if (mediaType == "video")
                     {
-                        DeleteFiles(GetDisplaysDierctory(_targetUser + "/" + changeTime));
+                        DeleteFiles(GetDisplayDirectory(_targetUser + "/" + changeTimeString));
                     }
 
-                    string config;
+                    var config = new Dictionary<string, object>();
 
                     try
                     {
-                        var readConfig = File.ReadAllText(GetDisplaysDierctory(_targetUser) + "/config.json");
+                        var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
                         var configJson = JsonDocument.Parse(readConfig);
 
                         if (configJson.RootElement.GetProperty(changeTime).GetProperty("mediaType").GetString() !=
                             mediaType)
                         {
-                            DeleteFiles(GetDisplaysDierctory(_targetUser + "/" + changeTime));
+                            DeleteFiles(GetDisplayDirectory(_targetUser + "/" + changeTimeString));
                         }
 
                         var fileList = JsonSerializer.Deserialize<List<string>>(
-                            configJson.RootElement.GetProperty("imagePaths").ToString()) ?? new List<string>();
+                                           configJson.RootElement.GetProperty(changeTime).GetProperty("paths")
+                                               .ToString()) ??
+                                       new List<string>();
 
                         if (mediaType == "video" ||
                             configJson.RootElement.GetProperty(changeTime).GetProperty("mediaType").GetString() !=
@@ -239,70 +242,83 @@ public class WebSocketBase
                         var changeTimesList = JsonSerializer.Deserialize<List<string>>(
                             configJson.RootElement.GetProperty("changeTimes")) ?? new List<string>();
 
-                        if (changeTime != "default" && !changeTimesList.Contains(changeTime))
+                        if (!changeTimesList.Contains(changeTime))
                         {
                             changeTimesList.Add(changeTime);
                             changeTimesList.Sort();
                         }
 
-                        var changeTimeString = "";
+                        config.Add("transitionStyle",
+                            configJson.RootElement.GetProperty("transitionStyle").GetString());
+                        config.Add("transitionDuration",
+                            configJson.RootElement.GetProperty("transitionDuration").GetInt32());
+                        config.Add("imageFit", configJson.RootElement.GetProperty("imageFit").GetString());
+                        config.Add("imageInterval", configJson.RootElement.GetProperty("imageInterval").GetInt32());
+                        config.Add("changeTimes", changeTimesList);
 
                         for (int i = 0; i < changeTimesList.Count; i++)
                         {
-                            if (configJson.RootElement.GetProperty(changeTimesList[i]).GetString() != null)
+                            if (changeTimesList[i] == changeTime)
                             {
-                                changeTimeString = JsonSerializer.Serialize(new
+                                config.Add(changeTimesList[i], new
                                 {
-                                    changeTime = new
-                                    {
-                                        mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
-                                            .GetProperty("mediaType").GetString(),
-                                        endTime = configJson.RootElement.GetProperty(changeTimesList[i])
-                                            .GetProperty("endTime").GetString(),
-                                        imagePaths = configJson.RootElement.GetProperty(changeTimesList[i])
-                                            .GetProperty("imagePaths").ToString(),
-                                    }
+                                    mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("mediaType").GetString(),
+                                    endTime = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("endTime").GetString(),
+                                    paths = fileList
+                                });
+                            }
+                            else if (changeTimesList[i] != "default")
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("mediaType").GetString(),
+                                    endTime = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("endTime").GetString(),
+                                    paths = JsonSerializer.Deserialize<List<string>>(
+                                        configJson.RootElement.GetProperty(changeTimesList[i])
+                                            .GetProperty("paths").ToString()) ?? new List<string>()
+                                });
+                            }
+                            else
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = configJson.RootElement.GetProperty("default")
+                                        .GetProperty("mediaType").GetString(),
+                                    paths = JsonSerializer.Deserialize<List<string>>(
+                                        configJson.RootElement.GetProperty("default")
+                                            .GetProperty("paths").ToString()) ?? new List<string>()
                                 });
                             }
                         }
-
-                        config = JsonSerializer.Serialize(new
-                        {
-                            transitionStyle = configJson.RootElement.GetProperty("transitionStyle").GetString(),
-                            transitionDuration = configJson.RootElement.GetProperty("transitionDuration").GetInt32(),
-                            imageFit = configJson.RootElement.GetProperty("imageFit").GetString(),
-                            imageInterval = configJson.RootElement.GetProperty("imageInterval").GetInt32(),
-                            changeTimes = changeTimesList,
-                            @default = new
-                            {
-                                mediaType = mediaType,
-                                paths = fileList
-                            },
-                            changeTimeString
-                        });
                     }
                     catch (Exception e)
                     {
-                        CreateDirectory(GetDisplaysDierctory(_targetUser));
-                        config = JsonSerializer.Serialize(new
+                        Console.WriteLine(e.Message);
+                        CreateDirectory(GetDisplayDirectory(_targetUser));
+                        config.Add("transitionStyle", "fade");
+                        config.Add("transitionDuration", 1000);
+                        config.Add("imageFit", "cover");
+                        config.Add("imageInterval", 5000);
+                        config.Add("changeTimes", new List<string> { "default" });
+                        config.Add("default", new
                         {
-                            transitionStyle = "slide",
-                            transitionDuration = 1,
-                            imageFit = "cover",
-                            imageInterval = 5,
-                            changeTimes = new List<string>(),
-                            @default = new
-                            {
-                                mediaType = mediaType,
-                                paths = new List<string>()
-                            },
+                            mediaType = mediaType,
+                            paths = new List<string>()
                         });
                     }
 
-                    fileStream = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+                    config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
+
+                    string configToSend = JsonSerializer.Serialize(config);
+
+                    fileStream = new FileStream(GetDisplayDirectory(_targetUser) + "/config.json",
                         FileMode.Create, FileAccess.Write);
 
-                    await fileStream.WriteAsync(Encoding.UTF8.GetBytes(config));
+                    await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configToSend));
 
                     // fileStream.FlushAsync();
                     fileStream.Close();
@@ -320,12 +336,17 @@ public class WebSocketBase
                         changeTime = changeTime.Replace(":", "_");
                     }
 
-                    CreateDirectory(GetDisplaysDierctory(_targetUser + "/" + changeTime));
+                    CreateDirectory(GetDisplayDirectory(_targetUser + "/" + changeTime));
 
-                    _currentFileStream = new FileStream(GetDisplaysDierctory(_targetUser + "/" + changeTime) + fileName,
+                    _currentFileStream = new FileStream(GetDisplayDirectory(_targetUser + "/" + changeTime) + fileName,
                         FileMode.Create, FileAccess.Write);
                     return createJsonContent("fileStreamStarted", "Start receiving files");
                 }
+                case "endFileStream":
+                    _currentFileStream.FlushAsync();
+                    _currentFileStream.Close();
+                    _currentFileStream.Dispose();
+                    return createJsonContent("fileArrived", "File arrived");
                 case "createImagePathConfig":
                 {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
@@ -333,8 +354,8 @@ public class WebSocketBase
 
                     var changeTimeString = changeTime.Replace(":", "_");
 
-                    var files = Directory.GetFiles(GetDisplaysDierctory(_targetUser) + "/" + changeTimeString);
-                    var readConfig = File.ReadAllText(GetDisplaysDierctory(_targetUser) + "/config.json");
+                    var files = Directory.GetFiles(GetDisplayDirectory(_targetUser) + "/" + changeTimeString);
+                    var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
                     var configJson = JsonDocument.Parse(readConfig);
                     var fileList = new List<string>();
 
@@ -359,24 +380,78 @@ public class WebSocketBase
                         fileList.Add(Path.GetFileName(file));
                     }
 
-                    string config = JsonSerializer.Serialize(new
-                    {
-                        transitionStyle = configJson.RootElement.GetProperty("transitionStyle").GetString(),
-                        transitionDuration = configJson.RootElement.GetProperty("transitionDuration").GetInt32(),
-                        imageFit = configJson.RootElement.GetProperty("imageFit").GetString(),
-                        imageInterval = configJson.RootElement.GetProperty("imageInterval").GetInt32(),
-                        changeTimes = configJson.RootElement.GetProperty("changeTimes"),
-                        @default = new
-                        {
-                            mediaType = configJson.RootElement.GetProperty("default").GetProperty("mediaType")
-                                .GetString(),
-                            paths = fileList
-                        },
-                    });
+                    var config = new Dictionary<string, object>();
 
-                    FileStream fileStream2 = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+                    config.Add("transitionStyle", configJson.RootElement.GetProperty("transitionStyle").GetString());
+                    config.Add("transitionDuration",
+                        configJson.RootElement.GetProperty("transitionDuration").GetInt32());
+                    config.Add("imageFit", configJson.RootElement.GetProperty("imageFit").GetString());
+                    config.Add("imageInterval", configJson.RootElement.GetProperty("imageInterval").GetInt32());
+                    config.Add("changeTimes", JsonSerializer.Deserialize<List<string>>(
+                        configJson.RootElement.GetProperty("changeTimes").ToString()) ?? new List<string>());
+
+                    var changeTimesList = JsonSerializer.Deserialize<List<string>>(
+                        configJson.RootElement.GetProperty("changeTimes")) ?? new List<string>();
+
+                    if (!changeTimesList.Contains(changeTime))
+                    {
+                        changeTimesList.Add(changeTime);
+                        changeTimesList.Sort();
+                    }
+
+                    for (int i = 0; i < changeTimesList.Count; i++)
+                    {
+                        if (changeTimesList[i] == changeTime && changeTime == "default")
+                        {
+                            config.Add(changeTimesList[i], new
+                            {
+                                mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                    .GetProperty("mediaType").GetString(),
+                                paths = fileList
+                            });
+                        }
+                        else if (changeTimesList[i] == changeTime)
+                        {
+                            config.Add(changeTimesList[i], new
+                            {
+                                mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                    .GetProperty("mediaType").GetString(),
+                                endTime = configJson.RootElement.GetProperty(changeTimesList[i])
+                                    .GetProperty("endTime").GetString(),
+                                paths = fileList
+                            });
+                        }
+                        else if (changeTimesList[i] != "default")
+                        {
+                            config.Add(changeTimesList[i], new
+                            {
+                                mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                    .GetProperty("mediaType").GetString(),
+                                endTime = configJson.RootElement.GetProperty(changeTimesList[i])
+                                    .GetProperty("endTime").GetString(),
+                                paths = JsonSerializer.Deserialize<List<string>>(
+                                    configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("paths").ToString()) ?? new List<string>()
+                            });
+                        }
+                        else
+                        {
+                            config.Add(changeTimesList[i], new
+                            {
+                                mediaType = configJson.RootElement.GetProperty("default")
+                                    .GetProperty("mediaType").GetString(),
+                                paths = JsonSerializer.Deserialize<List<string>>(
+                                    configJson.RootElement.GetProperty("default")
+                                        .GetProperty("paths").ToString()) ?? new List<string>()
+                            });
+                        }
+                    }
+
+                    config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
+
+                    FileStream fileStream2 = new FileStream(GetDisplayDirectory(_targetUser) + "config.json",
                         FileMode.Create, FileAccess.Write);
-                    await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
+                    await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(config)));
 
                     // fileStream.FlushAsync();
                     fileStream2.Close();
@@ -389,20 +464,15 @@ public class WebSocketBase
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
                     var fileNames = json.RootElement.GetProperty("fileNames");
-                    
-                    if (changeTime != "default")
-                    {
-                        changeTime = changeTime.Replace(":", "_");
-                    }
-                    
+
                     try
                     {
-                        var readConfig = File.ReadAllText(GetDisplaysDierctory(_targetUser) + "/config.json");
+                        var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
                         var configJson = JsonNode.Parse(readConfig).AsObject();
-                        
+
                         configJson[changeTime]["paths"] = fileNames.AsNode();
                         string config = configJson.ToString();
-                        FileStream fileStream2 = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+                        FileStream fileStream2 = new FileStream(GetDisplayDirectory(_targetUser) + "config.json",
                             FileMode.Create, FileAccess.Write);
                         await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
                         fileStream2.Close();
@@ -422,11 +492,240 @@ public class WebSocketBase
 
                     return createJsonContent("ConfigUpdated", "Image order modified");
                 }
-                case "endFileStream":
-                    _currentFileStream.FlushAsync();
-                    _currentFileStream.Close();
-                    _currentFileStream.Dispose();
-                    return createJsonContent("fileArrived", "File arrived");
+                case "deleteMedia":
+                {
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
+                        
+                    string changeTimeString = changeTime;
+
+                    if (changeTimeString != "default")
+                    {
+                        changeTimeString = changeTimeString.Replace(":", "_");
+                    }
+
+                    var fileNames = json.RootElement.GetProperty("fileNames");
+                    Console.WriteLine(fileNames);
+
+                    string configPath = GetDisplayDirectory(_targetUser) + "config.json";
+                    if (!File.Exists(configPath))
+                    {
+                        return createJsonContent("Error", "No config file found");
+                    }
+
+                    try
+                    {
+                        var readConfig = File.ReadAllText(configPath);
+                        var configJson = JsonNode.Parse(readConfig)?.AsObject();
+
+                        if (configJson == null || !configJson.ContainsKey(changeTime) ||
+                            !configJson[changeTime].AsObject().ContainsKey("paths"))
+                        {
+                            return createJsonContent("Error", "Invalid config structure");
+                        }
+
+                        var fileList = configJson[changeTime]["paths"].AsArray();
+                        foreach (var fileName in fileNames.EnumerateArray())
+                        {
+                            if (fileList.Any(f =>
+                                    f.ToString().Equals(fileName.ToString(), StringComparison.OrdinalIgnoreCase)))
+                            {
+                                for (int i = fileList.Count - 1; i >= 0; i--)
+                                {
+                                    if (fileList[i].ToString().Equals(fileName.ToString(),
+                                            StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        fileList.RemoveAt(i);
+                                        Console.WriteLine($"Removed: {fileName} from fileList");
+                                        DeleteFile(GetDisplayDirectory(_targetUser) + changeTimeString + "/" +
+                                                   fileName);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        configJson[changeTime]["paths"] = fileList;
+                        string config = configJson.ToString();
+
+                        await using FileStream fileStream2 =
+                            new FileStream(configPath, FileMode.Create, FileAccess.Write);
+                        await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
+                    }
+                    catch (Exception e)
+                    {
+                        return createJsonContent("Error", "Failed to process config file: " + e.Message);
+                    }
+
+                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out var socket))
+                    {
+                        await socket.webSocket.SendAsync(
+                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
+                            WebSocketMessageType.Text, true, CancellationToken.None);
+                    }
+
+                    return createJsonContent("ConfigUpdated", "Image deleted");
+                }
+                case "AddSchedule":
+                {
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    string startTime = json.RootElement.GetProperty("start").GetString();
+                    string endTime = json.RootElement.GetProperty("end").GetString();
+                    
+                    var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+                    var configJson = JsonDocument.Parse(readConfig);
+
+                    try
+                    {
+                        var changeTimesList = JsonSerializer.Deserialize<List<string>>(
+                            configJson.RootElement.GetProperty("changeTimes").ToString()) ?? new List<string>();
+
+                        if (!changeTimesList.Contains(startTime))
+                        {
+                            changeTimesList.Add(startTime);
+                            changeTimesList.Sort();
+                        }
+
+                        var config = new Dictionary<string, object>();
+
+                        config.Add("transitionStyle", configJson.RootElement.GetProperty("transitionStyle").GetString());
+                        config.Add("transitionDuration",
+                            configJson.RootElement.GetProperty("transitionDuration").GetInt32());
+                        config.Add("imageFit", configJson.RootElement.GetProperty("imageFit").GetString());
+                        config.Add("imageInterval", configJson.RootElement.GetProperty("imageInterval").GetInt32());
+                        config.Add("changeTimes", changeTimesList);
+
+                        for (int i = 0; i < changeTimesList.Count; i++)
+                        {
+                            if (changeTimesList[i] == startTime)
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = "image",
+                                    endTime = endTime,
+                                    paths = new List<string>()
+                                });
+                            }
+                            else if (changeTimesList[i] != "default")
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("mediaType").GetString(),
+                                    endTime = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("endTime").GetString(),
+                                    paths = JsonSerializer.Deserialize<List<string>>(
+                                        configJson.RootElement.GetProperty(changeTimesList[i])
+                                            .GetProperty("paths").ToString()) ?? new List<string>()
+                                });
+                            }
+                            else
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = configJson.RootElement.GetProperty("default")
+                                        .GetProperty("mediaType").GetString(),
+                                    paths = JsonSerializer.Deserialize<List<string>>(
+                                        configJson.RootElement.GetProperty("default")
+                                            .GetProperty("paths").ToString()) ?? new List<string>()
+                                });
+                            }
+                        }
+
+                        config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
+
+                        string configToSend = JsonSerializer.Serialize(config);
+
+                        FileStream fileStream = new FileStream(GetDisplayDirectory(_targetUser) + "config.json",
+                            FileMode.Create, FileAccess.Write);
+
+                        await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configToSend));
+
+                        fileStream.Close();
+                        fileStream.Dispose();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    return createJsonContent("ConfigUpdated", "Schedule added");
+                }
+                case "DeleteSchedule":
+                {
+                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
+
+                    var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+                    var configJson = JsonDocument.Parse(readConfig);
+
+                    try
+                    {
+                        var changeTimesList = JsonSerializer.Deserialize<List<string>>(
+                            configJson.RootElement.GetProperty("changeTimes").ToString()) ?? new List<string>();
+
+                        if (changeTimesList.Contains(changeTime))
+                        {
+                            changeTimesList.Remove(changeTime);
+                        }
+
+                        var config = new Dictionary<string, object>();
+
+                        config.Add("transitionStyle", configJson.RootElement.GetProperty("transitionStyle").GetString());
+                        config.Add("transitionDuration",
+                            configJson.RootElement.GetProperty("transitionDuration").GetInt32());
+                        config.Add("imageFit", configJson.RootElement.GetProperty("imageFit").GetString());
+                        config.Add("imageInterval", configJson.RootElement.GetProperty("imageInterval").GetInt32());
+                        config.Add("changeTimes", changeTimesList);
+
+                        for (int i = 0; i < changeTimesList.Count; i++)
+                        {
+                            if (changeTimesList[i] != "default")
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("mediaType").GetString(),
+                                    endTime = configJson.RootElement.GetProperty(changeTimesList[i])
+                                        .GetProperty("endTime").GetString(),
+                                    paths = JsonSerializer.Deserialize<List<string>>(
+                                        configJson.RootElement.GetProperty(changeTimesList[i])
+                                            .GetProperty("paths").ToString()) ?? new List<string>()
+                                });
+                            }
+                            else
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = configJson.RootElement.GetProperty("default")
+                                        .GetProperty("mediaType").GetString(),
+                                    paths = JsonSerializer.Deserialize<List<string>>(
+                                        configJson.RootElement.GetProperty("default")
+                                            .GetProperty("paths").ToString()) ?? new List<string>()
+                                });
+                            }
+                        }
+
+                        config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
+
+                        string configToSend = JsonSerializer.Serialize(config);
+
+                        FileStream fileStream = new FileStream(GetDisplayDirectory(_targetUser) + "config.json",
+                            FileMode.Create, FileAccess.Write);
+
+                        await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configToSend));
+
+                        fileStream.Close();
+                        fileStream.Dispose();
+                        
+                        DeleteFiles(GetDisplayDirectory(_targetUser) + changeTime.Replace(":", "_"));
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    return createJsonContent("ConfigUpdated", "Schedule deleted");
+                }
                 case "Disconnect":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
@@ -558,41 +857,40 @@ public class WebSocketBase
                         return createJsonContent("Error", "No target user");
                         break;
                     }
-                    
-                    CreateDirectory(GetDisplaysDierctory(_targetUser));
+
+                    CreateDirectory(GetDisplayDirectory(_targetUser));
 
                     try
                     {
-                        var readConfig = File.ReadAllText(GetDisplaysDierctory(_targetUser) + "/config.json");
+                        var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
                         var configJson = JsonNode.Parse(readConfig).AsObject();
-                        
+
                         configJson["transitionStyle"] = transitionStyle;
                         configJson["transitionDuration"] = transitionDuration;
                         configJson["imageFit"] = imageFit;
                         configJson["imageInterval"] = imageInterval;
                         config = configJson.ToString();
-                        
                     }
                     catch (Exception e)
                     {
                         return createJsonContent("Error", "No config file found");
                     }
-                    
-                    fileStream2 = new FileStream(GetDisplaysDierctory(_targetUser) + "/config.json",
+
+                    fileStream2 = new FileStream(GetDisplayDirectory(_targetUser) + "config.json",
                         FileMode.Create, FileAccess.Write);
                     await fileStream2.WriteAsync(Encoding.UTF8.GetBytes(config));
 
                     fileStream2.Close();
                     fileStream2.Dispose();
-                    
+
                     if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
                     {
                         targetSocket.webSocket.SendAsync(
                             new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
                             WebSocketMessageType.Text, true, CancellationToken.None);
                     }
-                    return createJsonContent("ConfigUpdated", "Configuration updated");
 
+                    return createJsonContent("ConfigUpdated", "Configuration updated");
                 }
                 case "getAdminList":
                 {
@@ -705,14 +1003,9 @@ public class WebSocketBase
         return message;
     }
 
-    private string GetPlaylistsDirectory(string targetPlaylist)
+    private string GetDisplayDirectory(string targetUser)
     {
-        return _filesPath + "/playlists/" + targetPlaylist + "/";
-    }
-
-    private string GetDisplaysDierctory(string targetUser)
-    {
-        return _filesPath + "/displays/" + targetUser + "/";
+        return _filesPath + "displays/" + targetUser + "/";
     }
 
     private static void CreateDirectory(string path)
@@ -728,6 +1021,17 @@ public class WebSocketBase
         if (Directory.Exists(path))
         {
             Directory.Delete(path, true);
+        }
+    }
+
+    private static void DeleteFile(string path)
+    {
+        try
+        {
+            File.Delete(path);
+        }
+        catch (Exception e)
+        {
         }
     }
 

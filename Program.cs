@@ -16,7 +16,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IRegisteredDisplaysServices, RegisteredDisplaysServices>();
-builder.Services.AddScoped<IPlaylistsService, PlaylistsService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.WebHost.ConfigureKestrel(options =>
