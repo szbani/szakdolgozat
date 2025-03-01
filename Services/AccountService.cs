@@ -16,9 +16,19 @@ public class AccountService : IAccountService
 
     public int UpdateUser(string id, string username, string email, string password)
     {
-        if (username == null || email == null || id == null)
+        if (username == null)
         {
-            return AccountErrors.NullError;
+            return AccountErrors.UsernameError;
+        }
+
+        if (email == null)
+        {
+            return AccountErrors.EmailError;
+        }
+
+        if (id == null)
+        {
+            return AccountErrors.UnknownError;
         }
 
         if (!AccountInformation.IsValidEmail(email))
@@ -26,9 +36,13 @@ public class AccountService : IAccountService
             return AccountErrors.InvalidEmail;
         }
 
-        if (username.Length < 5 || username.Length > 32)
+        if (username.Length < 5)
         {
-            return AccountErrors.UsernameError;
+            return AccountErrors.UserNameTooShort;
+        }
+        if (username.Length > 32)
+        {
+            return AccountErrors.UserNameTooLong;
         }
 
         var user = _userManager.FindByIdAsync(id).Result;
@@ -47,7 +61,7 @@ public class AccountService : IAccountService
 
         if (password == null)
         {
-            return AccountErrors.NullError;
+            return AccountErrors.PasswordError;
         }
 
         if (password.Length >= 8 &&
@@ -67,7 +81,7 @@ public class AccountService : IAccountService
                 var result = _userManager.ResetPasswordAsync(user, token, password).Result;
                 if (!result.Succeeded)
                 {
-                    return AccountErrors.PasswordError;
+                    return AccountErrors.UnknownError;
                 }
                 else
                 {
@@ -77,7 +91,30 @@ public class AccountService : IAccountService
         }
         else
         {
-            return AccountErrors.PasswordError;
+            if (password.Length < 8)
+            {
+                return AccountErrors.PasswordTooShort;
+            }
+            else if (password.Length > 100)
+            {
+                return AccountErrors.PasswordTooLong;
+            }
+            else if (!password.Any(char.IsDigit))
+            {
+                return AccountErrors.PasswordNoDigit;
+            }
+            else if (!password.Any(char.IsUpper))
+            {
+                return AccountErrors.PasswordNoUpper;
+            }
+            else if (!password.Any(char.IsLower))
+            {
+                return AccountErrors.PasswordNoLower;
+            }
+            else
+            {
+                return AccountErrors.UnknownError;   
+            }
         }
     }
 
@@ -114,25 +151,47 @@ public class AccountService : IAccountService
 
 public class AccountErrors
 {
-    public const int PasswordError = 0;
+    public const int NullError = 0;
     public const int Success = 1;
-    public const int UsernameError = 2;
-    public const int NullError = 3;
-    public const int UserNotFoundError = 4;
-    public const int InvalidEmail = 5;
-    public const int UnknownError = 6;
+    public const int UnknownError = 2;
+    public const int UserFound = 3;
+
+    public const int UsernameError = 10;
+    public const int UserNameTooShort = 11;
+    public const int UserNameTooLong = 12;
+    public const int UserNotFoundError = 13;
+    public const int EmailError = 20;
+    public const int InvalidEmail = 21;
+    
+    public const int PasswordError = 30;
+    public const int PasswordTooShort = 31;
+    public const int PasswordTooLong = 32;
+    public const int PasswordNoDigit = 33;
+    public const int PasswordNoUpper = 34;
+    public const int PasswordNoLower = 35;
+    
 
     public static string GetErrorMessage(int errorCode)
     {
         return errorCode switch
         {
-            0 => "Password error",
-            2 => "Username error",
-            3 => "Null error",
-            4 => "User not found",
-            5 => "Invalid Email",
-            6 => "Unkonwn error",
-            _ => "Success"
+            NullError => "Null error",
+            Success => "Success",
+            UnknownError => "Unknown error",
+            UserFound => "User found",
+            UsernameError => "Username Not Found",
+            UserNameTooShort => "Username too short",
+            UserNameTooLong => "Username too long",
+            UserNotFoundError => "User not found",
+            EmailError => "Email Not Found",
+            InvalidEmail => "Invalid email",
+            PasswordError => "Password Not Found",
+            PasswordTooShort => "Password too short",
+            PasswordTooLong => "Password too long",
+            PasswordNoDigit => "Password no digit",
+            PasswordNoUpper => "Password no upper",
+            PasswordNoLower => "Password no lower",
+            _ => "Unknown error"
         };
     }
 }

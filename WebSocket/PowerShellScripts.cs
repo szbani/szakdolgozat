@@ -232,6 +232,13 @@ public class PowerShellScripts
             "http://schemas.microsoft.com/powershell/Microsoft.PowerShell",
             new PSCredential(username, ToSecureString(password)));
     }
+    
+    ~PowerShellScripts()
+    {
+        username = null;
+        password = null;
+        command = null;
+    }
 }
 
 public class PsResult

@@ -39,7 +39,7 @@ public class WebSocketBase
     public async Task InvokeAsync(HttpContext context)
     {
         string userName = "";
-        WebSocket webSocket;
+        WebSocket webSocket = null;
         try
         {
             if (context.Request.Path == "/ws")
@@ -117,9 +117,19 @@ public class WebSocketBase
         catch (Exception e)
         {
             Console.WriteLine("Closing connection");
+            webSocket.Dispose();
+            userName = null;
             ConnectedUsers.clients.TryRemove(userName, out _);
             ConnectedUsers.admins.TryRemove(userName, out _);
             BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+            _psScripts.Disconnect(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
+            _targetUser = null;
+            _filesPath = null;
+            _receiveResult = null;
+            _currentFileStream = null;
+            _adminName = null;
+            _serviceProvider = null;
+            _psScripts = null;
         }
     }
 
@@ -190,11 +200,11 @@ public class WebSocketBase
                         await targetSocket.webSocket.SendAsync(
                             new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
                             WebSocketMessageType.Text, true, CancellationToken.None);
-                        return createJsonContent("Success", "Screen update sent.");
+                        return createJsonContent("ConfigUpdated", "Screen update sent.");
                     }
                     else
                     {
-                        return createJsonContent("Error", "User not found");
+                        return createJsonContent("ConfigUpdated", "Config Updated");
                     }
                 case "prepareFileStream":
                 {
@@ -258,12 +268,19 @@ public class WebSocketBase
 
                         for (int i = 0; i < changeTimesList.Count; i++)
                         {
-                            if (changeTimesList[i] == changeTime)
+                            if (changeTimesList[i] == changeTime && changeTime == "default")
                             {
                                 config.Add(changeTimesList[i], new
                                 {
-                                    mediaType = configJson.RootElement.GetProperty(changeTimesList[i])
-                                        .GetProperty("mediaType").GetString(),
+                                    mediaType = mediaType,
+                                    paths = fileList
+                                });
+                            }
+                            else if (changeTimesList[i] == changeTime)
+                            {
+                                config.Add(changeTimesList[i], new
+                                {
+                                    mediaType = mediaType,
                                     endTime = configJson.RootElement.GetProperty(changeTimesList[i])
                                         .GetProperty("endTime").GetString(),
                                     paths = fileList
@@ -299,10 +316,10 @@ public class WebSocketBase
                     {
                         Console.WriteLine(e.Message);
                         CreateDirectory(GetDisplayDirectory(_targetUser));
-                        config.Add("transitionStyle", "fade");
-                        config.Add("transitionDuration", 1000);
+                        config.Add("transitionStyle", "slide");
+                        config.Add("transitionDuration", 1);
                         config.Add("imageFit", "cover");
-                        config.Add("imageInterval", 5000);
+                        config.Add("imageInterval", 5);
                         config.Add("changeTimes", new List<string> { "default" });
                         config.Add("default", new
                         {
@@ -313,12 +330,12 @@ public class WebSocketBase
 
                     config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
 
-                    string configToSend = JsonSerializer.Serialize(config);
+                    string configToWrite = JsonSerializer.Serialize(config);
 
                     fileStream = new FileStream(GetDisplayDirectory(_targetUser) + "/config.json",
                         FileMode.Create, FileAccess.Write);
 
-                    await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configToSend));
+                    await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configToWrite));
 
                     // fileStream.FlushAsync();
                     fileStream.Close();
@@ -329,7 +346,8 @@ public class WebSocketBase
                 case "startFileStream":
                 {
                     //todo rename uploading files to something else
-                    string fileName = json.RootElement.GetProperty("fileName").GetString();
+                    string fileType = json.RootElement.GetProperty("fileType").GetString();
+                    string fileName = DateTime.Now.ToString("O").Replace(":","_") + "." + fileType;
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
                     if (changeTime != "default")
                     {
@@ -496,7 +514,7 @@ public class WebSocketBase
                 {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
-                        
+
                     string changeTimeString = changeTime;
 
                     if (changeTimeString != "default")
@@ -571,8 +589,23 @@ public class WebSocketBase
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     string startTime = json.RootElement.GetProperty("start").GetString();
                     string endTime = json.RootElement.GetProperty("end").GetString();
-                    
-                    var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+
+                    if (startTime == null || endTime == null)
+                    {
+                        return createJsonContent("Error", "Invalid time format");
+                    }
+
+                    var readConfig = "";
+                    try
+                    {
+                        readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+                    }
+                    catch (Exception e)
+                    {
+                        CreateDefaultConfig(GetDisplayDirectory(_targetUser));
+                        readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+                    }
+
                     var configJson = JsonDocument.Parse(readConfig);
 
                     try
@@ -588,7 +621,8 @@ public class WebSocketBase
 
                         var config = new Dictionary<string, object>();
 
-                        config.Add("transitionStyle", configJson.RootElement.GetProperty("transitionStyle").GetString());
+                        config.Add("transitionStyle",
+                            configJson.RootElement.GetProperty("transitionStyle").GetString());
                         config.Add("transitionDuration",
                             configJson.RootElement.GetProperty("transitionDuration").GetInt32());
                         config.Add("imageFit", configJson.RootElement.GetProperty("imageFit").GetString());
@@ -632,7 +666,8 @@ public class WebSocketBase
                             }
                         }
 
-                        config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
+                        config = JsonSerializer.Deserialize<Dictionary<string, object>>(
+                            JsonSerializer.Serialize(config));
 
                         string configToSend = JsonSerializer.Serialize(config);
 
@@ -648,6 +683,7 @@ public class WebSocketBase
                     {
                         Console.WriteLine(e);
                     }
+
                     return createJsonContent("ConfigUpdated", "Schedule added");
                 }
                 case "DeleteSchedule":
@@ -655,7 +691,18 @@ public class WebSocketBase
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
 
-                    var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+
+                    var readConfig = "";
+
+                    try
+                    {
+                        readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
+                    }
+                    catch (Exception e)
+                    {
+                        return createJsonContent("Error", "No config file found");
+                    }
+
                     var configJson = JsonDocument.Parse(readConfig);
 
                     try
@@ -670,7 +717,8 @@ public class WebSocketBase
 
                         var config = new Dictionary<string, object>();
 
-                        config.Add("transitionStyle", configJson.RootElement.GetProperty("transitionStyle").GetString());
+                        config.Add("transitionStyle",
+                            configJson.RootElement.GetProperty("transitionStyle").GetString());
                         config.Add("transitionDuration",
                             configJson.RootElement.GetProperty("transitionDuration").GetInt32());
                         config.Add("imageFit", configJson.RootElement.GetProperty("imageFit").GetString());
@@ -705,7 +753,8 @@ public class WebSocketBase
                             }
                         }
 
-                        config = JsonSerializer.Deserialize<Dictionary<string, object>>(JsonSerializer.Serialize(config));
+                        config = JsonSerializer.Deserialize<Dictionary<string, object>>(
+                            JsonSerializer.Serialize(config));
 
                         string configToSend = JsonSerializer.Serialize(config);
 
@@ -716,14 +765,14 @@ public class WebSocketBase
 
                         fileStream.Close();
                         fileStream.Dispose();
-                        
+
                         DeleteFiles(GetDisplayDirectory(_targetUser) + changeTime.Replace(":", "_"));
-                        
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
                     }
+
                     return createJsonContent("ConfigUpdated", "Schedule deleted");
                 }
                 case "Disconnect":
@@ -860,21 +909,28 @@ public class WebSocketBase
 
                     CreateDirectory(GetDisplayDirectory(_targetUser));
 
+
+                    var readConfig = "";
+
                     try
                     {
-                        var readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
-                        var configJson = JsonNode.Parse(readConfig).AsObject();
-
-                        configJson["transitionStyle"] = transitionStyle;
-                        configJson["transitionDuration"] = transitionDuration;
-                        configJson["imageFit"] = imageFit;
-                        configJson["imageInterval"] = imageInterval;
-                        config = configJson.ToString();
+                        readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
                     }
                     catch (Exception e)
                     {
-                        return createJsonContent("Error", "No config file found");
+                        CreateDefaultConfig(GetDisplayDirectory(_targetUser));
+                        readConfig = File.ReadAllText(GetDisplayDirectory(_targetUser) + "config.json");
                     }
+
+
+                    var configJson = JsonNode.Parse(readConfig).AsObject();
+
+                    configJson["transitionStyle"] = transitionStyle;
+                    configJson["transitionDuration"] = transitionDuration;
+                    configJson["imageFit"] = imageFit;
+                    configJson["imageInterval"] = imageInterval;
+                    config = configJson.ToString();
+
 
                     fileStream2 = new FileStream(GetDisplayDirectory(_targetUser) + "config.json",
                         FileMode.Create, FileAccess.Write);
@@ -1035,14 +1091,59 @@ public class WebSocketBase
         }
     }
 
+    private static void CreateDefaultConfig(string path)
+    {
+        CreateDirectory(path);
+        var config = new Dictionary<string, object>
+        {
+            { "transitionStyle", "slide" },
+            { "transitionDuration", 1 },
+            { "imageFit", "cover" },
+            { "imageInterval", 5 },
+            { "changeTimes", new List<string> { "default" } },
+            {
+                "default", new
+                {
+                    mediaType = "image",
+                    paths = new List<string>()
+                }
+            }
+        };
+
+        var configToSend = JsonSerializer.Serialize(config);
+
+        FileStream fileStream = new FileStream(path + "config.json",
+            FileMode.Create, FileAccess.Write);
+
+        fileStream.WriteAsync(Encoding.UTF8.GetBytes(configToSend));
+
+        fileStream.Close();
+        fileStream.Dispose();
+    }
+
     private static string createJsonContent(string type, string content = "", string targetUser = "")
     {
         string json = JsonSerializer.Serialize(new { type = type, content = content, targetUser = targetUser });
         return json;
     }
-
     ~WebSocketBase()
     {
         Console.WriteLine("Destructor called");
+        foreach (var admin in ConnectedUsers.admins)
+        {
+            admin.Value.webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Server shutting down",
+                CancellationToken.None);
+        }
+        
+        foreach (var client in ConnectedUsers.clients)
+        {
+            client.Value.webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Server shutting down",
+                CancellationToken.None);
+        }
+        
+        _currentFileStream?.Close();
+        GC.Collect();
+        
+        
     }
 }
