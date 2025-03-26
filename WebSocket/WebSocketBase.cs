@@ -15,7 +15,7 @@ public class WebSocketBase
     public static string _filesPath;
     private string _targetUser;
     private FileStream _currentFileStream;
-    private PowerShellScripts _psScripts;
+    private SSHScripts _SSHScripts;
     private IServiceProvider _serviceProvider;
     private string _adminName;
 
@@ -25,7 +25,7 @@ public class WebSocketBase
 
     public WebSocketBase(RequestDelegate next, IServiceProvider serviceProvider)
     {
-        _psScripts = new PowerShellScripts();
+        _SSHScripts = new SSHScripts();
         _serviceProvider = serviceProvider;
         using (var scope = _serviceProvider.CreateScope())
         {
@@ -40,6 +40,8 @@ public class WebSocketBase
     {
         string userName = "";
         WebSocket webSocket = null;
+        Guid _userGuid = Guid.NewGuid();
+
         try
         {
             if (context.Request.Path == "/ws")
@@ -74,7 +76,7 @@ public class WebSocketBase
                                 createJsonContent("AdminList", JsonSerializer.Serialize(users)));
                         }
 
-                        await Echo(webSocket, context, userName);
+                        await Echo(webSocket, context, _userGuid, userName);
                     }
                     else
                     {
@@ -92,17 +94,22 @@ public class WebSocketBase
                 {
                     webSocket = await context.WebSockets.AcceptWebSocketAsync();
                     Console.WriteLine(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
-                    SocketConnection socket =
-                        new SocketConnection(webSocket, context.Connection.RemoteIpAddress.MapToIPv4().ToString(),
-                            _psScripts.GetMacAddress(context.Connection.RemoteIpAddress.MapToIPv4().ToString())
-                                .getMessage());
-
+                    string ipv4 = context.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                    SocketConnection socket;
+                    if (_SSHScripts.TestSSHConnection(ipv4))
+                    {
+                        socket = new SocketConnection(webSocket, ipv4, _SSHScripts.GetMacAddress(ipv4).getMessage());
+                    }
+                    else
+                    {
+                        socket = new SocketConnection(webSocket, ipv4);
+                    }
                     userName = context.Request.Query["user"].ToString();
-                    ConnectedUsers.clients.TryAdd(userName, socket);
-                    Console.WriteLine("Connected Client: " + userName);
+                    ConnectedUsers.clients.TryAdd((userName, _userGuid), socket);
+                    Console.WriteLine("Connected Client: " + userName+ "Guid: " + _userGuid);
                     BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
 
-                    await Echo(webSocket, context, userName);
+                    await Echo(webSocket, context, _userGuid, userName);
                 }
                 else
                 {
@@ -116,24 +123,27 @@ public class WebSocketBase
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             Console.WriteLine("Closing connection");
+            Console.WriteLine("username: " + userName + "Guid: " + _userGuid);
             webSocket.Dispose();
-            userName = null;
-            ConnectedUsers.clients.TryRemove(userName, out _);
+            ConnectedUsers.clients.TryRemove((userName, _userGuid), out _);
             ConnectedUsers.admins.TryRemove(userName, out _);
+            userName = null;
+            _userGuid = Guid.Empty;
             BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-            _psScripts.Disconnect(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
+            // _psScripts.Shutdown(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
             _targetUser = null;
             _filesPath = null;
             _receiveResult = null;
             _currentFileStream = null;
             _adminName = null;
             _serviceProvider = null;
-            _psScripts = null;
+            _SSHScripts = null;
         }
     }
 
-    public async Task Echo(WebSocket webSocket, HttpContext context, string username = "")
+    public async Task Echo(WebSocket webSocket, HttpContext context, Guid _userGuid, string username = "")
     {
         var buffer = new byte[1024 * 256];
         Console.WriteLine("----------------- Echo ---------------");
@@ -169,8 +179,13 @@ public class WebSocketBase
             }
         } while (!_receiveResult.CloseStatus.HasValue);
 
+        Console.WriteLine("----------------- Echo ----------------");
         Console.WriteLine("Closing connection");
-        ConnectedUsers.clients.TryRemove(username, out _);
+        Console.WriteLine("username: " + username + "Guid: " + _userGuid);
+        Console.WriteLine(ConnectedUsers.clients.Values);
+        Console.WriteLine("------------------ End ----------------");
+
+        ConnectedUsers.clients.TryRemove((username, _userGuid), out _);
         ConnectedUsers.admins.TryRemove(username, out _);
         BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
 
@@ -192,20 +207,42 @@ public class WebSocketBase
                 case "getConnectedUsers":
                     return ConnectedUsers.sendConnectedUsers();
                 case "sendUpdateRequestToUser":
-                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    // _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                    // if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    // {
+                    //     var reply = "{\"type\": \"updateRequest\"}";
+                    //     var serverReply = Encoding.UTF8.GetBytes(reply);
+                    //     await targetSocket.webSocket.SendAsync(
+                    //         new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
+                    //         WebSocketMessageType.Text, true, CancellationToken.None);
+                    //     return createJsonContent("ConfigUpdated", "Screen update sent.");
+                    // }
+                    // else
+                    // {
+                    //     return createJsonContent("ConfigUpdated", "Config Updated");
+                    // }
+                {
+                    var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
+
+                    if (targetEntries.Any())
                     {
-                        var reply = "{\"type\": \"updateRequest\"}";
-                        var serverReply = Encoding.UTF8.GetBytes(reply);
-                        await targetSocket.webSocket.SendAsync(
-                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
-                            WebSocketMessageType.Text, true, CancellationToken.None);
-                        return createJsonContent("ConfigUpdated", "Screen update sent.");
+                        var serverReply = Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}");
+
+                        var sendTasks = targetEntries.Select(entry =>
+                            entry.Value.webSocket.SendAsync(
+                                new ArraySegment<byte>(serverReply),
+                                WebSocketMessageType.Text, true, CancellationToken.None)
+                        );
+
+                        await Task.WhenAll(sendTasks);
+
+                        return createJsonContent("ConfigUpdated", "Screen update sent to all connections.");
                     }
                     else
                     {
                         return createJsonContent("ConfigUpdated", "Config Updated");
                     }
+                }
                 case "prepareFileStream":
                 {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
@@ -347,7 +384,7 @@ public class WebSocketBase
                 {
                     //todo rename uploading files to something else
                     string fileType = json.RootElement.GetProperty("fileType").GetString();
-                    string fileName = DateTime.Now.ToString("O").Replace(":","_") + "." + fileType;
+                    string fileName = DateTime.Now.ToString("O").Replace(":", "_") + "." + fileType;
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
                     if (changeTime != "default")
                     {
@@ -501,11 +538,25 @@ public class WebSocketBase
                         return createJsonContent("Error", "No config file found");
                     }
 
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
+
+                    if (targetEntries.Any())
                     {
-                        targetSocket.webSocket.SendAsync(
-                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
-                            WebSocketMessageType.Text, true, CancellationToken.None);
+                        var serverReply = Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}");
+
+                        var sendTasks = targetEntries.Select(entry =>
+                            entry.Value.webSocket.SendAsync(
+                                new ArraySegment<byte>(serverReply),
+                                WebSocketMessageType.Text, true, CancellationToken.None)
+                        );
+
+                        await Task.WhenAll(sendTasks);
+
+                        return createJsonContent("ConfigUpdated", "Screen update sent to all connections.");
+                    }
+                    else
+                    {
+                        return createJsonContent("ConfigUpdated", "Config Updated");
                     }
 
                     return createJsonContent("ConfigUpdated", "Image order modified");
@@ -575,11 +626,21 @@ public class WebSocketBase
                         return createJsonContent("Error", "Failed to process config file: " + e.Message);
                     }
 
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out var socket))
+                    var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
+
+                    if (targetEntries.Any())
                     {
-                        await socket.webSocket.SendAsync(
-                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
-                            WebSocketMessageType.Text, true, CancellationToken.None);
+                        var serverReply = Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}");
+
+                        var sendTasks = targetEntries.Select(entry =>
+                            entry.Value.webSocket.SendAsync(
+                                new ArraySegment<byte>(serverReply),
+                                WebSocketMessageType.Text, true, CancellationToken.None)
+                        );
+
+                        await Task.WhenAll(sendTasks);
+
+                        return createJsonContent("ConfigUpdated", "Screen update sent to all connections.");
                     }
 
                     return createJsonContent("ConfigUpdated", "Image deleted");
@@ -776,77 +837,127 @@ public class WebSocketBase
                     return createJsonContent("ConfigUpdated", "Schedule deleted");
                 }
                 case "Disconnect":
-                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                {
+                    var targetEntries = ConnectedUsers.clients.Where(client => client.Key.Item1 == _targetUser).ToList();
+
+                    if (targetEntries.Any())
                     {
-                        PsResult psResult = _psScripts.Disconnect(targetSocket.ipAddress);
-                        if (psResult.Success())
+                        var disconnectResults = new List<SSHResult>();
+
+                        foreach (var entry in targetEntries)
                         {
-                            ConnectedUsers.clients.TryRemove(_targetUser, out _);
+                            SSHResult sshResult = _SSHScripts.Shutdown(entry.Value.ipAddress);
+
+                            if (sshResult.Success())
+                            {
+                                ConnectedUsers.clients.TryRemove(entry.Key, out _);
+                            }
+
+                            disconnectResults.Add(sshResult);
                         }
 
-                        return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
+                        // Check if all disconnections were successful
+                        bool allSuccess = disconnectResults.All(r => r.Success());
+                        string resultMessage = allSuccess
+                            ? "All users disconnected successfully"
+                            : "Some users failed to disconnect";
+
+                        return createJsonContent(allSuccess ? "Success" : "PartialSuccess", resultMessage);
                     }
 
                     return createJsonContent("Error", "User not found");
+                }
                 case "RebootDisplay":
+                {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+
+                    var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
+
+                    if (targetEntries.Any())
                     {
-                        PsResult psResult = _psScripts.Reboot(targetSocket.ipAddress);
-                        if (psResult.Success())
+                        var rebootResults = new List<SSHResult>();
+
+                        foreach (var entry in targetEntries)
                         {
-                            ConnectedUsers.clients.TryRemove(_targetUser, out _);
+                            SSHResult sshResult = _SSHScripts.Reboot(entry.Value.ipAddress);
+
+                            if (sshResult.Success())
+                            {
+                                ConnectedUsers.clients.TryRemove(entry.Key, out _);
+                            }
+
+                            rebootResults.Add(sshResult);
                         }
 
-                        return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
+                        // Determine the overall success status
+                        bool allSuccess = rebootResults.All(r => r.Success());
+                        string resultMessage =
+                            allSuccess ? "All users rebooted successfully" : "Some users failed to reboot";
+
+                        return createJsonContent(allSuccess ? "Success" : "PartialSuccess", resultMessage);
                     }
 
                     return createJsonContent("Error", "User not found");
+                }
                 case "StartDisplay":
                 {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     var result = ConnectedUsers.RegisteredDisplays.FirstOrDefault(x => x.DisplayName == _targetUser);
                     if (result != null)
                     {
-                        PsResult psResult = _psScripts.WakeOnLan(result.macAddress);
-                        return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
+                        SSHResult sshResult = _SSHScripts.WakeOnLan(result.macAddress);
+                        return createJsonContent(sshResult.SuccessToString(), sshResult.getMessage());
                     }
 
                     return createJsonContent("Error", "Display not registered");
                 }
                 case "RegisterDisplay":
+                {
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
+                    var displayDescription = json.RootElement.GetProperty("displayDescription").GetString();
+
+                    var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
+
+                    if (targetEntries.Any())
                     {
-                        var psResult = _psScripts.GetMacAddress(targetSocket.ipAddress);
-                        if (psResult.Success())
+                        using (var scope = _serviceProvider.CreateScope())
                         {
-                            var display = new DisplayModel
+                            var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
+
+                            foreach (var entry in targetEntries)
                             {
-                                DisplayName = _targetUser,
-                                DisplayDescription = json.RootElement.GetProperty("displayDescription").GetString(),
-                                macAddress = psResult.getMessage(),
-                                KioskName = _targetUser
-                            };
-                            using (var scope = _serviceProvider.CreateScope())
-                            {
-                                var scopedService =
-                                    scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
-                                scopedService.RegisterDisplay(display);
-                                ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
+                                var SSHResult = _SSHScripts.GetMacAddress(entry.Value.ipAddress);
+
+                                if (SSHResult.Success())
+                                {
+                                    var display = new DisplayModel
+                                    {
+                                        DisplayName = _targetUser,
+                                        DisplayDescription = displayDescription,
+                                        macAddress = SSHResult.getMessage(),
+                                        KioskName = _targetUser
+                                    };
+
+                                    scopedService.RegisterDisplay(display);
+                                }
+                                else
+                                {
+                                    return createJsonContent(SSHResult.SuccessToString(), SSHResult.getMessage());
+                                }
                             }
 
-                            BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-                            return createJsonContent("Success", "Display registered");
+                            // Update registered displays after processing all entries
+                            ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
                         }
-                        else
-                        {
-                            return createJsonContent(psResult.SuccessToString(), psResult.getMessage());
-                        }
+
+                        // Notify admins about the updated user list
+                        BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+
+                        return createJsonContent("Success", "All displays registered");
                     }
 
                     return createJsonContent("Error", "User not found");
+                }
                 case "RemoveRegisteredDisplay":
                     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
                     using (var scope = _serviceProvider.CreateScope())
@@ -939,14 +1050,26 @@ public class WebSocketBase
                     fileStream2.Close();
                     fileStream2.Dispose();
 
-                    if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
-                    {
-                        targetSocket.webSocket.SendAsync(
-                            new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
-                            WebSocketMessageType.Text, true, CancellationToken.None);
-                    }
+                    var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
 
-                    return createJsonContent("ConfigUpdated", "Configuration updated");
+                    if (targetEntries.Any())
+                    {
+                        var serverReply = Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}");
+
+                        var sendTasks = targetEntries.Select(entry =>
+                            entry.Value.webSocket.SendAsync(
+                                new ArraySegment<byte>(serverReply),
+                                WebSocketMessageType.Text, true, CancellationToken.None)
+                        );
+
+                        await Task.WhenAll(sendTasks);
+
+                        return createJsonContent("ConfigUpdated", "Screen update sent to all connections.");
+                    }
+                    else
+                    {
+                        return createJsonContent("ConfigUpdated", "Config Updated");
+                    }
                 }
                 case "getAdminList":
                 {
@@ -1126,6 +1249,7 @@ public class WebSocketBase
         string json = JsonSerializer.Serialize(new { type = type, content = content, targetUser = targetUser });
         return json;
     }
+
     ~WebSocketBase()
     {
         Console.WriteLine("Destructor called");
@@ -1134,16 +1258,14 @@ public class WebSocketBase
             admin.Value.webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Server shutting down",
                 CancellationToken.None);
         }
-        
+
         foreach (var client in ConnectedUsers.clients)
         {
             client.Value.webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Server shutting down",
                 CancellationToken.None);
         }
-        
+
         _currentFileStream?.Close();
         GC.Collect();
-        
-        
     }
 }

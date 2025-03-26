@@ -7,8 +7,8 @@ namespace szakdolgozat.Controllers;
 
 public class ConnectedUsers
 {
-    public static ConcurrentDictionary<string, SocketConnection> clients =
-        new ConcurrentDictionary<string, SocketConnection>();
+    public static ConcurrentDictionary<(string,Guid), SocketConnection> clients =
+        new ConcurrentDictionary<(string,Guid), SocketConnection>();
 
     public static ConcurrentDictionary<string, SocketConnection> admins =
         new ConcurrentDictionary<string, SocketConnection>();
@@ -27,7 +27,7 @@ public class ConnectedUsers
             .Where(client => !RegisteredDisplays.Any(display => display.macAddress == client.Value.macAddress))
             .Select(client => new
             {
-                KioskName = client.Key,
+                KioskName = client.Key.Item1,
                 MacAddress = client.Value.macAddress,
                 Status = 0 //online
             });
@@ -48,7 +48,7 @@ public class ConnectedUsers
             .Select(x => new
             {
                 Id = x.Display.Id,
-                KioskName = x.Client.Key,
+                KioskName = x.Client.Key.Item1, // kioskName
                 NickName = x.Display.DisplayName,
                 Description = x.Display.DisplayDescription,
                 Status = 0 // online
@@ -62,11 +62,12 @@ public class ConnectedUsers
                 KioskName = display.KioskName,
                 NickName = display.DisplayName,
                 Description = display.DisplayDescription,
-                Status = 1 //offline
+                Status = 1 // offline
             });
 
         var allDisplays = onlineDisplays.Concat(offlineDisplays)
-            .OrderBy(display => display.Status).ThenBy(display => display.NickName);
+            .OrderBy(display => display.Status)
+            .ThenBy(display => display.NickName);
 
         return JsonSerializer.Serialize(allDisplays);
     }
