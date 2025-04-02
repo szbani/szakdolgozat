@@ -217,7 +217,8 @@ public class SSHScripts
             var connectionInfo = new ConnectionInfo(address, username, 
                 new PasswordAuthenticationMethod(username, password))
             {
-                Timeout = TimeSpan.FromSeconds(2)
+                Timeout = TimeSpan.FromSeconds(2),
+                RetryAttempts = 0
             };
 
             using (var client = new SshClient(connectionInfo))

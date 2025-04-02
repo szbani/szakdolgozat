@@ -106,7 +106,7 @@ public class WebSocketBase
                     }
                     userName = context.Request.Query["user"].ToString();
                     ConnectedUsers.clients.TryAdd((userName, _userGuid), socket);
-                    Console.WriteLine("Connected Client: " + userName+ "Guid: " + _userGuid);
+                    Console.WriteLine("Connected Client: " + userName+ " Guid: " + _userGuid);
                     BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
 
                     await Echo(webSocket, context, _userGuid, userName);
@@ -125,14 +125,13 @@ public class WebSocketBase
         {
             Console.WriteLine(e);
             Console.WriteLine("Closing connection");
-            Console.WriteLine("username: " + userName + "Guid: " + _userGuid);
+            Console.WriteLine("username: " + userName + " Guid: " + _userGuid);
             webSocket.Dispose();
             ConnectedUsers.clients.TryRemove((userName, _userGuid), out _);
             ConnectedUsers.admins.TryRemove(userName, out _);
             userName = null;
             _userGuid = Guid.Empty;
             BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-            // _psScripts.Shutdown(context.Connection.RemoteIpAddress.MapToIPv4().ToString());
             _targetUser = null;
             _filesPath = null;
             _receiveResult = null;
@@ -181,14 +180,13 @@ public class WebSocketBase
 
         Console.WriteLine("----------------- Echo ----------------");
         Console.WriteLine("Closing connection");
-        Console.WriteLine("username: " + username + "Guid: " + _userGuid);
-        Console.WriteLine(ConnectedUsers.clients.Values);
+        Console.WriteLine("username: " + username + " Guid: " + _userGuid);
         Console.WriteLine("------------------ End ----------------");
 
         ConnectedUsers.clients.TryRemove((username, _userGuid), out _);
         ConnectedUsers.admins.TryRemove(username, out _);
         BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-
+        
         await webSocket.CloseAsync(_receiveResult.CloseStatus.Value, _receiveResult.CloseStatusDescription,
             CancellationToken.None);
     }
@@ -207,20 +205,6 @@ public class WebSocketBase
                 case "getConnectedUsers":
                     return ConnectedUsers.sendConnectedUsers();
                 case "sendUpdateRequestToUser":
-                    // _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    // if (ConnectedUsers.clients.TryGetValue(_targetUser, out targetSocket))
-                    // {
-                    //     var reply = "{\"type\": \"updateRequest\"}";
-                    //     var serverReply = Encoding.UTF8.GetBytes(reply);
-                    //     await targetSocket.webSocket.SendAsync(
-                    //         new ArraySegment<byte>(Encoding.UTF8.GetBytes("{\"type\": \"configUpdated\"}")),
-                    //         WebSocketMessageType.Text, true, CancellationToken.None);
-                    //     return createJsonContent("ConfigUpdated", "Screen update sent.");
-                    // }
-                    // else
-                    // {
-                    //     return createJsonContent("ConfigUpdated", "Config Updated");
-                    // }
                 {
                     var targetEntries = ConnectedUsers.clients.Where(kv => kv.Key.Item1 == _targetUser).ToList();
 
@@ -382,7 +366,6 @@ public class WebSocketBase
                 }
                 case "startFileStream":
                 {
-                    //todo rename uploading files to something else
                     string fileType = json.RootElement.GetProperty("fileType").GetString();
                     string fileName = DateTime.Now.ToString("O").Replace(":", "_") + "." + fileType;
                     string changeTime = json.RootElement.GetProperty("changeTime").GetString() ?? "default";
