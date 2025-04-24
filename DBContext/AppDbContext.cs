@@ -18,11 +18,6 @@ public class AppDbContext :IdentityDbContext<IdentityUser>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // builder.Entity<IdentityUser>(b =>
-        // {az
-        //     b.HasIndex( e => e.NormalizedUserName).HasDatabaseName("UserNameIndex").IsUnique();
-        // });
-
         builder.Entity<DisplayModel>(b =>
         {
             b.HasKey(e => e.Id);

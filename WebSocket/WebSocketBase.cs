@@ -41,7 +41,7 @@ public class WebSocketBase
         string userName = "";
         WebSocket webSocket = null;
         Guid _userGuid = Guid.NewGuid();
-
+        _SSHScripts = new SSHScripts();
         try
         {
             if (context.Request.Path == "/ws")
@@ -137,8 +137,6 @@ public class WebSocketBase
             _receiveResult = null;
             _currentFileStream = null;
             _adminName = null;
-            _serviceProvider = null;
-            _SSHScripts = null;
         }
     }
 
