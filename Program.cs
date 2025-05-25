@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using szakdolgozat.Controllers;
-using szakdolgozat.DBContext;
+using szakdolgozat;
 using szakdolgozat.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,16 +68,17 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/api/Auth/Login";
 });
 
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-var webSocketOptions = new WebSocketOptions()
-{
-    KeepAliveInterval = TimeSpan.FromSeconds(120),
-    ReceiveBufferSize = 256 * 1024,
-};
-app.UseWebSockets(webSocketOptions);
-app.UseMiddleware<WebSocketBase>();
+// var webSocketOptions = new WebSocketOptions()
+// {
+//     KeepAliveInterval = TimeSpan.FromSeconds(120),
+//     ReceiveBufferSize = 256 * 1024,
+// };
+// app.UseWebSockets(webSocketOptions);
+// app.UseMiddleware<WebSocketBase>();
 
 app.UseRouting();
 app.UseCors("AllowAll");

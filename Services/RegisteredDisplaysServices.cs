@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using szakdolgozat.DBContext;
-using szakdolgozat.DBContext.Models;
+using szakdolgozat;
+using szakdolgozat.Models;
 using szakdolgozat.Interface;
 
 namespace szakdolgozat.Controllers;
@@ -47,7 +47,7 @@ public class RegisteredDisplaysServices : IRegisteredDisplaysServices
         return await _context.SaveChangesAsync();
     }
     
-    public int RemoveRegisteredDisplay(int id)
+    public int RemoveRegisteredDisplay(Guid id)
     {
         var display = _context.displays.FirstOrDefault(x => x.Id == id);
         if (display == null)

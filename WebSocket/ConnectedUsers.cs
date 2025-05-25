@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Text.Json;
-using szakdolgozat.DBContext.Models;
+using szakdolgozat.Models;
 
 namespace szakdolgozat.Controllers;
 

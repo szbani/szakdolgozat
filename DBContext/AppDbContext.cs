@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using szakdolgozat.DBContext.Models;
+using szakdolgozat.Models;
 
-namespace szakdolgozat.DBContext;
+namespace szakdolgozat;
 
 public class AppDbContext :IdentityDbContext<IdentityUser>
 {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Json.More;
-using szakdolgozat.DBContext.Models;
+using szakdolgozat.Models;
 using szakdolgozat.Interface;
 
 namespace szakdolgozat.Controllers;
@@ -966,7 +966,7 @@ public class WebSocketBase
 
                         display = new DisplayModel
                         {
-                            Id = json.RootElement.GetProperty("id").GetInt32(),
+                            Id = json.RootElement.GetProperty("id").GetGuid(),
                             DisplayName = json.RootElement.GetProperty("nickName").GetString(),
                             DisplayDescription = json.RootElement.GetProperty("description").GetString(),
                             macAddress = macAddress,
