@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using szakdolgozat.Controllers;
 using szakdolgozat;
+using szakdolgozat.Hubs;
 using szakdolgozat.Interface;
+using szakdolgozat.SSH;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,17 +72,14 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/api/Auth/Login";
 });
 
+builder.Services.AddSingleton<IDisplayConfigService, DisplayConfigService>();
+builder.Services.AddSingleton<IFileTransferService, FileTransferService>();
+builder.Services.AddSingleton<IConnectionTracker, ConnectionTracker>();
+builder.Services.AddSingleton<SSHScripts>();
+
 builder.Services.AddSignalR();
 
 var app = builder.Build();
-
-// var webSocketOptions = new WebSocketOptions()
-// {
-//     KeepAliveInterval = TimeSpan.FromSeconds(120),
-//     ReceiveBufferSize = 256 * 1024,
-// };
-// app.UseWebSockets(webSocketOptions);
-// app.UseMiddleware<WebSocketBase>();
 
 app.UseRouting();
 app.UseCors("AllowAll");
@@ -87,6 +88,51 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapControllers();
-app.UseHttpsRedirection();
+app.MapHub<AdminHub>("/adminhub");
+app.MapHub<ClientHub>("/clienthub");
+
+app.MapPost("/upload-media/{targetUser}/{changeTime}", async (
+    string targetUser,
+    string changeTime,
+    IFormFile file,
+    [FromServices] IFileTransferService fileTransferService,      
+    [FromServices] IDisplayConfigService displayConfigService,       
+    [FromServices] IHubContext<ClientHub> clientHubContext,        
+    [FromServices] IHubContext<AdminHub> adminHubContext,           
+    [FromServices] IConnectionTracker connectionTracker) =>  
+{
+    if (file == null || file.Length == 0)
+    {
+        return Results.BadRequest("No file uploaded.");
+    }
+
+    try
+    {
+        string fileName = await fileTransferService.SaveUploadedFileAsync(file, targetUser, changeTime);
+        await displayConfigService.AddImagePathToConfigAsync(targetUser, changeTime, fileName);
+
+        // Signal the client that its config has been updated (it should re-fetch)
+        var clientConnections = connectionTracker.GetClientConnections()
+            .Where(c => c.KioskName == targetUser);
+        foreach (var client in clientConnections)
+        {
+            await clientHubContext.Clients.Client(client.ConnectionId).SendAsync("ConfigUpdated");
+            // Or, send the full updated config
+            // var updatedConfig = await displayConfigService.GetConfigJsonAsync(targetUser);
+            // await clientHubContext.Clients.Client(client.ConnectionId).SendAsync("ReceiveConfigUpdate", updatedConfig);
+        }
+
+        // Notify admins that a file was uploaded and config updated
+        await adminHubContext.Clients.All.SendAsync("AdminMessage", $"File '{fileName}' uploaded for '{targetUser}'. Config updated.");
+
+        return Results.Ok(new { message = "File uploaded and config updated.", fileName });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"File upload failed: {ex.Message}");
+        return Results.Problem($"File upload failed: {ex.Message}");
+    }
+}).DisableAntiforgery();
+
 
 app.Run();

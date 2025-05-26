@@ -3,9 +3,10 @@ using System.Net.Sockets;
 using System.Security;
 using System.Text.RegularExpressions;
 using Renci.SshNet;
+using szakdolgozat.Controllers;
 using ConnectionInfo = Renci.SshNet.ConnectionInfo;
 
-namespace szakdolgozat.Controllers;
+namespace szakdolgozat.SSH;
 
 public class SSHScripts
 {

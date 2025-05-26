@@ -6,6 +6,7 @@ using System.Text.Json.Nodes;
 using Json.More;
 using szakdolgozat.Models;
 using szakdolgozat.Interface;
+using szakdolgozat.SSH;
 
 namespace szakdolgozat.Controllers;
 
@@ -1079,41 +1080,41 @@ public class WebSocketBase
                             id = "";
                         }
 
-                        var result = scopedService.UpdateUser(id, username, email, password);
-                        if (result == AccountErrors.Success)
-                        {
-                            Console.WriteLine("Admin updated");
-                            BroadcastMessageToAdmins(createJsonContent("AdminList",
-                                JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
-                            return createJsonContent("Success", "Admin created");
-                        }
-
-                        if (AccountErrors.GetErrorMessage(result) != null)
-                        {
-                            Console.WriteLine("Admin not updated");
-                            BroadcastMessageToAdmin(_adminName, createJsonContent("AdminList",
-                                JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
-                            return createJsonContent("Error", AccountErrors.GetErrorMessage(result));
-                        }
+                        // var result = scopedService.UpdateUser(id, username, email, password);
+                        // if (result == AccountErrors.Success)
+                        // {
+                        //     Console.WriteLine("Admin updated");
+                        //     BroadcastMessageToAdmins(createJsonContent("AdminList",
+                        //         JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
+                        //     return createJsonContent("Success", "Admin created");
+                        // }
+                        //
+                        // if (AccountErrors.GetErrorMessage(result) != null)
+                        // {
+                        //     Console.WriteLine("Admin not updated");
+                        //     BroadcastMessageToAdmin(_adminName, createJsonContent("AdminList",
+                        //         JsonSerializer.Serialize(scopedService.GetUsersAsync().Result)));
+                        //     return createJsonContent("Error", AccountErrors.GetErrorMessage(result));
+                        // }
                     }
 
                     return createJsonContent("Error", "Something went Wrong");
                 }
-                case "DeleteAdmin":
-                {
-                    using (var scope = _serviceProvider.CreateScope())
-                    {
-                        var scopedService = scope.ServiceProvider.GetRequiredService<IAccountService>();
-                        var id = json.RootElement.GetProperty("id").GetString();
-                        var result = scopedService.RemoveUser(id);
-                        if (result == 1)
-                        {
-                            return createJsonContent("Success", "Admin removed");
-                        }
-                    }
-
-                    return createJsonContent("Error", "Admin not found");
-                }
+                // case "DeleteAdmin":
+                // {
+                //     using (var scope = _serviceProvider.CreateScope())
+                //     {
+                //         var scopedService = scope.ServiceProvider.GetRequiredService<IAccountService>();
+                //         var id = json.RootElement.GetProperty("id").GetString();
+                //         var result = scopedService.DeleteUserAsync(id);
+                //         if (result == 1)
+                //         {
+                //             return createJsonContent("Success", "Admin removed");
+                //         }
+                //     }
+                //
+                //     return createJsonContent("Error", "Admin not found");
+                // }
                 case "Logout":
                 {
                     ConnectedUsers.admins.TryRemove(_adminName, out _);

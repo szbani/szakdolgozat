@@ -1,4 +1,4 @@
-﻿namespace szakdolgozat.Controllers;
+﻿namespace szakdolgozat.SSH;
 
 public class SSHResult
 {
