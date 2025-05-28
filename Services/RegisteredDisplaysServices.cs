@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using szakdolgozat;
 using szakdolgozat.Models;
 using szakdolgozat.Interface;
 
-namespace szakdolgozat.Controllers;
+namespace szakdolgozat.Services;
 
 public class RegisteredDisplaysServices : IRegisteredDisplaysServices
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
     
     public RegisteredDisplaysServices(AppDbContext context)
     {
@@ -16,23 +15,23 @@ public class RegisteredDisplaysServices : IRegisteredDisplaysServices
     
     public int RegisterDisplay(DisplayModel dto)
     {
-        _context.displays.Add(dto);
+        _context.Displays.Add(dto);
         return _context.SaveChanges();
     }
     
     public async Task<DisplayModel[]> GetRegisteredDisplaysAsync()
     {
-        return await _context.displays.ToArrayAsync();
+        return await _context.Displays.ToArrayAsync();
     }
     
     public DisplayModel[] GetRegisteredDisplays()
     {
-        return _context.displays.ToArray();
+        return _context.Displays.ToArray();
     }
     
     public async Task<int> ModifyRegisteredDisplay(DisplayModel dto)
     {
-        var display = await _context.displays.FirstOrDefaultAsync(x => x.Id == dto.Id);
+        var display = await _context.Displays.FirstOrDefaultAsync(x => x.Id == dto.Id);
         if (display == null)
         {
             return 0;
@@ -47,15 +46,15 @@ public class RegisteredDisplaysServices : IRegisteredDisplaysServices
         return await _context.SaveChangesAsync();
     }
     
-    public int RemoveRegisteredDisplay(Guid id)
+    public Task RemoveRegisteredDisplay(Guid id)
     {
-        var display = _context.displays.FirstOrDefault(x => x.Id == id);
+        var display = _context.Displays.FirstOrDefault(x => x.Id == id);
         if (display == null)
         {
-            return 0;
+            return Task.FromException(new Exception("No display found with the given ID."));
         }
-        _context.displays.Remove(display);
-        return _context.SaveChanges();
+        _context.Displays.Remove(display);
+        return _context.SaveChangesAsync();
     }
     
 }

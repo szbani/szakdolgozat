@@ -163,10 +163,11 @@ public class SSHScripts
 
         try
         {
-            Console.WriteLine(0);
-
-            Console.WriteLine(address);
-            Console.WriteLine(username, password);
+            Console.WriteLine("Getting MAC address for: " + address);
+            if (!IPAddress.TryParse(address, out _))
+            {
+                return new SSHResult(false, "Invalid IP address format.");
+            }
             using (var sshClient = new SshClient(address, username, password))
             {
                 sshClient.Connect();
@@ -207,7 +208,7 @@ public class SSHScripts
         }
         catch (Exception e)
         {
-            return new SSHResult(false, "Error connecting via SSH or executing the command: " + e.Message);
+            return new SSHResult(false, "00:00:00:00:00:00");
         }
     }
 

@@ -8,5 +8,5 @@ public interface IRegisteredDisplaysServices
     Task<DisplayModel[]> GetRegisteredDisplaysAsync();
     DisplayModel[] GetRegisteredDisplays();
     Task<int> ModifyRegisteredDisplay(DisplayModel dto);
-    int RemoveRegisteredDisplay(Guid id);
+    Task RemoveRegisteredDisplay(Guid id);
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using szakdolgozat.Controllers;
 using szakdolgozat.Interface;
+using szakdolgozat.Models;
 using szakdolgozat.SSH;
 
 namespace szakdolgozat.Hubs;
@@ -105,6 +106,177 @@ public class AdminHub : Hub
         }
     }
 
+    public async Task RemoveDisplay(Guid displayId)
+    {
+        try
+        {
+            await _registeredDisplaysService.RemoveRegisteredDisplay(displayId);
+            Console.WriteLine($"AdminHub: Removed display with ID {displayId}.");
+            await Clients.Caller.SendAsync("SuccessMessage", $"Display with ID {displayId} removed successfully.");
+            // Optionally, refresh the registered displays list
+            await RefreshRegisteredDisplays();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error removing display with ID {displayId}: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error removing display: {ex.Message}");
+        }
+    }
+
+    public async Task RegisterDisplay(string ipAddress, string kioskName)
+    {
+        try
+        {
+            var macAddress = _sshScripts.GetMacAddress(ipAddress);
+            if (macAddress == null)
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "Failed to retrieve MAC address from the display.");
+                return;
+            }
+            
+            var display = new DisplayModel()
+            {
+                Id = Guid.NewGuid(),
+                DisplayName = $"Display {ipAddress}",
+                macAddress = macAddress.getMessage(),
+                DisplayDescription = "Registered via DisplayManager",
+                KioskName = kioskName
+            };
+
+            int result = _registeredDisplaysService.RegisterDisplay(display);
+            if (result > 0)
+            {
+                Console.WriteLine($"AdminHub: Registered display {display.DisplayName} with IP {ipAddress}.");
+                await Clients.Caller.SendAsync("SuccessMessage", $"Display {display.DisplayName} registered successfully.");
+                // Optionally, refresh the registered displays list
+                await RefreshRegisteredDisplays();
+            }
+            else
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "Failed to register display.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error registering display with IP {ipAddress}: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error registering display: {ex.Message}");
+        }
+    }
+
+    public async Task WakeOnLanDisplay(Guid displayId)
+    {
+        try
+        {
+            var display = _registeredDisplaysService.GetRegisteredDisplays().FirstOrDefault(d => d.Id == displayId);
+            if (display == null)
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "Display not found.");
+                return;
+            }
+
+            var macAddress = display.macAddress;
+            if (string.IsNullOrEmpty(macAddress))
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "MAC address is not available for this display.");
+                return;
+            }
+
+            _sshScripts.WakeOnLan(macAddress);
+            Console.WriteLine($"AdminHub: Sent Wake-on-LAN command to display {display.DisplayName} (ID: {displayId}).");
+            await Clients.Caller.SendAsync("SuccessMessage", $"Wake-on-LAN command sent to {display.DisplayName}.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending Wake-on-LAN command: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error sending Wake-on-LAN command: {ex.Message}");
+        }
+    }
+    
+    public async Task RestartDisplay(Guid displayId)
+    {
+        try
+        {
+            var display = _registeredDisplaysService.GetRegisteredDisplays().FirstOrDefault(d => d.Id == displayId);
+            if (display == null)
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "Display not found.");
+                return;
+            }
+            
+            var ipAddress = _connectionTracker.GetClientConnections()
+                .FirstOrDefault(c => c.MacAddress == display.macAddress)?.IpAddress;
+
+            if (string.IsNullOrEmpty(ipAddress))
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "IP address not found for this display.");
+                return;
+            }
+            _sshScripts.Reboot(ipAddress);
+            Console.WriteLine($"AdminHub: Sent restart command to display {display.DisplayName} (ID: {displayId}).");
+            await Clients.Caller.SendAsync("SuccessMessage", $"Restart command sent to {display.DisplayName}.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending restart command: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error sending restart command: {ex.Message}");
+        }
+    }
+    
+    public async Task ShutdownDisplay(Guid displayId)
+    {
+        try
+        {
+            var display = _registeredDisplaysService.GetRegisteredDisplays().FirstOrDefault(d => d.Id == displayId);
+            if (display == null)
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "Display not found.");
+                return;
+            }
+            
+            var ipAddress = _connectionTracker.GetClientConnections()
+                .FirstOrDefault(c => c.MacAddress == display.macAddress)?.IpAddress;
+
+            if (string.IsNullOrEmpty(ipAddress))
+            {
+                await Clients.Caller.SendAsync("ErrorMessage", "IP address not found for this display.");
+                return;
+            }
+            _sshScripts.Shutdown(ipAddress);
+            Console.WriteLine($"AdminHub: Sent shutdown command to display {display.DisplayName} (ID: {displayId}).");
+            await Clients.Caller.SendAsync("SuccessMessage", $"Shutdown command sent to {display.DisplayName}.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending shutdown command: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error sending shutdown command: {ex.Message}");
+        }
+    }
+    
+    public async Task EditDisplay(Guid displayId, string nickName, string description, string macAddress)
+    {
+        Console.WriteLine( $"AdminHub: Editing display {displayId} with Nickname: {nickName}, Description: {description}, MAC: {macAddress}");
+        try
+        {
+            var display = new DisplayModel
+            {
+                Id = displayId,
+                DisplayName = nickName,
+                DisplayDescription = description,
+                macAddress = macAddress
+            };
+            await _registeredDisplaysService.ModifyRegisteredDisplay(display);
+            Console.WriteLine($"AdminHub: Updated display {display.DisplayName} (ID: {displayId}).");
+            await Clients.Caller.SendAsync("SuccessMessage", $"Display {display.DisplayName} updated successfully.");
+            // Optionally, refresh the registered displays list
+            await RefreshRegisteredDisplays();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating display {displayId}: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error updating display: {ex.Message}");
+        }
+    }
+
     public async Task DeleteAdminUser(string id)
     {
         try
@@ -144,12 +316,6 @@ public class AdminHub : Hub
             {
                 try
                 {
-                    // Get the latest config from the service for this client
-                    var configJson = await _displayConfigService.GetConfigJsonAsync(client.KioskName);
-                    // Send the config directly to the targeted client
-                    await _clientHubContext.Clients.Client(client.ConnectionId)
-                        .SendAsync("ReceiveConfigUpdate", configJson);
-                    // Optionally, also send a generic "ConfigUpdated" signal
                     await _clientHubContext.Clients.Client(client.ConnectionId).SendAsync("ConfigUpdated");
                 }
                 catch (Exception ex)
@@ -232,7 +398,7 @@ public class AdminHub : Hub
         _connectionTracker.SetRegisteredDisplays(displays); // Update tracker
         await Clients.Caller.SendAsync("AdminMessage", "Registered displays list refreshed from database.");
         // Also notify clients of the change if they need to be aware of registration status
-        await Clients.Caller.SendAsync("UpdateDisplayStatuses",
+        await Clients.All.SendAsync("UpdateDisplayStatuses",
             _connectionTracker.GetRegisteredDisplayStatusesJson(),
             _connectionTracker.GetOnlineUnregisteredDisplaysJson());
     }

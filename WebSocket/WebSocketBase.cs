@@ -940,24 +940,24 @@ public class WebSocketBase
 
                     return createJsonContent("Error", "User not found");
                 }
-                case "RemoveRegisteredDisplay":
-                    _targetUser = json.RootElement.GetProperty("targetUser").GetString();
-                    using (var scope = _serviceProvider.CreateScope())
-                    {
-                        var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
-                        Console.WriteLine(ConnectedUsers.RegisteredDisplays
-                            .FirstOrDefault(x => x.DisplayName == _targetUser).Id);
-                        var result = scopedService.RemoveRegisteredDisplay(ConnectedUsers.RegisteredDisplays
-                            .FirstOrDefault(x => x.DisplayName == _targetUser).Id);
-                        if (result == 1)
-                        {
-                            ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
-                            BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
-                            return createJsonContent("Success", "Display removed");
-                        }
-                    }
-
-                    return createJsonContent("Error", "Display not found");
+                // case "RemoveRegisteredDisplay":
+                //     _targetUser = json.RootElement.GetProperty("targetUser").GetString();
+                //     using (var scope = _serviceProvider.CreateScope())
+                //     {
+                //         var scopedService = scope.ServiceProvider.GetRequiredService<IRegisteredDisplaysServices>();
+                //         Console.WriteLine(ConnectedUsers.RegisteredDisplays
+                //             .FirstOrDefault(x => x.DisplayName == _targetUser).Id);
+                //         var result = scopedService.RemoveRegisteredDisplay(ConnectedUsers.RegisteredDisplays
+                //             .FirstOrDefault(x => x.DisplayName == _targetUser).Id);
+                //         if (result == 1)
+                //         {
+                //             ConnectedUsers.RegisteredDisplays = await scopedService.GetRegisteredDisplaysAsync();
+                //             BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
+                //             return createJsonContent("Success", "Display removed");
+                //         }
+                //     }
+                //
+                //     return createJsonContent("Error", "Display not found");
                 case "ModifyRegisteredDisplay":
                     using (var scope = _serviceProvider.CreateScope())
                     {

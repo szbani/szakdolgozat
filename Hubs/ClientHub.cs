@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Renci.SshNet;
+using szakdolgozat.Controllers;
 using szakdolgozat.Interface;
 using szakdolgozat.SSH;
 
@@ -14,7 +15,7 @@ public class ClientHub : Hub
 
     public ClientHub(IConnectionTracker connectionTracker,
         IDisplayConfigService displayConfigService,
-        IHubContext<AdminHub> adminHubContext) 
+        IHubContext<AdminHub> adminHubContext)
     {
         _connectionTracker = connectionTracker;
         _displayConfigService = displayConfigService;

@@ -1,4 +1,5 @@
 ﻿using szakdolgozat.Models;
+using szakdolgozat.Services;
 
 namespace szakdolgozat.Interface;
 

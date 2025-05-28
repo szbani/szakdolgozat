@@ -1,16 +1,17 @@
 ﻿using System.Collections.Concurrent;
 using System.Text.Json;
+using szakdolgozat.Controllers;
 using szakdolgozat.Models;
 using szakdolgozat.Interface;
 
-namespace szakdolgozat.Controllers;
+namespace szakdolgozat.Services;
 
 public class ConnectionTracker : IConnectionTracker
 {
         private readonly ConcurrentDictionary<string,ClientConnectionInfo> _clientConnections = new();
         private readonly ConcurrentDictionary<string, AdminConnectionInfo> _adminConnections = new();
         private DisplayModel[] _registeredDisplays = Array.Empty<DisplayModel>();
-
+        
         public ConnectionTracker(IEnumerable<DisplayModel> initialRegisteredDisplays = null)
         {
             if (initialRegisteredDisplays != null)
@@ -107,7 +108,7 @@ public class ConnectionTracker : IConnectionTracker
                 .Select(client => new
                 {
                     KioskName = client.KioskName,
-                    MacAddress = client.MacAddress,
+                    IpAddress = client.IpAddress,
                     Status = 0 // online
                 });
 
@@ -130,6 +131,7 @@ public class ConnectionTracker : IConnectionTracker
                     KioskName = x.Client.KioskName,
                     NickName = x.Display.DisplayName,
                     Description = x.Display.DisplayDescription,
+                    Ipaddress = x.Client.IpAddress,
                     Status = 0 // online
                 });
 
@@ -141,6 +143,7 @@ public class ConnectionTracker : IConnectionTracker
                     KioskName = display.KioskName,
                     NickName = display.DisplayName,
                     Description = display.DisplayDescription,
+                    Ipaddress = "",
                     Status = 1 // offline
                 });
 

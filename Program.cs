@@ -6,6 +6,7 @@ using szakdolgozat.Controllers;
 using szakdolgozat;
 using szakdolgozat.Hubs;
 using szakdolgozat.Interface;
+using szakdolgozat.Services;
 using szakdolgozat.SSH;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,7 +75,12 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddSingleton<IDisplayConfigService, DisplayConfigService>();
 builder.Services.AddSingleton<IFileTransferService, FileTransferService>();
-builder.Services.AddSingleton<IConnectionTracker, ConnectionTracker>();
+
+var registeredDisplays = builder.Services.BuildServiceProvider()
+    .GetRequiredService<IRegisteredDisplaysServices>()
+    .GetRegisteredDisplays().ToList();
+
+builder.Services.AddSingleton<IConnectionTracker>(new ConnectionTracker(registeredDisplays));
 builder.Services.AddSingleton<SSHScripts>();
 
 builder.Services.AddSignalR();

@@ -8,7 +8,7 @@ namespace szakdolgozat;
 public class AppDbContext :IdentityDbContext<IdentityUser>
 {
 
-    public DbSet<DisplayModel> displays { get; set; }
+    public DbSet<DisplayModel> Displays { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
