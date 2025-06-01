@@ -2,6 +2,6 @@
 
 public interface IFileTransferService
 {
-    string GetFilePathForUpload(string targetUser, string changeTime, string originalFileName);
-    Task<string> SaveUploadedFileAsync(IFormFile file, string targetUser, string changeTime);
+    string GetFilePathForUpload(string kioskName, string schedule, string originalFileName);
+    Task<List<string>> SaveUploadedFilesAsync(IFormFileCollection files, string kioskName, string schedule);
 }

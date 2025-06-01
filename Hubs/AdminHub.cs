@@ -331,63 +331,91 @@ public class AdminHub : Hub
         }
         else
         {
-            await Clients.Caller.SendAsync("AdminMessage", $"Error: Client '{kioskName}' not found or connected.");
+            // await Clients.Caller.SendAsync("AdminMessage", $"Error: Client '{kioskName}' not found or connected.");
         }
     }
+    
 
-    // Admin-triggered configuration changes (calling the config service)
-    public async Task PrepareFileStreamAndConfig(string targetUser, string mediaType, string changeTime)
+    public async Task SetNewDisplayConfig(string configJson)
     {
         try
         {
-            await _displayConfigService.PrepareConfigFileAsync(targetUser, mediaType, changeTime);
-            await Clients.Caller.SendAsync("AdminMessage", "Config file prepared for file stream.");
+            var config = JsonSerializer.Deserialize<DisplayConfigModel>(configJson);
+            if (config == null)
+            {
+                await Clients.Caller.SendAsync("AdminMessage", "Invalid configuration data.");
+                return;
+            }
+
+            await _displayConfigService.SetNewDisplayConfigAsync(config);
+            await Clients.Caller.SendAsync("AdminMessage", "New display configuration set successfully.");
+            // Optionally, notify all clients with kioskName to refresh their config
+            await SendConfigRequestToClient(config.kioskName);
+            await Clients.Caller.SendAsync("ConfigUpdated");
         }
         catch (Exception ex)
         {
-            await Clients.Caller.SendAsync("AdminMessage", $"Error preparing config for file stream: {ex.Message}");
+            await Clients.Caller.SendAsync("ErrorMessage", $"Error setting new display config: {ex.Message}");
         }
     }
-
-    public async Task ModifyImageOrder(string targetUser, string changeTime, JsonElement fileNames)
+    
+    public async Task AddSchedule(string kioskName, string startTime, string endTime)
     {
         try
         {
-            await _displayConfigService.ModifyImageOrderAsync(targetUser, changeTime, fileNames);
-            await Clients.Caller.SendAsync("AdminMessage", "Image order modified successfully.");
-            await SendConfigRequestToClient(targetUser); // Push updated config to client
+            await _displayConfigService.AddScheduleToConfigAsync(kioskName, startTime, endTime);
+            await Clients.Caller.SendAsync("AdminMessage", "Schedule added successfully.");
+            await SendConfigRequestToClient(kioskName);
+            await Clients.Caller.SendAsync("ConfigUpdated");
         }
         catch (Exception ex)
         {
-            await Clients.Caller.SendAsync("AdminMessage", $"Error modifying image order: {ex.Message}");
+            await Clients.Caller.SendAsync("AdminMessage", $"Error adding Schedule: {ex.Message}");
         }
     }
-
-    public async Task DeleteMedia(string targetUser, string changeTime, JsonElement fileNames)
+    
+    public async Task RemoveSchedule(string kioskName, string startTime)
     {
         try
         {
-            await _displayConfigService.DeleteMediaAsync(targetUser, changeTime, fileNames);
+            await _displayConfigService.RemoveScheduleFromConfigAsync(kioskName, startTime);
+            await Clients.Caller.SendAsync("AdminMessage", "Schedule removed successfully.");
+            await SendConfigRequestToClient(kioskName);
+            await Clients.Caller.SendAsync("ConfigUpdated");
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("AdminMessage", $"Error removing Schedule: {ex.Message}");
+        }
+    }
+
+    public async Task ChangeFileOrder(string kioskName,JsonElement fileNames , string schedules)
+    {
+        try
+        {
+            await _displayConfigService.ChangeFileOrderAsync(kioskName, fileNames, schedules);
+            await Clients.Caller.SendAsync("AdminMessage", "File order changed successfully.");
+            await SendConfigRequestToClient(kioskName); // Push updated config to client
+            await Clients.Caller.SendAsync("ConfigUpdated");
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("AdminMessage", $"Error changing file order: {ex.Message}");
+        }
+    }
+
+    public async Task DeleteFiles(string kioskName, string schedule, JsonElement fileNames)
+    {
+        try
+        {
+            await _displayConfigService.DeleteMediaAsync(kioskName, schedule, fileNames);
             await Clients.Caller.SendAsync("AdminMessage", "Media deleted successfully.");
-            await SendConfigRequestToClient(targetUser); // Push updated config to client
+            await Clients.Caller.SendAsync("ConfigUpdated");
+            await SendConfigRequestToClient(kioskName); // Push updated config to client
         }
         catch (Exception ex)
         {
             await Clients.Caller.SendAsync("AdminMessage", $"Error deleting media: {ex.Message}");
-        }
-    }
-
-    public async Task AddSchedule(string targetUser, string startTime, string endTime)
-    {
-        try
-        {
-            await _displayConfigService.AddScheduleToConfigAsync(targetUser, startTime, endTime);
-            await Clients.Caller.SendAsync("AdminMessage", "Schedule added successfully.");
-            await SendConfigRequestToClient(targetUser); // Push updated config to client
-        }
-        catch (Exception ex)
-        {
-            await Clients.Caller.SendAsync("AdminMessage", $"Error adding schedule: {ex.Message}");
         }
     }
 

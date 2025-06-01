@@ -13,7 +13,6 @@ namespace szakdolgozat.Controllers;
 public class WebSocketBase
 {
     private WebSocketReceiveResult _receiveResult;
-    public static string _filesPath;
     private string _targetUser;
     private FileStream _currentFileStream;
     private SSHScripts _SSHScripts;
@@ -134,7 +133,7 @@ public class WebSocketBase
             _userGuid = Guid.Empty;
             BroadcastMessageToAdmins(ConnectedUsers.sendConnectedUsers());
             _targetUser = null;
-            _filesPath = null;
+            // _filesPath = null;
             _receiveResult = null;
             _currentFileStream = null;
             _adminName = null;
@@ -1166,7 +1165,8 @@ public class WebSocketBase
 
     private string GetDisplayDirectory(string targetUser)
     {
-        return _filesPath + "displays/" + targetUser + "/";
+        // return _filesPath + "displays/" + targetUser + "/";
+        return "";
     }
 
     private static void CreateDirectory(string path)

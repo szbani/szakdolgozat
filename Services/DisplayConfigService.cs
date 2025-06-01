@@ -3,24 +3,25 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Json.More;
 using szakdolgozat.Interface;
+using szakdolgozat.Models;
 
 namespace szakdolgozat.Controllers;
 
 public class DisplayConfigService : IDisplayConfigService
 {
-    private readonly string _basePath; // Base directory for all display configs
-
-    public DisplayConfigService(IWebHostEnvironment env)
+    private readonly string _filesPath; 
+    public DisplayConfigService(string filesPath)
     {
-        // You might want to get this from configuration or a dedicated data folder
-        _basePath = Path.Combine(env.ContentRootPath, "DisplayConfigs");
-        // Ensure the base directory exists
-        CreateDirectory(_basePath);
+        _filesPath = filesPath ?? throw new ArgumentNullException(nameof(filesPath), "Files path cannot be null.");
+        if (!Directory.Exists(_filesPath))
+        {
+            throw new DirectoryNotFoundException($"The specified files path does not exist: {_filesPath}");
+        }
     }
 
-    public string GetDisplayDirectory(string targetUser)
+    public string GetDisplayDirectory(string folderName)
     {
-        return Path.Combine(_basePath, targetUser, Path.DirectorySeparatorChar.ToString());
+        return _filesPath + "displays/" + folderName + "/";
     }
 
     public void CreateDirectory(string path)
@@ -50,13 +51,65 @@ public class DisplayConfigService : IDisplayConfigService
         }
     }
 
+    public async Task SetNewDisplayConfigAsync(DisplayConfigModel config)
+    {
+        if (config.kioskName == "" || config.kioskName == null)
+        {
+            throw new ArgumentException("Kiosk name cannot be empty or null.");
+        }
+
+        if (config.transitionStyle == null || config.transitionDuration <= 0 || config.imageFit == null ||
+            config.imageInterval <= 0)
+        {
+            throw new ArgumentException("Invalid configuration values provided.");
+        }
+
+        // Ensure the display directory exists
+        CreateDirectory(GetDisplayDirectory(config.kioskName));
+        var readConfig = string.Empty;
+        try
+        {
+            var temp = GetDisplayDirectory(config.kioskName);
+            readConfig = await File.ReadAllTextAsync(
+                Path.Combine(GetDisplayDirectory(config.kioskName), "config.json"));
+        }
+        catch (FileNotFoundException e)
+        {
+            await CreateDefaultConfig(GetDisplayDirectory(config.kioskName));
+            Console.WriteLine($"Creating default config for {config.kioskName}: {e.Message}");
+            readConfig = File.ReadAllText(GetDisplayDirectory(config.kioskName) + "config.json");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        var readJson = JsonNode.Parse(readConfig).AsObject();
+
+        // Update the configuration values
+        readJson["transitionStyle"] = config.transitionStyle;
+        readJson["transitionDuration"] = config.transitionDuration;
+        readJson["imageFit"] = config.imageFit;
+        readJson["imageInterval"] = config.imageInterval;
+
+        var writeConfig = new FileStream(GetDisplayDirectory(config.kioskName) + "config.json", FileMode.Create,
+            FileAccess.Write);
+        await using (writeConfig)
+        {
+            await writeConfig.WriteAsync(Encoding.UTF8.GetBytes(readJson.ToString()));
+            writeConfig.Close();
+            writeConfig.Dispose();
+        }
+        Console.WriteLine($"Configuration for {config.kioskName} updated successfully.");
+    }
+
     private async Task CreateDefaultConfig(string displayDir)
     {
         var defaultConfig = new
         {
             transitionStyle = "slide",
             transitionDuration = 1,
-            imageFit = "cover",
+            imageFit = "contain",
             imageInterval = 5,
             changeTimes = new List<string> { "default" },
             @default = new
@@ -71,9 +124,9 @@ public class DisplayConfigService : IDisplayConfigService
             new JsonSerializerOptions { WriteIndented = true })));
     }
 
-    public async Task PrepareConfigFileAsync(string targetUser, string mediaType, string changeTime)
+    public async Task PrepareConfigFileAsync(string kioskName, string mediaType, string schedule)
     {
-        string displayDir = GetDisplayDirectory(targetUser);
+        string displayDir = GetDisplayDirectory(kioskName);
         CreateDirectory(displayDir);
 
         string configPath = Path.Combine(displayDir, "config.json");
@@ -87,8 +140,8 @@ public class DisplayConfigService : IDisplayConfigService
             configDict = JsonSerializer.Deserialize<Dictionary<string, object>>(readConfig);
 
             // Logic to clear files if media type changes for a specific changeTime
-            string changeTimeDirPath = Path.Combine(displayDir, changeTime.Replace(":", "_"));
-            if (configJsonDoc.RootElement.TryGetProperty(changeTime, out var changeTimeElement) &&
+            string changeTimeDirPath = Path.Combine(displayDir, schedule.Replace(":", "_"));
+            if (configJsonDoc.RootElement.TryGetProperty(schedule, out var changeTimeElement) &&
                 changeTimeElement.TryGetProperty("mediaType", out var existingMediaTypeElement) &&
                 existingMediaTypeElement.GetString() != mediaType)
             {
@@ -106,7 +159,7 @@ public class DisplayConfigService : IDisplayConfigService
         catch (Exception e)
         {
             // Handle parsing errors, create default if invalid
-            Console.WriteLine($"Error parsing config.json for {targetUser}: {e.Message}. Creating default.");
+            Console.WriteLine($"Error parsing config.json for {kioskName}: {e.Message}. Creating default.");
             await CreateDefaultConfig(displayDir);
             string readConfig = await File.ReadAllTextAsync(configPath);
             configJsonDoc = JsonDocument.Parse(readConfig);
@@ -121,9 +174,9 @@ public class DisplayConfigService : IDisplayConfigService
                               new List<string>();
         }
 
-        if (!changeTimesList.Contains(changeTime))
+        if (!changeTimesList.Contains(schedule))
         {
-            changeTimesList.Add(changeTime);
+            changeTimesList.Add(schedule);
             changeTimesList.Sort();
         }
 
@@ -131,13 +184,13 @@ public class DisplayConfigService : IDisplayConfigService
 
         // Update or add the specific changeTime entry
         var currentChangeTimeEntry = new Dictionary<string, object>();
-        if (configJsonDoc.RootElement.TryGetProperty(changeTime, out var existingEntry))
+        if (configJsonDoc.RootElement.TryGetProperty(schedule, out var existingEntry))
         {
             currentChangeTimeEntry = JsonSerializer.Deserialize<Dictionary<string, object>>(existingEntry.GetRawText());
         }
 
         currentChangeTimeEntry["mediaType"] = mediaType;
-        if (changeTime != "default" && currentChangeTimeEntry.ContainsKey("endTime"))
+        if (schedule != "default" && currentChangeTimeEntry.ContainsKey("endTime"))
         {
             // Preserve endTime if it exists and it's not the default time
             // Or you might want to remove it if mediaType changes dramatically
@@ -148,7 +201,7 @@ public class DisplayConfigService : IDisplayConfigService
             currentChangeTimeEntry["paths"] = new List<string>();
         }
 
-        configDict[changeTime] = currentChangeTimeEntry; // Overwrite or add
+        configDict[schedule] = currentChangeTimeEntry; // Overwrite or add
 
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(configDict,
@@ -156,46 +209,43 @@ public class DisplayConfigService : IDisplayConfigService
     }
 
 
-    public async Task AddImagePathToConfigAsync(string targetUser, string changeTime, string fileName)
+    public async Task AddImagePathsToConfigAsync(string kioskName, string schedule, List<string> fileNames)
     {
-        string configPath = Path.Combine(GetDisplayDirectory(targetUser), "config.json");
+        if (fileNames == null || fileNames.Count == 0)
+        {
+            throw new ArgumentException("File names cannot be null or empty.");
+        }
+
+        string displayDir = GetDisplayDirectory(kioskName);
+        CreateDirectory(displayDir);
+
+        string configPath = Path.Combine(displayDir, "config.json");
         if (!File.Exists(configPath))
         {
-            await CreateDefaultConfig(GetDisplayDirectory(targetUser));
+            await CreateDefaultConfig(displayDir);
         }
 
         var configJson = JsonNode.Parse(await File.ReadAllTextAsync(configPath)).AsObject();
-        var pathsArray = configJson[changeTime]?["paths"]?.AsArray() ?? new JsonArray();
+        var pathsArray = configJson[schedule]?["paths"]?.AsArray() ?? new JsonArray();
 
-        if (!pathsArray.Any(n => n.GetValue<string>() == fileName))
+        foreach (var fileName in fileNames)
         {
-            pathsArray.Add(fileName);
+            if (!pathsArray.Any(n => n.GetValue<string>() == fileName))
+            {
+                pathsArray.Add(fileName);
+            }
         }
 
-        configJson[changeTime]["paths"] = pathsArray;
+        configJson[schedule]["paths"] = pathsArray;
 
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
     }
+    
 
-    public async Task ModifyImageOrderAsync(string targetUser, string changeTime, JsonElement fileNames)
+    public async Task DeleteMediaAsync(string kioskName, string schedule, JsonElement fileNames)
     {
-        string configPath = Path.Combine(GetDisplayDirectory(targetUser), "config.json");
-        if (!File.Exists(configPath))
-        {
-            throw new FileNotFoundException("Config file not found for display.", configPath);
-        }
-
-        var configJson = JsonNode.Parse(await File.ReadAllTextAsync(configPath)).AsObject();
-        configJson[changeTime]["paths"] = fileNames.AsNode();
-
-        await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
-        await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
-    }
-
-    public async Task DeleteMediaAsync(string targetUser, string changeTime, JsonElement fileNames)
-    {
-        string displayDir = GetDisplayDirectory(targetUser);
+        string displayDir = GetDisplayDirectory(kioskName);
         string configPath = Path.Combine(displayDir, "config.json");
         if (!File.Exists(configPath))
         {
@@ -203,14 +253,14 @@ public class DisplayConfigService : IDisplayConfigService
         }
 
         var configJson = JsonNode.Parse(await File.ReadAllTextAsync(configPath))?.AsObject();
-        if (configJson == null || !configJson.ContainsKey(changeTime) ||
-            !configJson[changeTime].AsObject().ContainsKey("paths"))
+        if (configJson == null || !configJson.ContainsKey(schedule) ||
+            !configJson[schedule].AsObject().ContainsKey("paths"))
         {
             throw new InvalidOperationException("Invalid config structure for media deletion.");
         }
 
-        var pathsArray = configJson[changeTime]["paths"].AsArray();
-        var changeTimeDirPath = Path.Combine(displayDir, changeTime.Replace(":", "_"));
+        var pathsArray = configJson[schedule]["paths"].AsArray();
+        var changeTimeDirPath = Path.Combine(displayDir, schedule.Replace(":", "_"));
 
         foreach (var fileNameNode in fileNames.EnumerateArray())
         {
@@ -227,19 +277,19 @@ public class DisplayConfigService : IDisplayConfigService
             }
         }
 
-        configJson[changeTime]["paths"] = pathsArray;
+        configJson[schedule]["paths"] = pathsArray;
 
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
     }
 
 
-    public async Task AddScheduleToConfigAsync(string targetUser, string startTime, string endTime)
+    public async Task AddScheduleToConfigAsync(string kioskName, string startTime, string endTime)
     {
-        string configPath = Path.Combine(GetDisplayDirectory(targetUser), "config.json");
+        string configPath = Path.Combine(GetDisplayDirectory(kioskName), "config.json");
         if (!File.Exists(configPath))
         {
-            await CreateDefaultConfig(GetDisplayDirectory(targetUser));
+            await CreateDefaultConfig(GetDisplayDirectory(kioskName));
         }
 
         var readConfig = await File.ReadAllTextAsync(configPath);
@@ -267,6 +317,62 @@ public class DisplayConfigService : IDisplayConfigService
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
     }
 
+    public async Task RemoveScheduleFromConfigAsync(string kioskName, string startTime)
+    {
+        string configPath = Path.Combine(GetDisplayDirectory(kioskName), "config.json");
+        if (!File.Exists(configPath))
+        {
+            throw new FileNotFoundException("Config file not found for display.", configPath);
+        }
+
+        var readConfig = await File.ReadAllTextAsync(configPath);
+        var configJson = JsonNode.Parse(readConfig).AsObject();
+
+        // Remove the schedule entry
+        if (configJson.ContainsKey(startTime))
+        {
+            configJson.Remove(startTime);
+            Console.WriteLine($"Removed schedule entry for {startTime} from {kioskName}.");
+        }
+        else
+        {
+            Console.WriteLine($"No schedule entry found for {startTime} in {kioskName}.");
+        }
+
+        // Remove the startTime from changeTimes if it exists
+        var changeTimesArray = configJson["changeTimes"]?.AsArray();
+        if (changeTimesArray != null)
+        {
+            foreach (var item in changeTimesArray)
+            {
+                if (item.GetValue<string>() == startTime)
+                {
+                    changeTimesArray.Remove(item);
+                    Console.WriteLine($"Removed {startTime} from changeTimes in {kioskName}.");
+                    break;
+                }
+            }
+        }
+        
+        await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
+        await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+    }
+    
+    public async Task ChangeFileOrderAsync(string kioskName, JsonElement fileNames, string Schedule)
+    {
+        string configPath = Path.Combine(GetDisplayDirectory(kioskName), "config.json");
+        if (!File.Exists(configPath))
+        {
+            throw new FileNotFoundException("Config file not found for display.", configPath);
+        }
+
+        var configJson = JsonNode.Parse(await File.ReadAllTextAsync(configPath)).AsObject();
+        configJson[Schedule]["paths"] = fileNames.AsNode();
+
+        await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
+        await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+    }
+
     public async Task<string> GetConfigJsonAsync(string targetUser)
     {
         string configPath = Path.Combine(GetDisplayDirectory(targetUser), "config.json");
@@ -278,5 +384,4 @@ public class DisplayConfigService : IDisplayConfigService
 
         return await File.ReadAllTextAsync(configPath);
     }
-
 }

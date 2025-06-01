@@ -12,7 +12,6 @@ using szakdolgozat.SSH;
 var builder = WebApplication.CreateBuilder(args);
 
 var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-WebSocketBase._filesPath = config.GetValue<string>("WebServer:FilesPath");
 int port = config.GetValue<int>("ServerPort");
 var certPath = config.GetValue<string>("Certificate:Path");
 var certPassword = config.GetValue<string>("Certificate:Password");
@@ -73,7 +72,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/api/Auth/Login";
 });
 
-builder.Services.AddSingleton<IDisplayConfigService, DisplayConfigService>();
+builder.Services.AddSingleton<IDisplayConfigService>(new DisplayConfigService(config.GetValue<string>("WebServer:FilesPath")));
 builder.Services.AddSingleton<IFileTransferService, FileTransferService>();
 
 var registeredDisplays = builder.Services.BuildServiceProvider()
@@ -100,42 +99,59 @@ app.MapHub<ClientHub>("/clienthub");
 app.MapPost("/upload-media/{targetUser}/{changeTime}", async (
     string targetUser,
     string changeTime,
-    IFormFile file,
-    [FromServices] IFileTransferService fileTransferService,      
-    [FromServices] IDisplayConfigService displayConfigService,       
-    [FromServices] IHubContext<ClientHub> clientHubContext,        
-    [FromServices] IHubContext<AdminHub> adminHubContext,           
-    [FromServices] IConnectionTracker connectionTracker) =>  
+    IFormFileCollection files,
+    [FromServices] IFileTransferService fileTransferService,
+    [FromServices] IDisplayConfigService displayConfigService,
+    [FromServices] IHubContext<ClientHub> clientHubContext,
+    [FromServices] IHubContext<AdminHub> adminHubContext,
+    [FromServices] IConnectionTracker connectionTracker) =>
 {
-    if (file == null || file.Length == 0)
+    if (files == null || files.Count == 0)
     {
-        return Results.BadRequest("No file uploaded.");
+        return Results.BadRequest("No files uploaded.");
     }
 
     try
     {
-        string fileName = await fileTransferService.SaveUploadedFileAsync(file, targetUser, changeTime);
-        await displayConfigService.AddImagePathToConfigAsync(targetUser, changeTime, fileName);
-
-        // Signal the client that its config has been updated (it should re-fetch)
+        List<string> uploadedFileNames = await fileTransferService.SaveUploadedFilesAsync(files, targetUser, changeTime);
+    
+        if (uploadedFileNames.Count == 0)
+        {
+             return Results.BadRequest("No valid files were processed.");
+        }
+    
+        // 2. Update display configuration (assuming AddImagePathToConfigAsync can handle multiple or you call it per file)
+        // If AddImagePathToConfigAsync handles a single path at a time:
+        await displayConfigService.AddImagePathsToConfigAsync(targetUser, changeTime, uploadedFileNames);
+        
+        // If AddImagePathToConfigAsync could take a list of file names, you'd call it once:
+        // await displayConfigService.AddImagePathsToConfigAsync(targetUser, changeTime, uploadedFileNames);
+    
+    
+        // 3. Notify the specific client via SignalR that its config has been updated
         var clientConnections = connectionTracker.GetClientConnections()
-            .Where(c => c.KioskName == targetUser);
+                                                    .Where(c => c.KioskName == targetUser)
+                                                    .ToList();
+    
         foreach (var client in clientConnections)
         {
             await clientHubContext.Clients.Client(client.ConnectionId).SendAsync("ConfigUpdated");
-            // Or, send the full updated config
-            // var updatedConfig = await displayConfigService.GetConfigJsonAsync(targetUser);
-            // await clientHubContext.Clients.Client(client.ConnectionId).SendAsync("ReceiveConfigUpdate", updatedConfig);
+            Console.WriteLine($"Sent 'ConfigUpdated' to client {client.KioskName} ({client.ConnectionId})");
         }
-
-        // Notify admins that a file was uploaded and config updated
-        await adminHubContext.Clients.All.SendAsync("AdminMessage", $"File '{fileName}' uploaded for '{targetUser}'. Config updated.");
-
-        return Results.Ok(new { message = "File uploaded and config updated.", fileName });
+    
+        // 4. Notify senders via AdminHub that files were uploaded and config updated
+        // string fileListMessage = uploadedFileNames.Count > 1
+        //     ? $"Files '{string.Join(", ", uploadedFileNames)}' uploaded for '{targetUser}'."
+        //     : $"File '{uploadedFileNames.FirstOrDefault()}' uploaded for '{targetUser}'.";
+        //
+        // await adminHubContext.Clients.All.SendAsync("AdminMessage", fileListMessage);
+    
+        return Results.Ok(new { message = "Files uploaded and config updated successfully.", fileNames = uploadedFileNames });
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"File upload failed: {ex.Message}");
+        Console.WriteLine($"File upload failed for {targetUser}: {ex.Message}");
+        await adminHubContext.Clients.All.SendAsync("AdminMessage", $"File upload failed for '{targetUser}': {ex.Message}");
         return Results.Problem($"File upload failed: {ex.Message}");
     }
 }).DisableAntiforgery();
