@@ -9,7 +9,8 @@ namespace szakdolgozat.Controllers;
 
 public class DisplayConfigService : IDisplayConfigService
 {
-    private readonly string _filesPath; 
+    private readonly string _filesPath;
+
     public DisplayConfigService(string filesPath)
     {
         _filesPath = filesPath ?? throw new ArgumentNullException(nameof(filesPath), "Files path cannot be null.");
@@ -29,6 +30,14 @@ public class DisplayConfigService : IDisplayConfigService
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
+        }
+    }
+
+    public void DeleteDirectory(string path)
+    {
+        if (Directory.Exists(path))
+        {
+            Directory.Delete(path, true);
         }
     }
 
@@ -100,6 +109,7 @@ public class DisplayConfigService : IDisplayConfigService
             writeConfig.Close();
             writeConfig.Dispose();
         }
+
         Console.WriteLine($"Configuration for {config.kioskName} updated successfully.");
     }
 
@@ -241,7 +251,7 @@ public class DisplayConfigService : IDisplayConfigService
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
     }
-    
+
 
     public async Task DeleteMediaAsync(string kioskName, string schedule, JsonElement fileNames)
     {
@@ -315,6 +325,73 @@ public class DisplayConfigService : IDisplayConfigService
 
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+        fileStream.Flush();
+        fileStream.Close();
+    }
+
+    public async Task EditScheduleInConfigAsync(string kioskName, string originalStartTime, string startTime,
+        string endTime)
+    {
+        string configPath = Path.Combine(GetDisplayDirectory(kioskName), "config.json");
+        if (!File.Exists(configPath))
+        {
+            throw new FileNotFoundException("Config file not found for display.", configPath);
+        }
+
+        var readConfig = await File.ReadAllTextAsync(configPath);
+        var configJson = JsonNode.Parse(readConfig).AsObject();
+
+        // Check if the original start time exists
+        if (!configJson.ContainsKey(originalStartTime))
+        {
+            throw new KeyNotFoundException($"Schedule entry for {originalStartTime} not found in {kioskName}.");
+        }
+
+        //update the existing entry
+        if (configJson.ContainsKey(startTime) && startTime != originalStartTime)
+        {
+            throw new InvalidOperationException($"Schedule entry for {startTime} already exists in {kioskName}.");
+        }
+
+        if (startTime != originalStartTime)
+        {
+            // Move the entry to the new start time
+            var changeTimesList = configJson["changeTimes"]?.AsArray() ?? new JsonArray();
+            changeTimesList.Add(startTime);
+            foreach (var item in changeTimesList)
+            {
+                if (item.GetValue<string>() == originalStartTime)
+                {
+                    changeTimesList.Remove(item);
+                    Console.WriteLine($"Removed {originalStartTime} from changeTimes in {kioskName}.");
+                    break;
+                }
+            }
+            var sortedChangeTimes = changeTimesList.Select(x => x.GetValue<string>()).OrderBy(x => x).ToList();
+            configJson["changeTimes"] = JsonNode.Parse(JsonSerializer.Serialize(sortedChangeTimes)).AsArray();
+            Console.WriteLine(configJson[originalStartTime]["mediaType"]);
+            Console.WriteLine(configJson[originalStartTime]["paths"]);
+            var scheduleEntry = new JsonObject
+            {
+                ["mediaType"] = configJson[originalStartTime]["mediaType"].DeepClone(), 
+                ["endTime"] = endTime,
+                ["paths"] = configJson[originalStartTime]["paths"].DeepClone(),
+            };
+            configJson[startTime] = scheduleEntry;
+            configJson.Remove(originalStartTime);
+            
+            await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
+            await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+            Console.WriteLine($"Updated schedule entry from {originalStartTime} to {startTime} in {kioskName}.");
+        }
+        else
+        {
+            configJson[startTime]["endTime"] = endTime;
+            
+            await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
+            await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+            Console.WriteLine($"Updated end time for {startTime} in {kioskName}.");
+        }
     }
 
     public async Task RemoveScheduleFromConfigAsync(string kioskName, string startTime)
@@ -353,11 +430,17 @@ public class DisplayConfigService : IDisplayConfigService
                 }
             }
         }
-        
+
+        //Delete the directory for this schedule if it exists
+        string changeTimeDirPath = Path.Combine(GetDisplayDirectory(kioskName), startTime.Replace(":", "_"));
+        DeleteDirectory(changeTimeDirPath);
+
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+        fileStream.Flush();
+        fileStream.Close();
     }
-    
+
     public async Task ChangeFileOrderAsync(string kioskName, JsonElement fileNames, string Schedule)
     {
         string configPath = Path.Combine(GetDisplayDirectory(kioskName), "config.json");
@@ -371,6 +454,8 @@ public class DisplayConfigService : IDisplayConfigService
 
         await using var fileStream = new FileStream(configPath, FileMode.Create, FileAccess.Write);
         await fileStream.WriteAsync(Encoding.UTF8.GetBytes(configJson.ToString()));
+        fileStream.Flush();
+        fileStream.Close();
     }
 
     public async Task<string> GetConfigJsonAsync(string targetUser)

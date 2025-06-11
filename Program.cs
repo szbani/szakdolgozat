@@ -119,33 +119,17 @@ app.MapPost("/upload-media/{targetUser}/{changeTime}", async (
         {
              return Results.BadRequest("No valid files were processed.");
         }
-    
-        // 2. Update display configuration (assuming AddImagePathToConfigAsync can handle multiple or you call it per file)
-        // If AddImagePathToConfigAsync handles a single path at a time:
-        await displayConfigService.AddImagePathsToConfigAsync(targetUser, changeTime, uploadedFileNames);
         
-        // If AddImagePathToConfigAsync could take a list of file names, you'd call it once:
-        // await displayConfigService.AddImagePathsToConfigAsync(targetUser, changeTime, uploadedFileNames);
-    
-    
-        // 3. Notify the specific client via SignalR that its config has been updated
+        await displayConfigService.AddImagePathsToConfigAsync(targetUser, changeTime, uploadedFileNames);
         var clientConnections = connectionTracker.GetClientConnections()
                                                     .Where(c => c.KioskName == targetUser)
                                                     .ToList();
-    
         foreach (var client in clientConnections)
         {
             await clientHubContext.Clients.Client(client.ConnectionId).SendAsync("ConfigUpdated");
             Console.WriteLine($"Sent 'ConfigUpdated' to client {client.KioskName} ({client.ConnectionId})");
         }
-    
-        // 4. Notify senders via AdminHub that files were uploaded and config updated
-        // string fileListMessage = uploadedFileNames.Count > 1
-        //     ? $"Files '{string.Join(", ", uploadedFileNames)}' uploaded for '{targetUser}'."
-        //     : $"File '{uploadedFileNames.FirstOrDefault()}' uploaded for '{targetUser}'.";
-        //
-        // await adminHubContext.Clients.All.SendAsync("AdminMessage", fileListMessage);
-    
+        
         return Results.Ok(new { message = "Files uploaded and config updated successfully.", fileNames = uploadedFileNames });
     }
     catch (Exception ex)

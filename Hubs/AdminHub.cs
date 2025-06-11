@@ -331,7 +331,7 @@ public class AdminHub : Hub
         }
         else
         {
-            // await Clients.Caller.SendAsync("AdminMessage", $"Error: Client '{kioskName}' not found or connected.");
+            await Clients.Caller.SendAsync("AdminMessage", $"Error: Client '{kioskName}' not found or connected.");
         }
     }
     
@@ -371,6 +371,21 @@ public class AdminHub : Hub
         catch (Exception ex)
         {
             await Clients.Caller.SendAsync("AdminMessage", $"Error adding Schedule: {ex.Message}");
+        }
+    }
+    
+    public async Task EditSchedule(string kioskName, string originalStartTime, string startTime, string endTime)
+    {
+        try
+        {
+            await _displayConfigService.EditScheduleInConfigAsync(kioskName, originalStartTime, startTime, endTime);
+            await Clients.Caller.SendAsync("AdminMessage", "Schedule edited successfully.");
+            await SendConfigRequestToClient(kioskName);
+            await Clients.Caller.SendAsync("ConfigUpdated");
+        }
+        catch (Exception ex)
+        {
+            await Clients.Caller.SendAsync("AdminMessage", $"Error editing Schedule: {ex.Message}");
         }
     }
     

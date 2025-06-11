@@ -7,6 +7,7 @@ public interface IDisplayConfigService
 {
     string GetDisplayDirectory(string FolderName);
     void CreateDirectory(string path);
+    void DeleteDirectory(string path);
     void DeleteFiles(string path);
     void DeleteFile(string filePath);
     Task SetNewDisplayConfigAsync(DisplayConfigModel dcm);
@@ -15,6 +16,7 @@ public interface IDisplayConfigService
     Task ChangeFileOrderAsync(string kioskName, JsonElement fileNames, string schedule);
     Task DeleteMediaAsync(string kioskName, string schedule, JsonElement fileNames);
     Task AddScheduleToConfigAsync(string kioskName, string startTime, string endTime); // Your AddSchedule
+    Task EditScheduleInConfigAsync(string kioskName, string originalStartTime, string startTime, string endTime); // Your UpdateSchedule
     Task RemoveScheduleFromConfigAsync(string kioskName, string startTime); // Your DeleteSchedule
     Task<string> GetConfigJsonAsync(string kioskName); // To retrieve the config for client
     // Add more methods as needed for other config operations
