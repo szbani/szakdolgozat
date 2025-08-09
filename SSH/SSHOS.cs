@@ -1,6 +1,6 @@
 ﻿using Renci.SshNet;
 
-namespace szakdolgozat.Controllers;
+namespace szakdolgozat.SSH;
 
 public class SSHOS
 {

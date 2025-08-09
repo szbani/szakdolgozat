@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using szakdolgozat.DBContext.Models;
+using szakdolgozat.Models;
 
-namespace szakdolgozat.DBContext;
+namespace szakdolgozat;
 
 public class AppDbContext :IdentityDbContext<IdentityUser>
 {
 
-    public DbSet<DisplayModel> displays { get; set; }
+    public DbSet<DisplayModel> Displays { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {

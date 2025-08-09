@@ -14,54 +14,54 @@ public class AccountService : IAccountService
         _userManager = userManager;
     }
 
-    public int UpdateUser(string id, string username, string email, string password)
+    public Task UpdateUserAsync(string id, string username, string email, string password)
     {
         if (username == null)
         {
-            return AccountErrors.UsernameError;
+            return Task.FromException(AccountErrors.UsernameError);
         }
 
         if (email == null)
         {
-            return AccountErrors.EmailError;
+            return Task.FromException(AccountErrors.EmailError);
         }
 
         if (id == null)
         {
-            return AccountErrors.UnknownError;
+            return Task.FromException(AccountErrors.NullError);
         }
 
         if (!AccountInformation.IsValidEmail(email))
         {
-            return AccountErrors.InvalidEmail;
+            return Task.FromException(AccountErrors.InvalidEmail);
         }
 
         if (username.Length < 5)
         {
-            return AccountErrors.UserNameTooShort;
+            return Task.FromException(AccountErrors.UserNameTooShort);
         }
         if (username.Length > 32)
         {
-            return AccountErrors.UserNameTooLong;
+            return Task.FromException(AccountErrors.UserNameTooLong);
         }
 
         var user = _userManager.FindByIdAsync(id).Result;
         if (user == null && password.Length == 0)
         {
-            return AccountErrors.UserNotFoundError;
+            return Task.FromException(AccountErrors.UserNotFoundError);
         }
 
-        if (password.Length == 0)
+        if (password.Length == 0 || password == "******")
         {
             user.UserName = username;
             user.Email = email;
             _userManager.UpdateAsync(user).Wait();
-            return AccountErrors.Success;
+            return Task.CompletedTask;
         }
 
         if (password == null)
         {
-            return AccountErrors.PasswordError;
+            return Task.FromException(AccountErrors.PasswordError);
         }
 
         if (password.Length >= 8 &&
@@ -81,11 +81,11 @@ public class AccountService : IAccountService
                 var result = _userManager.ResetPasswordAsync(user, token, password).Result;
                 if (!result.Succeeded)
                 {
-                    return AccountErrors.UnknownError;
+                    return Task.FromException(AccountErrors.UnknownError);
                 }
                 else
                 {
-                    return AccountErrors.Success;
+                    return Task.CompletedTask;
                 }
             }
         }
@@ -93,37 +93,44 @@ public class AccountService : IAccountService
         {
             if (password.Length < 8)
             {
-                return AccountErrors.PasswordTooShort;
+                return Task.FromException(AccountErrors.PasswordTooShort);
             }
             else if (password.Length > 100)
             {
-                return AccountErrors.PasswordTooLong;
+                return Task.FromException(AccountErrors.PasswordTooLong);
             }
             else if (!password.Any(char.IsDigit))
             {
-                return AccountErrors.PasswordNoDigit;
+                return Task.FromException(AccountErrors.PasswordNoDigit);
             }
             else if (!password.Any(char.IsUpper))
             {
-                return AccountErrors.PasswordNoUpper;
+                return Task.FromException(AccountErrors.PasswordNoUpper);
             }
             else if (!password.Any(char.IsLower))
             {
-                return AccountErrors.PasswordNoLower;
+                return Task.FromException(AccountErrors.PasswordNoLower);
             }
             else
             {
-                return AccountErrors.UnknownError;   
+                return Task.FromException(AccountErrors.UnknownError);   
             }
         }
     }
 
-    public int RegisterUser(string username, string email, string password)
+    public Task RegisterUser(string username, string email, string password)
     {
         var user = new IdentityUser { UserName = username, Email = email };
         var result = _userManager.CreateAsync(user, password).Result;
         Console.WriteLine(result.Errors.ToString());
-        return result.Succeeded ? AccountErrors.Success : AccountErrors.UnknownError;
+        if (result.Succeeded)
+        {
+            return Task.CompletedTask;
+        }
+        else
+        {
+            return Task.FromException(AccountErrors.UnknownError);
+        }
     }
 
     public async Task<AccountInformation[]> GetUsersAsync()
@@ -137,63 +144,42 @@ public class AccountService : IAccountService
         }).ToArray();
     }
 
-    public int RemoveUser(string id)
+    public Task DeleteUserAsync(string id)
     {
         var user = _userManager.FindByIdAsync(id).Result;
         if (user == null)
         {
-            return 0;
+            return Task.FromException(AccountErrors.NullError);
         }
-
-        return _userManager.DeleteAsync(user).Result.Succeeded ? 1 : 0;
+        
+        return _userManager.DeleteAsync(user);
     }
 }
 
 public class AccountErrors
 {
-    public const int NullError = 0;
-    public const int Success = 1;
-    public const int UnknownError = 2;
-    public const int UserFound = 3;
+    // General Exceptions
+    public static readonly Exception NullError = new ArgumentNullException("A required value was null.");
+    public static readonly Exception UnknownError = new ApplicationException("An unknown error occurred.");
 
-    public const int UsernameError = 10;
-    public const int UserNameTooShort = 11;
-    public const int UserNameTooLong = 12;
-    public const int UserNotFoundError = 13;
-    public const int EmailError = 20;
-    public const int InvalidEmail = 21;
-    
-    public const int PasswordError = 30;
-    public const int PasswordTooShort = 31;
-    public const int PasswordTooLong = 32;
-    public const int PasswordNoDigit = 33;
-    public const int PasswordNoUpper = 34;
-    public const int PasswordNoLower = 35;
-    
+    // Username Exceptions
+    public static readonly Exception UsernameError = new ArgumentException("Username not found or invalid.");
+    public static readonly Exception UserNameTooShort = new ArgumentException("Username is too short.");
+    public static readonly Exception UserNameTooLong = new ArgumentException("Username is too long.");
+    public static readonly Exception UserNotFoundError = new KeyNotFoundException("User not found.");
 
-    public static string GetErrorMessage(int errorCode)
-    {
-        return errorCode switch
-        {
-            NullError => "Null error",
-            Success => "Success",
-            UnknownError => "Unknown error",
-            UserFound => "User found",
-            UsernameError => "Username Not Found",
-            UserNameTooShort => "Username too short",
-            UserNameTooLong => "Username too long",
-            UserNotFoundError => "User not found",
-            EmailError => "Email Not Found",
-            InvalidEmail => "Invalid email",
-            PasswordError => "Password Not Found",
-            PasswordTooShort => "Password too short",
-            PasswordTooLong => "Password too long",
-            PasswordNoDigit => "Password no digit",
-            PasswordNoUpper => "Password no upper",
-            PasswordNoLower => "Password no lower",
-            _ => "Unknown error"
-        };
-    }
+    // Email Exceptions
+    public static readonly Exception EmailError = new ArgumentException("Email not found or invalid.");
+    public static readonly Exception InvalidEmail = new FormatException("Invalid email format.");
+
+    // Password Exceptions
+    public static readonly Exception PasswordError = new ArgumentException("Password not found or invalid.");
+    public static readonly Exception PasswordTooShort = new ArgumentException("Password is too short.");
+    public static readonly Exception PasswordTooLong = new ArgumentException("Password is too long.");
+    public static readonly Exception PasswordNoDigit = new ArgumentException("Password requires at least one digit.");
+    public static readonly Exception PasswordNoUpper = new ArgumentException("Password requires at least one uppercase letter.");
+    public static readonly Exception PasswordNoLower = new ArgumentException("Password requires at least one lowercase letter.");
+    
 }
 
 public class AccountInformation

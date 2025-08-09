@@ -1,4 +1,4 @@
-﻿using szakdolgozat.DBContext.Models;
+﻿using szakdolgozat.Models;
 
 namespace szakdolgozat.Interface;
 
@@ -8,5 +8,5 @@ public interface IRegisteredDisplaysServices
     Task<DisplayModel[]> GetRegisteredDisplaysAsync();
     DisplayModel[] GetRegisteredDisplays();
     Task<int> ModifyRegisteredDisplay(DisplayModel dto);
-    int RemoveRegisteredDisplay(int id);
+    Task RemoveRegisteredDisplay(Guid id);
 }
